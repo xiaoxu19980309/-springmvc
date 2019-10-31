@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/public.css">
+    <style>
+        body{
+            background: #f2f2f2
+        }
+        .sd{
+            width: 100%;
+            padding-top: 68px;
+
+        }
+        .swrap{
+            margin: 0 114.5px;
+        }
+        .pd{
+            width: 100%;
+            height: 54px;
+            padding-top: 40px;
+        }
+        .pd>p{
+            font-size: 30px;
+            color: rgb(51,51,51);
+            font-weight: 400;
+            margin-bottom: 6px;
+        }
+        .dtrolley{
+            border: 1px solid rgb(221,221,221);
+            border-bottom: none;
+            border-radius: 3px;
+            margin-bottom: 120px;
+        }
+        .dhead{
+            height: 22px;
+            padding: 16px 30px;
+            background: white;
+            border-bottom: 1px solid rgb(221,221,221);
+            border-radius: 3px;
+            font-size: 12px;
+            line-height: 22px;
+            color: rgb(102,102,102);
+        }
+        .ch{
+            height: 16px;
+            width: 16px;
+            vertical-align: middle;
+        }
+        .dhead .ch{
+            margin-top: -2px;
+            margin-right: 9px;
+        }
+        .dhead>span{
+            height: 18px;
+            display: inline-block;
+            padding-top: 2px;
+        }
+        .dhs2{
+            width: 65px;
+        }
+        .dhs3{
+            width: 544px;
+        }
+        .dhs4{
+            width: 96.8px;
+        }
+        .dhs5{
+            width: 121px;
+        }
+        .dhs6{
+            width: 109px;
+        }
+        .dhs7{
+            width: 56px;
+        }
+        .dtb{
+          /* width: 100%; */
+          position: relative;
+        }
+        .dtb>ul>li{
+            /* width: 1118px; */
+            height: 101px;
+            margin-top: 10px;
+            border-bottom: 1px solid rgb(221,221,221);
+            position: relative;
+        }
+        .dtb>ul>li>div>span{
+            float: left;
+            font-size: 12px;
+            color: rgb(102,102,102);
+        }
+        .dtb>ul>li>div{
+            /* width: 1058px; */
+            height: 100px;
+            padding: 0 30px;
+            border-top: 1px solid rgb(221,221,221);
+            background: white;
+        }
+        .dtb>ul>li img{
+            width: 60px;
+            height: 60px;
+        }
+        .dtb>ul .ch{
+            margin-top:43px
+        }
+        .dtb>ul .dhs2{
+            width: 60px;
+            height: 60px;
+            margin: 20px 0 20px 16px;
+            line-height: 99px;
+        }
+        .dtb>ul .dhs3{
+            width: 290px;
+            height: 18px;
+            padding: 20px 38px 20px 12px;
+        }
+        .dtb>ul .dhs3>a{
+            color: rgb(51,51,51);
+            text-decoration: none;
+        }
+        .dtb>ul .dhs4{
+            margin-left: 205px;
+            margin-top: 23px;
+            width: 100px;
+            height: 18px;
+            padding: 20px 0;
+        }
+        .dtb>ul .dhs5{
+            width: 78px;
+            height: 26px;
+            border: 1px solid rgb(221,221,221);
+            border-radius: 2px;
+            text-align: center;
+            margin-left: 0;
+            margin-top: 34px;
+        }
+        .dtb>ul .dhs5 input{
+            width: 38px;
+            height: 24px;
+            font-size: 12px;
+            border: none;
+            text-align: center;
+            margin-top: 1px;
+        }
+        .dtb>ul .dhs6{
+            width: 116px;
+            height: 18px;
+            margin-top: 23px;
+            padding: 20px 0;
+            margin-left: 47px;
+        }
+        .dtb>ul .dhs7{
+            width: 24px;
+            height: 18px;
+            padding: 20px 0;
+            margin-top: 23px;
+            margin-left: 2px;
+        }
+        .dtb>ul .dhs7>a{
+            text-decoration: none;
+            color: #666;
+            font-size: 12px;
+        }
+        .dtb>ul .add,.sub{
+            text-decoration: none;
+            font-size: 14px;
+            font-weight:bold;
+            color: rgb(102,102,102);
+        }
+        .dtb>p{
+            width: 1118px;
+            height: 101px;
+            margin-top: 10px;
+            border-bottom: 1px solid rgb(221,221,221);
+            position: relative;
+        }
+        .shopAll{
+            /* width: 1058px; */
+            height: 48px;
+            padding: 20px 30px;
+            margin-top: 10px;
+            border-top: 1px solid rgb(221,221,221);
+            border-bottom: 1px solid rgb(221,221,221);
+            background: white;
+            position: relative;
+        }
+        .shopAll>div{
+            width: 1058px;
+            height: 48px;
+        }
+        .shopAll>div>span{
+            font-size: 12px;
+            color: rgb(102,102,102);
+            display: inline-block;
+            height: 48px;
+            line-height: 48px;
+        }
+        .shopAll>div>span:nth-child(2){
+            margin-left:5px;
+        }
+        .shopAll>div>span:nth-child(3){
+            margin-left:31px;
+        }
+        .shopAll>div>span:nth-child(4){
+            margin-left:29px;
+        }
+        .shopAll>div>div{
+            width: 280px;
+            height:59px;
+            margin-top:0;
+            margin-left: 200px;
+            display: inline-block;
+            font-size: 12px;
+            position: absolute;
+            top:28px;
+            left:396px;
+        }
+        .shopAll>div>div>span:first-child{
+            font-size: 16px;
+            color: rgb(255, 68, 68);
+            font-weight: 700;
+        }
+        .shopAll>div>div>span:nth-child(3){
+            font-size: 24px;
+            display: inline-block;
+            line-height: 18px;
+            color: rgb(255, 68, 68);
+            font-weight: 700;
+        }
+        .shopAll>div>div>span:nth-child(4){
+            display: block;
+            margin-left: 194px;
+            color:#666;
+        }
+        .shopAll>div>div>span:nth-child(4)>span{
+            font-size: 14px;
+        }
+        .shopAll>div>a{
+            display: inline-block;
+            position: absolute;
+            right:30px;
+            text-align: center;
+            text-decoration: none;
+            width: 72px;
+            height: 46px;
+            border: 1px solid white;
+            border-radius: 3px;
+            background: rgb(255, 68, 68);
+            font-size: 18px;
+            line-height: 46px;
+            padding: 0 60px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="navigation">
+        <div class="wrap">
+            <a href="#" class="logo"><img src="../image/logo.png" alt="" class="logoi"></a>
+            <ul class="ul-bar-left">
+                <li><a href="" class="word chakan" id="chak">查看所有类别</a></li>
+                <li><a href="" class="word">首页</a></li>
+                <li><a href="" class="word">所有产品</a></li>
+                <!-- <li><a href="" class="word">博客</a></li> -->
+                <!-- <li><a href="" class="word">文章列表</a></li> -->
+            </ul>
+            <ul class="ul-bar-right">
+                <li class="word a0">0</li>
+                <li class="img2"><img src="../image/0.png" alt=""></li>
+                <li><a href="./register.html" class="word zhuc">注册</a></li>
+                <li class="word ash">|</li>
+                <li><a href="./login.html" class="word dengl">登录</a></li>
+            </ul>
+        </div>
+        <div class="wrap2" id="lb">
+            <ul>
+                <li><a href="">不锈钢</a></li>
+                <li><a href="">原料水泥</a></li>
+                <li><a href="">塑料</a></li>
+                <li><a href="">木制</a></li>
+                <li><a href="">陶瓷</a></li>
+            </ul>
+            <div class="wA1">
+                <a href="#" class="w2I">
+                    <img src="../image/img101.png" alt="">
+                </a>
+                <a href="#" class="w2P1">
+                    <p>简约原木餐盘</p>
+                </a>
+                <p class="w2P2">￥300.00</p>
+            </div>
+            <div class="wA2">
+                <a href="#" class="w2I">
+                    <img src="../image/img102.png" alt="">
+                </a>
+                <a href="#" class="w2P1">
+                    <p>不锈钢时尚咖啡水壶</p>
+                </a>
+                <p class="w2P2">￥400.00</p>
+            </div>
+            <div class="wA3">
+                <a href="#" class="w2I">
+                    <img src="../image/img103.png" alt="">
+                </a>
+                <a href="#" class="w2P1">
+                    <p>经典系列红色时钟</p>
+                </a>
+                <p class="w2P2">￥580.00</p>
+            </div>
+        </div>
+    </div>
+    <div class="sd">
+        <div class="swrap">
+            <div class="pd">
+                <p>购物车</p>
+            </div>
+            <div class="dtrolley">
+                <div class="dhead">
+                    <span><input type="checkbox" class="ch"></span>
+                    <span class="dhs2">全选</span>
+                    <span class="dhs3">商品名称</span>
+                    <span class="dhs4">单价</span>
+                    <span class="dhs5">数量</span>
+                    <span class="dhs6">小计</span>
+                    <span class="dhs7">操作</span>
+                </div>
+                <div class="dtb">
+                    <ul class="shopList">
+                        <li>
+                            <div>
+                                <span><input type="checkbox" class="ch" index="0"></span>
+                                <span class="dhs2"><img src="../image/img23.png" alt=""></span>
+                                <span class="dhs3"><a href="#">黑陶自然花香蜡烛</a></span>
+                                <span class="dhs4">￥580</span>
+                                <span class="dhs5">
+                                    <a href="javascript:void(0)" class="sub">-</a>
+                                    <input type="text" class="num" value="1">
+                                    <a href="javascript:void(0)" class="add">+</a>
+                                </span>
+                                <span class="dhs6">￥580</span>
+                                <span class="dhs7"><a href="#" class="del">删除</a></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <span><input type="checkbox" class="ch" index="0"></span>
+                                <span class="dhs2"><img src="../image/img23.png" alt=""></span>
+                                <span class="dhs3"><a href="#">黑陶自然花香蜡烛</a></span>
+                                <span class="dhs4">￥580</span>
+                                <span class="dhs5">
+                                    <a href="javascript:void(0)" class="sub">-</a>
+                                    <input type="text" class="num" value="1">
+                                    <a href="javascript:void(0)" class="add">+</a>
+                                </span>
+                                <span class="dhs6">￥580</span>
+                                <span class="dhs7"><a href="#" class="del">删除</a></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <span><input type="checkbox" class="ch" index="0"></span>
+                                <span class="dhs2"><img src="../image/img23.png" alt=""></span>
+                                <span class="dhs3"><a href="#">黑陶自然花香蜡烛</a></span>
+                                <span class="dhs4">￥580</span>
+                                <span class="dhs5">
+                                    <a href="javascript:void(0)" class="sub">-</a>
+                                    <input type="text" class="num" value="1">
+                                    <a href="javascript:void(0)" class="add">+</a>
+                                </span>
+                                <span class="dhs6">￥580</span>
+                                <span class="dhs7"><a href="#" class="del">删除</a></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <span><input type="checkbox" class="ch" index="0"></span>
+                                <span class="dhs2"><img src="../image/img23.png" alt=""></span>
+                                <span class="dhs3"><a href="#">黑陶自然花香蜡烛</a></span>
+                                <span class="dhs4">￥580</span>
+                                <span class="dhs5">
+                                    <a href="javascript:void(0)" class="sub">-</a>
+                                    <input type="text" class="num" value="1">
+                                    <a href="javascript:void(0)" class="add">+</a>
+                                </span>
+                                <span class="dhs6">￥580</span>
+                                <span class="dhs7"><a href="#" class="del">删除</a></span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="shopAll">
+                        <div>
+                            <span><input type="checkbox" class="ch"></span>
+                            <span>全选</span>
+                            <span>删除</span>
+                            <span>清除下架商品</span>
+                            <div>
+                                已选商品
+                                <span class="allNum">0</span>
+                                件
+                                <span>合计（不含运费）：</span>
+                                <span class="allSum">￥0</span>
+                                <span>已优惠：<span>￥0</span></span>
+                            </div>
+                            <a href="">确认结算</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="d6">
+        <div class="d61">
+            <div class="d611">
+                <a href=""><img src="../image/logo.png" alt=""></a>
+                <p>青竹良品原创生活类电商品牌，秉承一贯的严谨态度，我们深入世界各地，从源头全程严格把控商品生产环节，力求帮消费者甄选到最优质的商品</p>
+            </div>
+            <div class="d612">
+                <ul class="ul61">
+                    <li class="li61"><a href="">关于我们</a></li>
+                    <li class="li62"><a href="">我的品牌</a></li>
+                    <li class="li62"><a href="">公司动态</a></li>
+                </ul>
+                <ul class="ul62">
+                    <li class="li61"><a href="">支付方式</a></li>
+                    <li class="li62"><a href="">微信支付</a></li>
+                    <li class="li62"><a href="">支付宝</a></li>
+                    <li class="li62"><a href="">百度钱包</a></li>
+                    <li class="li62"><a href="">货到付款</a></li>
+                </ul>
+                <ul class="ul63">
+                    <li class="li61"><a href="">相关服务</a></li>
+                    <li class="li62"><a href="">退货政策</a></li>
+                    <li class="li62"><a href="">购物流程</a></li>
+                </ul>
+            </div>
+            <div class="d613">
+                <div class="weixin">
+                    <img src="../image/img72.png" alt="">
+                    <p>微博公众号</p>
+                </div>
+                <div class="weibo">
+                    <img src="../image/img71.png" alt="">
+                    <p>微信公众号</p>
+                </div>
+            </div>
+        </div>
+        <div class="d62">
+            <div class="d621">
+                <p class="p61">粤ICP备12043194号 © 2017youhaosuda.com</p>
+                <p class="p62">
+                    <img src="../image/img81.png" alt="" title="微信支付">
+                    <img src="../image/img82.png" alt="" title="支付宝">
+                    <img src="../image/img83.png" alt="" title="百度钱包">
+                    <img src="../image/img84.png" alt="" title="财付通">
+                    <img src="../image/img85.png" alt="" title="快钱">
+                    <img src="../image/img86.png" alt="" title="货到付款">
+                    <img src="../image/img87.png" alt="" title="银行卡">
+                </p>
+                <div class="d622">
+                    <ul>
+                        <li>
+                            <p class="p621">
+                                <img src="../image/img901.png" alt="" class="img61">
+                                <img src="../image/img90.png" alt="" class="img62">
+                            </p>
+                            <p class="p622">安全联盟<br>实名验证</p>
+                        </li>
+                        <li>
+                            <p class="p621">
+                                <img src="../image/img891.png" alt="" class="img61">
+                                <img src="../image/img89.png" alt="" class="img62">
+                            </p>
+                            <p class="p622">工商网监<br>电子标识</p>
+                        </li>
+                        <li>
+                            <p class="p621">
+                                <img src="../image/img881.png" alt="" class="img61">
+                                <img src="../image/img88.png" alt="" class="img62">
+                            </p>
+                            <p class="p622">可信联盟<br>身份验证</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d7">
+        <p>
+            <span class="s71"><a href="#"><img src="../image/img91.png" alt=""></a></span>
+            <span class="s72">|</span>
+            <span class="s73"><a href="#">由友好速搭提供技术与服务支持</a></span>
+        </p>
+    </div> -->
+    <script src="../js/leibie.js"></script>
+    <script src="../jq1.11.1/jquery1.11.1.min.js"></script>
+    <script>
+        var price = null;
+        var pcs = 0;
+        var sum =0;
+
+        function get_val(a) {
+            price = a.parent().siblings('.dhs4')[0].innerText;
+            price = Number(price.replace('￥',''));
+            pcs = a[0].value;
+            if(isNaN(pcs)){
+                pcs = Number(pcs.replace(/[^0-9]/g,''));
+            }
+            if(pcs<=0){
+                pcs = 1;
+            }
+        }
+        function get_sum(a) {
+            a.parent().siblings('.dhs6')[0].innerText = '￥'+(price*pcs);
+        }
+
+        $('.shopList .num').blur(function () {
+            get_val($(this));
+            get_sum($(this));
+            this.value = pcs;
+            allNum = 0;
+            numAll();
+            allSum = 0;
+            sumAll()
+        });
+
+        $('.shopList .add').click(function () {
+            get_val($(this).siblings('.num'));
+            pcs++;
+            $(this).siblings('.num')[0].value = pcs;
+            get_sum($(this).siblings('.num'));
+            allNum = 0;
+            numAll();
+            allSum = 0;
+            sumAll()
+        });
+
+        $('.shopList .sub').click(function () {
+            get_val($(this).siblings('.num'));
+            pcs--;
+            if(pcs<1){
+                pcs = 1;
+            }
+            $(this).siblings('.num')[0].value = pcs;
+            get_sum($(this).siblings('.num'));
+            allNum = 0;
+            numAll();
+            allSum = 0;
+            sumAll()
+        });
+
+        var i = 0;
+        document.onscroll = function () {
+            i = $('.shopList').children().last().offset().top-$(document).scrollTop();
+            let widths = document.getElementsByClassName('shopList')[0].getElementsByTagName('li')[0].offsetWidth
+            widths -= 60;
+            if(i>300){
+                $('.shopAll').css({
+                    position:'fixed',
+                    width: widths,
+                    bottom:0,
+                    borderLeft:'1px solid rgb(221,221,221)',
+                    borderRight:'1px solid rgb(221,221,221)'
+                });
+            }else{
+                $('.shopAll').css({
+                    position:'',
+                    width: 'auto',
+                    bottom:'',
+                    borderLeft:'',
+                    borderRight:''
+                });
+            }
+        };
+
+        var allNum = 0;
+        var j = 0;
+        function numAll(a) {
+            $('.shopList .num').each(function (index) {
+                if($(this).parent().siblings('span').eq(0).children('.ch').prop('checked')===false){
+
+                }else{
+                    j = Number(this.value);
+                    allNum += j;
+                }
+            });
+            $('.shopAll .allNum')[0].innerText = allNum;
+        }
+        numAll();
+
+        var allSum = 0;
+        var k = 0;
+        function sumAll() {
+            $('.shopList .dhs6').each(function (index) {
+                if($(this).siblings('span').eq(0).children('.ch').prop('checked')===false){
+
+                }else{
+                    k = Number(this.innerText.replace(/[^0-9]/g,''));
+                    allSum += k;
+                }
+            });
+            $('.shopAll .allSum')[0].innerText = '￥'+allSum;
+        }
+        sumAll();
+
+        $('.shopList .ch').change(function () {
+            allNum = 0;
+            numAll();
+            allSum = 0;
+            sumAll();
+            if($(this).prop('checked')===true){
+                $(this).attr('index',1)
+            }else{
+                $(this).attr('index',0)
+            }
+            var index = 0;
+            $('.shopList .ch').each(function () {
+                index += Number($(this).attr('index'));
+            });
+            if(index === $('.shopList').children().length){
+                $('.shopAll .ch').prop('checked','checked');
+                $('.dhead .ch').prop('checked','checked');
+            }else{
+                $('.shopAll .ch').prop('checked','');
+                $('.dhead .ch').prop('checked','');
+            }
+        });
+
+        $('.dhead .ch').change(function () {
+            if($(this).prop('checked')===true){
+                $('.shopList .ch').each(function () {
+                    $(this).prop('checked','checked');
+                });
+                $('.shopAll .ch').prop('checked','checked');
+
+            }else{
+                $('.shopList .ch').each(function () {
+                    $(this).prop('checked','');
+                });
+                $('.shopAll .ch').prop('checked','');
+            }
+            allNum = 0;
+            numAll();
+            allSum = 0;
+            sumAll();
+        });
+
+        $('.shopAll .ch').change(function () {
+            if($(this).prop('checked')===true){
+                $('.shopList .ch').each(function () {
+                    $(this).prop('checked','checked');
+                });
+                $('.dhead .ch').prop('checked','checked');
+
+            }else{
+                $('.shopList .ch').each(function () {
+                    $(this).prop('checked','');
+                });
+                $('.dhead .ch').prop('checked','');
+            }
+            allNum = 0;
+            numAll();
+            allSum = 0;
+            sumAll();
+        })
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -115,7 +115,8 @@ ul{
 .wrap3{
     background: white;
     display: none;
-    height: 68px;
+}
+.wrap3>ul>li {
     border-top: 1px solid #e2e2e2;
 }
 .w2I{

@@ -32,10 +32,10 @@ public interface UserDao{
 
     /**
      * 更新用户
-     * @param user
+     * @param
      */
-    @Update("update account set username=#{username} where username = #{username}")
-    public void updateUser(User user);
+    @Update("update user set password=#{password} where username = #{username}")
+    int updateUser(@Param("username") String username,@Param("password") String password);
 
     /**
      * 删除用户

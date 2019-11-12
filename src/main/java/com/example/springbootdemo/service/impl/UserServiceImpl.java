@@ -33,4 +33,15 @@ public class UserServiceImpl implements UserServices {
         }
         return ans;
     }
+
+    @Override
+    public int changePsw(User user){
+        int ans = 0;
+        try{
+            ans = userDao.updateUser(user.getUserName(),user.getPassword());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return ans;
+    }
 }

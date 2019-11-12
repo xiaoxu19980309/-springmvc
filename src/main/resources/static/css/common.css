@@ -236,6 +236,25 @@ a{
 .header .header_c .reg .reg_c{
 	float: right;
 }
+.header .header_c .reg .reg_c .login-out{
+	text-align: center;
+	display: none;
+}
+.header .header_c .reg .reg_c .wrap3{
+	background: #f2f2f2;
+	display: none;
+}
+.header .header_c .reg .reg_c .wrap3>ul>li{
+	padding: 0 7px;
+	text-align: center;
+	border-top: 1px solid #e2e2e2;
+}
+.header .header_c .reg .reg_c .person:hover + a +.wrap3{
+	display: block;
+}
+.header .header_c .reg .reg_c .wrap3:hover{
+	display: block;
+}
 .header .header_c .reg .ico{
 	float: right;
 }

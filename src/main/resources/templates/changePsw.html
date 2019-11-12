@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>注册</title>
+    <title>修改密码</title>
     <link rel="stylesheet" href="../css/public.css">
     <style>
         .rd1{
@@ -226,9 +226,10 @@
         <ul class="ul-bar-right">
             <li class="word a0">0</li>
             <li class="img2"><img src="../image/0.png" alt=""></li>
-            <li><a href="./register" class="word zhuc">注册</a></li>
-            <li class="word ash">|</li>
-            <li><a href="./login" class="word dengl">登录</a></li>
+            <li class="isLogin"><a href="./register" class="word zhuc">注册</a></li>
+            <li class="word ash isLogin">|</li>
+            <li class="isLogin"><a href="./login" class="word dengl">登录</a></li>
+            <li class="login-out"><a href="#" class="word" onclick="loginOut()">退出</a></li>
             <li class="login-out">
                 <a href="" class="word" id="person" style="text-align: center;">个人中心</a>
                 <div id="personList" class="wrap3">
@@ -281,25 +282,21 @@
     <div>
         <div>
             <div class="rd11">
-                <p>注册</p>
-                <form action="/api/user/register" method="post">
+                <p>修改密码</p>
+                <form action="/api/user/changePsw" method="post">
                     <div class="zh">
                         <input type="text" id="zin" value="">
-                        <div id="zh1">手机/邮箱/用户名</div>
+                        <div id="zh1">用户名</div>
                     </div>
                     <div class="mm">
-                        <input type="password" id="min">
+                        <input type="password" id="min" autocomplete="off">
                         <div id="mm">设置密码</div>
                     </div>
                     <div class="mm">
-                        <input type="password" id="remin">
+                        <input type="password" id="remin" autocomplete="off">
                         <div id="rem">确认密码</div>
                     </div>
-                    <div class="zw">
-                        <span class="az">已有账号？请</span>
-                        <a href="./login" class="aw"><span>直接登录</span></a>
-                    </div>
-                    <input type="button" value="注册" id="zc">
+                    <input type="button" value="修改密码" id="change">
                 </form>
             </div>
         </div>
@@ -311,12 +308,12 @@
 <script src="../js/public.js"></script>
 <script src="../jq1.11.1/jquery.min.js"></script>
 <script>
-    $('#zc').click(function(){
-        // var username = document.getElementById("zin");
-        // var password = document.getElementById("min");
-        // var passwordComfirm = document.getElementById("remin");
+    window.onload = function(){
+        checkToken();
+    }
+    $('#change').click(function(){
         $.ajax({
-            url: "/api/user/register",
+            url: "/api/user/changePsw",
             type: "POST",
             data: {
                 username: $('#zin').val(),
@@ -331,6 +328,7 @@
                     alert(result.resultMsg);
                 }else{
                     alert(result.resultMsg);
+                    sessionStorage.removeItem("token");
                     window.location.href = "./login";
                 }
             },

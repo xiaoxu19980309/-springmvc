@@ -75,7 +75,7 @@
 			</dl>
 			<ul class="nav">
 				<li><a href="./">首页</a></li>
-				<li><a href="./allproducts">所有产品</a></li>
+				<li><a href="./allproducts">所有商品</a></li>
 			</ul>
 			<div class="reg">
 				<div class="ico">
@@ -89,9 +89,17 @@
 					</span>
 				</div>
 				<div class = "reg_c">
-					<a href="./login" id="">登陆</a>
-					<span>&nbsp;|&nbsp;</span>
-					<a href="./register">注册</a>
+					<a class="isLogin" href="./login" id="">登陆</a>
+					<span class="isLogin">&nbsp;|&nbsp;</span>
+					<a class="isLogin" href="./register">注册</a>
+					<a class="login-out person" href="#" style="margin-right: 20px;">个人中心</a>
+					<a class="login-out" href="#" onclick="loginOut()">退出</a>
+					<div class="wrap3">
+						<ul>
+							<li><a class="word" href="./changePsw">修改密码</a></li>
+							<li><a class="word" href="./orderList">历史订单</a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -286,4 +294,35 @@
 		</div>
 	</div>
 </body>
+<script src="../js/public.js"></script>
+<script src="../jq1.11.1/jquery.min.js"></script>
+<script>
+	window.onload = function(){
+		$.ajax({
+			url: '/api/user/checkToken',
+			type: 'post',
+			data: {
+			},
+			beforeSend: function(request){
+				request.setRequestHeader("Authorization",sessionStorage.getItem("token"));
+			},
+			success: function(data){
+				if(data.data!=null){
+					var blocks = document.getElementsByClassName("isLogin")
+					var outbtn = document.getElementsByClassName("login-out")
+					for(var i=0;i<blocks.length;i++){
+						blocks[i].style.display = "none";
+					}
+					for(var i=0;i<outbtn.length;i++){
+						outbtn[i].style.display = "inline-block";
+					}
+				}else{
+					sessionStorage.removeItem("token");
+				}
+			},
+			error: function(e){
+			}
+		})
+	}
+</script>
 </html>

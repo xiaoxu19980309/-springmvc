@@ -83,4 +83,28 @@ public class UserController {
             return Result.fail(ResponseCode.ERROR.val(),"注册失败！");
         }
     }
+
+    @RequestMapping(value = "/changePsw",method = RequestMethod.POST)
+    public Result changePsw(HttpServletRequest request){
+        User user = new User();
+        int ans = 0;
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String pswComfirm = request.getParameter("pswComfirm");
+        if(!password.equals(pswComfirm)){
+            return Result.fail(ResponseCode.ERROR.val(),"两次输入的密码不一致！");
+        }
+        user.setUserName(username);
+        user.setPassword(password);
+        try{
+            ans=userServices.changePsw(user);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if(ans!=0){
+            return Result.success(null,"修改密码成功!");
+        }else{
+            return Result.fail(ResponseCode.ERROR.val(),"修改密码失败！");
+        }
+    }
 }

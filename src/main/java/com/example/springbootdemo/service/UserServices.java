@@ -5,4 +5,5 @@ import com.example.springbootdemo.pojo.User;
 public interface UserServices {
     int register(User user);
     User login(User user);
+    int changePsw(User user);
 }

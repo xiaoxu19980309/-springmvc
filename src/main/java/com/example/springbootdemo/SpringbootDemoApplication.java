@@ -63,6 +63,9 @@ public class SpringbootDemoApplication {
     @RequestMapping(value = "/orderDetail")
     public String orderDetail(){ return "orderDetail"; }
 
+    @RequestMapping(value = "/changePsw")
+    public String changePsw(){ return "changePsw"; }
+
     @PostMapping("/register_submit")
     public String register_submit(HttpServletRequest request){
         String username = request.getParameter("username");

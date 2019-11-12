@@ -59,14 +59,16 @@
             <ul class="ul-bar-right">
                 <li class="word a0">0</li>
                 <li class="img2"><img src="../image/0.png" alt=""></li>
-                <li><a href="./register.html" class="word zhuc">注册</a></li>
-                <li class="word ash">|</li>
-                <li><a href="./login.html" class="word dengl">登录</a></li>
+                <li class="isLogin"><a href="./register.html" class="word zhuc">注册</a></li>
+                <li class="word ash isLogin">|</li>
+                <li class="isLogin"><a href="./login.html" class="word dengl">登录</a></li>
+                <li class="login-out"><a href="#" class="word" onclick="loginOut()">退出</a></li>
                 <li class="login-out">
                     <a href="" class="word" id="person" style="text-align: center;">个人中心</a>
                     <div id="personList" class="wrap3">
                         <ul>
-                            <li><a class="word" href="./orderList">历史订单</a></li>
+                            <li style="float: none;"><a class="word" href="./changePsw">修改密码</a></li>
+                            <li style="float: none;"><a class="word" href="./orderList">历史订单</a></li>
                         </ul>
                     </div>
                 </li>

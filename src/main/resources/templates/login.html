@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>登录</title>
     <link rel="stylesheet" href="../css/public.css">
     <style>
         .ld1{
@@ -129,14 +129,23 @@
             <ul class="ul-bar-left">
                 <li><a href="" class="word chakan" id="chak">查看所有类别</a></li>
                 <li><a href="./" class="word">首页</a></li>
-                <li><a href="./allproducts" class="word">所有产品</a></li>
+                <li><a href="./allproducts" class="word">所有商品</a></li>
             </ul>
             <ul class="ul-bar-right">
                 <li class="word a0">0</li>
                 <li class="img2"><img src="../image/0.png" alt=""></li>
-                <li><a href="./register" class="word zhuc">注册</a></li>
-                <li class="word ash">|</li>
-                <li><a href="./login" class="word dengl">登录</a></li>
+                <li class="isLogin"><a href="./register" class="word zhuc">注册</a></li>
+                <li class="word ash isLogin">|</li>
+                <li class="isLogin"><a href="./login" class="word dengl">登录</a></li>
+                <li class="login-out">退出</li>
+                <li class="login-out">
+                    <a href="" class="word" id="person" style="text-align: center;">个人中心</a>
+                    <div id="personList" class="wrap3">
+                        <ul>
+                            <li><a class="word" href="./orderList">历史订单</a></li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
         </div>
         <div class="wrap2" id="lb">
@@ -197,13 +206,14 @@
                         <input type="button" value="登录" id="lg">
                     </form>
                 </div>
-                <button id="test">测试</button>
+<!--                <button id="test">测试</button>-->
             </div>
         </div>
     </div>
     <script src="../js/leibie.js"></script>
     <script src="../js/login.js"></script>
     <script src="../jq1.11.1/jquery.min.js"></script>
+    <script src="../js/public.js"></script>
 <script>
     $('#lg').click(function(){
         $.ajax({
@@ -214,30 +224,48 @@
                 password: $('#min').val()
             },
             success: function(data){
-                sessionStorage.setItem("token",token)
-                // window.location.href="./";
+                sessionStorage.setItem("token",data.data.token)
+                if(data.data!=null){
+                    var blocks = document.getElementsByClassName("isLogin")
+                    var outbtn = document.getElementsByClassName("login-out")
+                    for(var i=0;i<blocks.length;i++){
+                        blocks[i].style.display = "none";
+                    }
+                    for(var i=0;i<outbtn.length;i++){
+                        outbtn[i].style.display = "block";
+                    }
+                    window.location.href="./";
+                }
             },
             error: function(e){
                 alert("用户名或密码错误");
             }
         })
     });
-    $('#test').click(function(){
-        $.ajax({
-            url: '/api/user/test',
-            type: 'post',
-            data: {
-            },
-            beforeSend: function(request){
-                request.setRequestHeader("Authorization",sessionStorage.getItem("token"));
-            },
-            success: function(data){
-                // window.location.href="./";
-            },
-            error: function(e){
-            }
-        })
-    })
+    // $('#test').click(function(){
+    //     $.ajax({
+    //         url: '/api/user/test',
+    //         type: 'post',
+    //         data: {
+    //         },
+    //         beforeSend: function(request){
+    //             request.setRequestHeader("Authorization",sessionStorage.getItem("token"));
+    //         },
+    //         success: function(data){
+    //             if(data.data!=null){
+    //                 var blocks = document.getElementsByClassName("isLogin")
+    //                 var outbtn = document.getElementsByClassName("login-out")[0]
+    //                 for(var i=0;i<blocks.length;i++){
+    //                     blocks[i].style.display = "none";
+    //                 }
+    //                 outbtn.style.display = "block";
+    //             }
+    //             // window.location.href="./";
+    //         },
+    //         error: function(e){
+    //         }
+    //     })
+    // })
 
 </script>
 </body>

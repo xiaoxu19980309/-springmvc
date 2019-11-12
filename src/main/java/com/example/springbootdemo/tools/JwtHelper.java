@@ -44,10 +44,15 @@ public class JwtHelper {
         if (token == null) {
             return null;
         }
-        Map<String, Object> body = Jwts.parser()
-                .setSigningKey(SECRET)
-                .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
-                .getBody();
+        Map<String, Object> body = null;
+        try{
+            body = Jwts.parser()
+                    .setSigningKey(SECRET)
+                    .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+                    .getBody();
+        }catch(Exception e){
+            return null;
+        }
         return body;
     }
 }

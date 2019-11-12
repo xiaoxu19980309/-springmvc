@@ -37,6 +37,11 @@ ul{
     float: right;
     padding: 0 7px;
 }
+.navigation .ul-bar-right .login-out{
+    display: none;
+    line-height: 68px;
+    font-size: 14px;
+}
 .img2{
     margin-top: 23px;
     margin-right: -13px;
@@ -106,6 +111,12 @@ ul{
     height: 339px;
     margin: 0 auto;
     text-align: center;
+}
+.wrap3{
+    background: white;
+    display: none;
+    height: 68px;
+    border-top: 1px solid #e2e2e2;
 }
 .w2I{
     width: 200px;

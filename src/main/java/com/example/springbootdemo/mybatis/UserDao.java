@@ -25,10 +25,10 @@ public interface UserDao{
 
     /**
      * 添加用户
-     * @param user
+     * @param
      */
     @Insert("insert into user(username,password,gmt_create,gmt_modified) values(#{username},#{password},now(),now())")
-    int insertUser(User user);
+    int insertUser(@Param("username") String username,@Param("password") String password);
 
     /**
      * 更新用户

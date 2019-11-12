@@ -45,16 +45,42 @@ public class UserController {
         }
         if(ans!=null){
             JSONObject obj = jwtHelper.generateToken(claims);
-            response.setHeader("Authorization",obj.getString("token"));
             return Result.success(obj,"登录成功！");
         }else{
             return Result.fail(ResponseCode.ERROR.val(),"用户登录失败！");
         }
     }
 
-    @RequestMapping(value = "/test",method = RequestMethod.POST)
-    public Result test(HttpServletRequest request){
-        System.out.println(request);
+    @RequestMapping(value = "/checkToken",method = RequestMethod.POST)
+    public Result checkToken(HttpServletRequest request){
         return Result.success(jwtHelper.validateTokenAndGetClaims(request));
+    }
+
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    public Result register(HttpServletRequest request){
+        User user = new User();
+        int ans = 0;
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String pswComfirm = request.getParameter("pswComfirm");
+        if(!password.equals(pswComfirm)){
+            return Result.fail(ResponseCode.ERROR.val(),"两次输入的密码不一致！");
+        }
+        user.setUserName(username);
+        user.setPassword(password);
+        try{
+            if(userServices.login(user)!=null){
+                return Result.fail(ResponseCode.ERROR.val(),"用户名已注册！");
+            }else{
+                ans = userServices.register(user);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        if(ans!=0){
+            return Result.success(null,"注册成功！");
+        }else{
+            return Result.fail(ResponseCode.ERROR.val(),"注册失败！");
+        }
     }
 }

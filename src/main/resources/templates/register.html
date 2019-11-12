@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>注册</title>
     <link rel="stylesheet" href="../css/public.css">
     <style>
         .rd1{
@@ -229,6 +229,14 @@
             <li><a href="./register" class="word zhuc">注册</a></li>
             <li class="word ash">|</li>
             <li><a href="./login" class="word dengl">登录</a></li>
+            <li class="login-out">
+                <a href="" class="word" id="person" style="text-align: center;">个人中心</a>
+                <div id="personList" class="wrap3">
+                    <ul>
+                        <li><a class="word" href="./orderList">历史订单</a></li>
+                    </ul>
+                </div>
+            </li>
         </ul>
     </div>
     <div class="wrap2" id="lb">
@@ -273,30 +281,62 @@
         <div>
             <div class="rd11">
                 <p>注册</p>
-                <form th:action="@{/register_submit}" method="post">
+                <form action="/api/user/register" method="post">
                     <div class="zh">
-                        <input type="text" id="zin" value="" name="username">
+                        <input type="text" id="zin" value="">
                         <div id="zh1">手机/邮箱/用户名</div>
                     </div>
                     <div class="mm">
-                        <input type="password" id="min" name="psw">
+                        <input type="password" id="min">
                         <div id="mm">设置密码</div>
                     </div>
                     <div class="mm">
-                        <input type="password" id="remin" name="pswconfirm">
+                        <input type="password" id="remin">
                         <div id="rem">确认密码</div>
                     </div>
                     <div class="zw">
                         <span class="az">已有账号？请</span>
                         <a href="./login" class="aw"><span>直接登录</span></a>
                     </div>
-                    <input type="submit" value="注册" id="zc">
+                    <input type="button" value="注册" id="zc">
                 </form>
             </div>
         </div>
     </div>
 </div>
+</body>
 <script src="../js/leibie.js"></script>
 <script src="../js/register.js"></script>
-</body>
+<script src="../js/public.js"></script>
+<script src="../jq1.11.1/jquery.min.js"></script>
+<script>
+    $('#zc').click(function(){
+        // var username = document.getElementById("zin");
+        // var password = document.getElementById("min");
+        // var passwordComfirm = document.getElementById("remin");
+        $.ajax({
+            url: "/api/user/register",
+            type: "POST",
+            data: {
+                username: $('#zin').val(),
+                password: $('#min').val(),
+                pswComfirm: $('#remin').val(),
+            },
+            beforeSend: function(request){
+                request.setRequestHeader("Authorization",sessionStorage.getItem("token"));
+            },
+            success: function(result){
+                if(result.resultCode!=200){
+                    alert(result.resultMsg);
+                }else{
+                    alert(result.resultMsg);
+                    window.location.href = "./login";
+                }
+            },
+            error: function(e){
+                alert("失败了，请稍后重试");
+            }
+        })
+    })
+</script>
 </html>

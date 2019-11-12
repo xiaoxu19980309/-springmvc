@@ -13,8 +13,14 @@ public class UserServiceImpl implements UserServices {
     private UserDao userDao;
 
     @Override
-    public User register(User user) {
-        return null;
+    public int register(User user) {
+        int ans = 0;
+        try{
+            ans = userDao.insertUser(user.getUserName(),user.getPassword());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ans;
     }
 
     @Override

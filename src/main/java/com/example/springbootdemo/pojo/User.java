@@ -11,9 +11,9 @@ public class User {
 
     private String password;
 
-    private int is_admin;
+    private Integer is_admin;
 
-    private int is_delete;
+    private Integer is_delete;
 
     private String phone;
 
@@ -46,19 +46,19 @@ public class User {
         this.phone = phone;
     }
 
-    public int getIs_admin() {
+    public Integer getIs_admin() {
         return is_admin;
     }
 
-    public void setIs_admin(int is_admin) {
+    public void setIs_admin(Integer is_admin) {
         this.is_admin = is_admin;
     }
 
-    public int getIs_delete() {
+    public Integer getIs_delete() {
         return is_delete;
     }
 
-    public void setIs_delete(int is_delete) {
+    public void setIs_delete(Integer is_delete) {
         this.is_delete = is_delete;
     }
 

@@ -14,10 +14,10 @@ public interface UserDao{
      * @param username
      * @return
      */
-    @Select("select * from user WHERE username = #{username}")
+    @Select("select * from user WHERE username = #{username} AND is_delete!=1")
     User queryUserByUserName(@Param("username") String username);
 
-    @Select("select * from user WHERE username = #{username} AND is_admin = 1")
+    @Select("select * from user WHERE username = #{username} AND is_admin = 1 AND is_delete!=1")
     User queryUserByUserNameAdmin(@Param("username") String username);
 
     /**
@@ -41,14 +41,15 @@ public interface UserDao{
      * @param
      */
     @Update("<script>"+"update user set gmt_modified = now() "+
-            "<if test=\"is_admin!=null and is_admin!=''\">,is_admin=#{is_admin} </if>"+
+            "<if test=\"is_admin!=null\">,is_admin=#{is_admin} </if>"+
+            "<if test=\"is_delete!=null\">,is_delete=#{is_delete} </if>"+
             "<if test=\"password !=null and password!=''\">,password=#{password} </if>"+
             "where username = #{username}"+"</script>")
-    int updateUser(@Param("username") String username,@Param("password") String password,@Param("is_admin") Integer is_admin);
+    int updateUser(@Param("username") String username,@Param("password") String password,@Param("is_admin") Integer is_admin,@Param("is_delete") Integer is_delete);
 
     /**
      * 删除用户
      */
-    @Delete("delete from account where username = #{username}")
+    @Delete("delete from user where username = #{username}")
     public void deleteUser(@Param("username") String username);
 }

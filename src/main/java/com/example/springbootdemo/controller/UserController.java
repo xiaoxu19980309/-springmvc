@@ -106,11 +106,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/changeAdminStatus",method = RequestMethod.POST)
-    public Result changeAdminStatus(@RequestParam(required = false) int is_admin,@RequestParam String username){
+    public Result changeAdminStatus(@RequestParam(required = false) Integer is_admin,@RequestParam(required = false) Integer is_delete,@RequestParam String username){
         int ans = 0;
         User user = new User();
         user.setUsername(username);
         user.setIs_admin(is_admin);
+        user.setIs_delete(is_delete);
         try{
             ans = userServices.changeAdminStatus(user);
         }catch(Exception e){

@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserServices {
     public int changePsw(User user){
         int ans = 0;
         try{
-            ans = userDao.updateUser(user.getUsername(),user.getPassword(),user.getIs_admin());
+            ans = userDao.updateUser(user.getUsername(),user.getPassword(),user.getIs_admin(),user.getIs_delete());
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -73,8 +73,7 @@ public class UserServiceImpl implements UserServices {
     public int changeAdminStatus(User user) {
         int ans = 0;
         try{
-            System.out.println(user.getPassword());
-            ans = userDao.updateUser(user.getUsername(),user.getPassword(),user.getIs_admin());
+            ans = userDao.updateUser(user.getUsername(),user.getPassword(),user.getIs_admin(),user.getIs_delete());
         }catch(Exception e){
             e.printStackTrace();
         }

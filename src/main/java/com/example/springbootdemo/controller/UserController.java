@@ -7,15 +7,19 @@ import com.example.springbootdemo.tools.Result;
 import com.example.springbootdemo.pojo.User;
 import com.example.springbootdemo.service.UserServices;
 import com.example.springbootdemo.tools.JwtHelper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -28,28 +32,6 @@ public class UserController {
     @Autowired
     private JwtHelper jwtHelper;
 
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public Result login(HttpServletRequest request, HttpServletResponse response){
-        User ans = new User();
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        User user = new User();
-        user.setUserName(username);
-        user.setPassword(password);
-        Map<String, Object> claims = new HashMap<String, Object>();
-        claims.put("loginName", username);
-        try{
-            ans = userServices.login(user);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        if(ans!=null){
-            JSONObject obj = jwtHelper.generateToken(claims);
-            return Result.success(obj,"登录成功！");
-        }else{
-            return Result.fail(ResponseCode.ERROR.val(),"用户登录失败！");
-        }
-    }
 
     @RequestMapping(value = "/checkToken",method = RequestMethod.POST)
     public Result checkToken(HttpServletRequest request){
@@ -66,7 +48,7 @@ public class UserController {
         if(!password.equals(pswComfirm)){
             return Result.fail(ResponseCode.ERROR.val(),"两次输入的密码不一致！");
         }
-        user.setUserName(username);
+        user.setUsername(username);
         user.setPassword(password);
         try{
             if(userServices.login(user)!=null){
@@ -94,7 +76,7 @@ public class UserController {
         if(!password.equals(pswComfirm)){
             return Result.fail(ResponseCode.ERROR.val(),"两次输入的密码不一致！");
         }
-        user.setUserName(username);
+        user.setUsername(username);
         user.setPassword(password);
         try{
             ans=userServices.changePsw(user);
@@ -105,6 +87,39 @@ public class UserController {
             return Result.success(null,"修改密码成功!");
         }else{
             return Result.fail(ResponseCode.ERROR.val(),"修改密码失败！");
+        }
+    }
+
+    @RequestMapping(value = "/getUserList",method = RequestMethod.POST)
+    public Result getUserList(@RequestParam(required = false) String username,@RequestParam(required = false) String phone,@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10")int pageSize){
+        PageInfo<User> pageInfo = null;
+        try{
+            pageInfo = PageHelper.startPage(pageNum,pageSize).setOrderBy("id asc").doSelectPageInfo(()->this.userServices.getUserList(username,phone));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if(pageInfo!=null){
+            return Result.success(pageInfo);
+        }else{
+            return Result.fail(ResponseCode.ERROR.val(),"获取用户列表失败！");
+        }
+    }
+
+    @RequestMapping(value = "/changeAdminStatus",method = RequestMethod.POST)
+    public Result changeAdminStatus(@RequestParam(required = false) int is_admin,@RequestParam String username){
+        int ans = 0;
+        User user = new User();
+        user.setUsername(username);
+        user.setIs_admin(is_admin);
+        try{
+            ans = userServices.changeAdminStatus(user);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        if(ans!=0){
+            return Result.success(null);
+        }else{
+            return Result.fail(ResponseCode.ERROR.val(),"修改失败！");
         }
     }
 }

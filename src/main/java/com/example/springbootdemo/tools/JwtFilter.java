@@ -44,8 +44,9 @@ public class JwtFilter implements Filter {
         if ("OPTIONS".equals(httpRequest.getMethod())) {
             httpResponse.setStatus(HttpStatus.NO_CONTENT.value()); // HttpStatus.SC_NO_CONTENT = 204
             httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
-            httpResponse.setHeader("Access-Control-Allow-Headers", "Content-Type, x-requested-with, Token");
+            httpResponse.setHeader("Access-Control-Allow-Headers", "Content-Type, x-requested-with, Token,Authorization");
             httpResponse.setHeader("Access-Control-Allow-Methods", "OPTIONS,GET,POST,DELETE,PUT");
+            return;
         }
         String spath = httpRequest.getServletPath();
         try {

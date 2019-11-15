@@ -1,10 +1,12 @@
 package com.example.springbootdemo;
 
 import com.example.springbootdemo.pojo.*;
+import com.github.pagehelper.PageHelper;
 import org.apache.commons.io.FileUtils;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 @SpringBootApplication
 @Controller
@@ -141,9 +144,8 @@ public class SpringbootDemoApplication {
 
     @PostMapping("/field_submit")
     public String submit(@ModelAttribute User user) {
-        System.out.println("表单对象: " + user.getUserName());
+        System.out.println("表单对象: " + user.getUsername());
         return "index";
     }
-
-
 }
+

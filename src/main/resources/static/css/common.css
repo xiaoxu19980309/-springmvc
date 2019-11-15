@@ -255,6 +255,9 @@ a{
 .header .header_c .reg .reg_c .wrap3:hover{
 	display: block;
 }
+.header .header_c .reg .reg_c .wrap3 ul li:hover{
+	background: #E6D6C6;
+}
 .header .header_c .reg .ico{
 	float: right;
 }

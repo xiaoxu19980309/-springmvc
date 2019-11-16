@@ -1,5 +1,6 @@
 package com.example.springbootdemo.service.impl;
 
+import com.example.springbootdemo.mybatis.GoodsTypeDao;
 import com.example.springbootdemo.mybatis.UserDao;
 import com.example.springbootdemo.pojo.GoodsType;
 import com.example.springbootdemo.service.GoodsTypeServices;
@@ -12,20 +13,49 @@ import java.util.List;
 public class GoodsTypeServiceImpl implements GoodsTypeServices {
 
     @Autowired
-    private UserDao userDao;
+    private GoodsTypeDao goodsTypeDao;
 
     @Override
     public int addGoodsType(GoodsType goodsType) {
-        return 0;
+        int ans = 0;
+        try{
+            ans=goodsTypeDao.insertGoodsType(goodsType);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ans;
     }
 
     @Override
     public List<GoodsType> queryType() {
-        return null;
+        List<GoodsType> goodsTypesList = null;
+        try{
+            goodsTypesList = goodsTypeDao.queryGoodsType();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return goodsTypesList;
     }
 
     @Override
-    public int deleteGoodsType() {
-        return 0;
+    public int deleteGoodsType(Integer id) {
+        int ans = 0;
+        try{
+            ans = goodsTypeDao.deleteGoodsType(id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ans;
+    }
+
+    @Override
+    public int updateGoodsType(GoodsType goodsType) {
+        int ans = 0;
+        try{
+            ans = goodsTypeDao.updateGoodsType(goodsType);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ans;
     }
 }

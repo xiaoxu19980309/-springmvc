@@ -7,5 +7,6 @@ import java.util.List;
 public interface GoodsTypeServices {
     int addGoodsType(GoodsType goodsType);
     List<GoodsType> queryType();
-    int deleteGoodsType();
+    int deleteGoodsType(Integer id);
+    int updateGoodsType(GoodsType goodsType);
 }

@@ -4,6 +4,7 @@ public class GoodsType {
     private Integer id;
     private String type_name;
     private String note;
+    private Integer is_active;
     private Integer is_delete;
     private String gmt_create;
     private String gmt_modified;
@@ -31,9 +32,31 @@ public class GoodsType {
     public void setNote(String note) {
         this.note = note;
     }
+    public Integer getIs_active() {
+        return is_active;
+    }
 
+    public void setIs_active(Integer is_active) {
+        this.is_active = is_active;
+    }
     public Integer getIs_delete() {
         return is_delete;
+    }
+
+    public String getGmt_create() {
+        return gmt_create;
+    }
+
+    public void setGmt_create(String gmt_create) {
+        this.gmt_create = gmt_create;
+    }
+
+    public String getGmt_modified() {
+        return gmt_modified;
+    }
+
+    public void setGmt_modified(String gmt_modified) {
+        this.gmt_modified = gmt_modified;
     }
 
     public void setIs_delete(Integer is_delete) {

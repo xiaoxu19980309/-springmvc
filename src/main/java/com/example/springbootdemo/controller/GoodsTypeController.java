@@ -32,4 +32,60 @@ public class GoodsTypeController {
             return Result.fail(ResponseCode.ERROR.val(),"失败");
         }
     }
+
+    @RequestMapping(value = "/addGoodsType",method = RequestMethod.POST)
+    public Result addGoodsType(@RequestParam String type_name,@RequestParam(required = false) String note){
+        GoodsType goodsType = new GoodsType();
+        int ans = 0;
+        goodsType.setType_name(type_name);
+        goodsType.setNote(note);
+        try{
+            ans = goodsTypeServices.addGoodsType(goodsType);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if(ans!=0){
+            return Result.success(null,"添加商品类别成功！");
+        }else{
+            return Result.fail(ResponseCode.ERROR.val(),"添加失败");
+        }
+    }
+
+    @RequestMapping(value = "/deleteType",method = RequestMethod.POST)
+    public Result deleteGoodsType(@RequestParam Integer id){
+        int ans = 0;
+        try{
+            ans = goodsTypeServices.deleteGoodsType(id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if(ans!=0){
+            return Result.success(null,"删除成功！");
+        }else{
+            return Result.fail(ResponseCode.ERROR.val(),"删除失败！");
+        }
+    }
+
+    @RequestMapping(value = "updateGoodsType",method = RequestMethod.POST)
+    public Result updateGoodsType(@RequestParam Integer id,@RequestParam(required = false) String type_name,
+                                  @RequestParam(required = false) String note,@RequestParam(required = false) Integer is_active,
+                                  @RequestParam(required = false) Integer is_delete){
+        int ans =0;
+        GoodsType goodsType = new GoodsType();
+        goodsType.setId(id);
+        goodsType.setNote(note);
+        goodsType.setType_name(type_name);
+        goodsType.setIs_active(is_active);
+        goodsType.setIs_delete(is_delete);
+        try{
+            ans=goodsTypeServices.updateGoodsType(goodsType);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if(ans!=0){
+            return Result.success(null,"成功！");
+        }else{
+            return Result.fail(ResponseCode.ERROR.val(),"失败！");
+        }
+    }
 }

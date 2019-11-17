@@ -26,6 +26,9 @@ function checkToken(){
             }
         },
         error: function(e){
+            alert("登录失效，请重新登录！");
+            sessionStorage.removeItem("token");
+            window.location.href="./login";
         }
     })
 }

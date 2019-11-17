@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>商品详情</title>
     <link rel="stylesheet" href="../css/public.css">
     <link rel="stylesheet" href="../css/magnifier.css">
+    <link rel="stylesheet" href="../css/jquery.growl.css">
     <style>
         .d1{
             width: 100%;
@@ -319,10 +320,11 @@
                     </div>
                 </div>
                 <div class="d1122">
-                    <p class="p1">经典系列时钟</p>
-                    <p class="p2">精选材料，设计大师设计，做工精细，家居必备品</p>
+                    <p class="p1" th:text="${goods.goods_name}"></p>
+                    <p class="p2" th:text="${goods.description}"></p>
                     <p class="p3">
-                        <span class="s1">￥580</span>
+                        <span class="s1">￥</span>
+                        <span class="s1" th:text="${goods.goods_price}"></span>
                         <span class="s2">已售出0件</span>
                     </p>
                     <p class="p_"></p>
@@ -333,7 +335,10 @@
                             <input type="text" class="s32" value="1" id="s32">
                             <a href="javascript:void(0)" class="s33" id="s33">+</a>
                         </span>
-                        <span class="s4">件（库存2344件）</span>
+                        <span class="s4">件（库存
+                            <span th:text="${goods.goods_num}"></span>
+                            件）
+                        </span>
                     </p>
                     <p class="p6">
                         <a href="">加入购物车</a>
@@ -347,18 +352,37 @@
     <script src="../js/num.js"></script>
     <script src="../jq1.11.1/jquery.min.js"></script>
     <script src="../js/magnifier.js"></script>
+    <script src="../js/jquery.growl.js"></script>
     <script>
         $(function() {
-
             var magnifierConfig = {
                 magnifier : "#magnifier1",
                 width : 453,
                 height : 453,
                 moveWidth : 300
             };
-
             var _magnifier = magnifier(magnifierConfig);
         });
+        $.growl({
+            title: "消息标题",
+            message: "消息内容!"
+        });
+        var addBtn = $('.p6>a')[0]
+        addBtn.onclick(function(){
+            $.ajax({
+                url: "/api/shopping/addToCar",
+                type: 'post',
+                data: {
+
+                },
+                beforeSend: function(request){
+                    request.setRequestHeader("Authorization",sessionStorage.getItem("token"));
+                },
+                success: function(res){
+
+                },
+            })
+        })
     </script>
 </body>
 </html>

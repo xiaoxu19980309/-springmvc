@@ -191,7 +191,7 @@
             <div>
                 <div class="ld11">
                     <p>登录</p>
-                    <form action="/api/user/login" method="post">
+                    <form action="/common/login" method="post">
                         <div class="zh">
                             <input type="text" id="zin" value="" name="username">
                             <div id="zh1">手机/邮箱/用户名</div>
@@ -218,7 +218,7 @@
 <script>
     $('#lg').click(function(){
         $.ajax({
-            url: '/api/user/login',
+            url: '/common/login',
             type: 'post',
             data: {
                 username: $('#zin').val(),

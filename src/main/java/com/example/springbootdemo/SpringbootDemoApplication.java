@@ -1,9 +1,11 @@
 package com.example.springbootdemo;
 
 import com.example.springbootdemo.pojo.*;
+import com.example.springbootdemo.service.GoodsServices;
 import com.github.pagehelper.PageHelper;
 import org.apache.commons.io.FileUtils;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +31,9 @@ import java.util.Properties;
 @Controller
 @MapperScan("com.example.springbootdemo.mybatis")
 public class SpringbootDemoApplication {
+
+    @Autowired
+    private GoodsServices goodsServices;
 
     public static void main(String[] args) {
         SpringApplication.run(SpringbootDemoApplication.class, args);
@@ -68,6 +73,13 @@ public class SpringbootDemoApplication {
 
     @RequestMapping(value = "/changePsw")
     public String changePsw(){ return "changePsw"; }
+
+    @RequestMapping(value = "/proDetail")
+    public String proDetail(Model model,@RequestParam String goodId){
+        Goods goods = goodsServices.getGoods(Integer.valueOf(goodId));
+        model.addAttribute("goods",goods);
+        return "proDetail";
+    }
 
     @PostMapping("/register_submit")
     public String register_submit(HttpServletRequest request){

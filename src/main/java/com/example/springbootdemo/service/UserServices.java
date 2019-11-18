@@ -11,4 +11,5 @@ public interface UserServices {
     int changePsw(User user);
     List<User> getUserList(String username,String phone);
     int changeAdminStatus(User user);
+    User selectByUserName(String userName);
 }

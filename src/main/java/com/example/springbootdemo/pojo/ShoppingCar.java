@@ -7,6 +7,11 @@ public class ShoppingCar {
     private Integer count;
     private String gmt_create;
     private String gmt_modified;
+    private String goods_name;
+    private Double goods_price;
+    private Integer goods_num;
+    private String main_pic;
+    private String sub_pic;
 
     public Integer getId() {
         return id;
@@ -54,6 +59,46 @@ public class ShoppingCar {
 
     public void setGmt_modified(String gmt_modified) {
         this.gmt_modified = gmt_modified;
+    }
+
+    public String getGoods_name() {
+        return goods_name;
+    }
+
+    public void setGoods_name(String goods_name) {
+        this.goods_name = goods_name;
+    }
+
+    public Double getGoods_price() {
+        return goods_price;
+    }
+
+    public void setGoods_price(Double goods_price) {
+        this.goods_price = goods_price;
+    }
+
+    public Integer getGoods_num() {
+        return goods_num;
+    }
+
+    public void setGoods_num(Integer goods_num) {
+        this.goods_num = goods_num;
+    }
+
+    public String getMain_pic() {
+        return main_pic;
+    }
+
+    public void setMain_pic(String main_pic) {
+        this.main_pic = main_pic;
+    }
+
+    public String getSub_pic() {
+        return sub_pic;
+    }
+
+    public void setSub_pic(String sub_pic) {
+        this.sub_pic = sub_pic;
     }
 
     public ShoppingCar(Integer user_id, Integer good_id, Integer count) {

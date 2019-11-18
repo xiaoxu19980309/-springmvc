@@ -74,6 +74,7 @@ public class SpringbootDemoApplication {
     @RequestMapping(value = "/changePsw")
     public String changePsw(){ return "changePsw"; }
 
+
     @RequestMapping(value = "/proDetail")
     public String proDetail(Model model,@RequestParam String goodId){
         Goods goods = goodsServices.getGoods(Integer.valueOf(goodId));

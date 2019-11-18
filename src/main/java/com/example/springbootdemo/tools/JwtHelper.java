@@ -55,4 +55,16 @@ public class JwtHelper {
         }
         return body;
     }
+
+    public Object getTokenUserName(String token){
+        Map<String,Object> body = null;
+        Object userName=null;
+        try{
+            body=Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX,"")).getBody();
+            userName=body.get("loginName");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return userName;
+    }
 }

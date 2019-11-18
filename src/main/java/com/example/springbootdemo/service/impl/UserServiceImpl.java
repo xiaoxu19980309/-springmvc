@@ -79,4 +79,15 @@ public class UserServiceImpl implements UserServices {
         }
         return ans;
     }
+
+    @Override
+    public User selectByUserName(String userName) {
+        User user=new User();
+        try{
+            user=userDao.queryUserByUserName(userName);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return user;
+    }
 }

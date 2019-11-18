@@ -226,6 +226,7 @@
             },
             success: function(data){
                 sessionStorage.setItem("token",data.data.token)
+                sessionStorage.setItem("userName",data.data.userName);
                 if(data.data!=null){
                     var blocks = document.getElementsByClassName("isLogin")
                     var outbtn = document.getElementsByClassName("login-out")

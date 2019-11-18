@@ -41,6 +41,7 @@ public class CommonController {
         }
         if(ans!=null){
             JSONObject obj = jwtHelper.generateToken(claims);
+            obj.put("userName",username);
             return Result.success(obj,"登录成功！");
         }else{
             return Result.fail(ResponseCode.ERROR.val(),"用户登录失败！");

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class User {
 
-    private int id;
+    private Integer id;
 
     private String username;
 
@@ -28,6 +28,14 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getPassword() {
@@ -86,9 +94,6 @@ public class User {
         this.gmt_create = gmt_create;
     }
 
-    public int getId() {
-        return id;
-    }
 
     @Override
     public String toString() {

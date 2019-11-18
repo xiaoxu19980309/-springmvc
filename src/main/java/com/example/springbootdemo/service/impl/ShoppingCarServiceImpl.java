@@ -6,6 +6,8 @@ import com.example.springbootdemo.service.ShoppingCarServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ShoppingCarServiceImpl implements ShoppingCarServices {
     @Autowired
@@ -13,6 +15,23 @@ public class ShoppingCarServiceImpl implements ShoppingCarServices {
 
     @Override
     public int addToCar(ShoppingCar shoppingCar) {
-        return 0;
+        int ans = 0;
+        try{
+            ans = shoppingCarDao.insertGoodsToCar(shoppingCar);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ans;
+    }
+
+    @Override
+    public List<ShoppingCar> getShoppingCar(Integer UserId) {
+        List<ShoppingCar> list = null;
+        try{
+            list=shoppingCarDao.selectShoppingCar(UserId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return list;
     }
 }

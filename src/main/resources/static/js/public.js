@@ -1,4 +1,5 @@
 var token = sessionStorage.getItem("token")?sessionStorage.getItem("token"):null;
+var toShopCar = document.getElementsByClassName("img2")[0]
 
 function checkToken(){
     $.ajax({
@@ -38,3 +39,7 @@ function loginOut(){
     alert("您已退出登录！")
     window.location.href="./login";
 }
+
+toShopCar.addEventListener("click",function(){
+    window.location.href='./shopcar'
+})

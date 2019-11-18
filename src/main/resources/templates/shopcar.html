@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>购物车</title>
     <link rel="stylesheet" href="../css/public.css">
+    <link rel="stylesheet" href="../css/jquery.growl.css">
     <style>
         body{
             background: #f2f2f2
@@ -207,7 +208,7 @@
             margin-left:29px;
         }
         .shopAll>div>div{
-            width: 280px;
+            width: 300px;
             height:59px;
             margin-top:0;
             margin-left: 200px;
@@ -237,21 +238,55 @@
         .shopAll>div>div>span:nth-child(4)>span{
             font-size: 14px;
         }
-        .shopAll>div>a{
+        .shopAll>div>button{
             display: inline-block;
             position: absolute;
             right:30px;
             text-align: center;
             text-decoration: none;
-            width: 72px;
             height: 46px;
-            border: 1px solid white;
             border-radius: 3px;
             background: rgb(255, 68, 68);
             font-size: 18px;
             line-height: 46px;
             padding: 0 60px;
             color: white;
+            border: none;
+        }
+        .modal{
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            width: 100%;
+            height: 100%;
+        }
+        .modal .content{
+            padding: 40px 80px;
+            background-color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .modal .content div{
+            padding: 20px 0;
+            margin-bottom: 10px;
+        }
+        .modal .content button{
+            text-decoration: none;
+            font-size: 17px;
+            padding: 0 40px;
+            border: none;
+            background-color: rgb(255, 68, 68);
+            color: white;
+            line-height: 36px;
+        }
+        .modal .content .cancel{
+            background: #999;
         }
     </style>
 </head>
@@ -335,68 +370,7 @@
                     <span class="dhs7">操作</span>
                 </div>
                 <div class="dtb">
-                    <ul class="shopList">
-                        <li>
-                            <div>
-                                <span><input type="checkbox" class="ch" index="0"></span>
-                                <span class="dhs2"><img src="../image/img23.png" alt=""></span>
-                                <span class="dhs3"><a href="#">黑陶自然花香蜡烛</a></span>
-                                <span class="dhs4">￥580</span>
-                                <span class="dhs5">
-                                    <a href="javascript:void(0)" class="sub">-</a>
-                                    <input type="text" class="num" value="1">
-                                    <a href="javascript:void(0)" class="add">+</a>
-                                </span>
-                                <span class="dhs6">￥580</span>
-                                <span class="dhs7"><a href="#" class="del">删除</a></span>
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <span><input type="checkbox" class="ch" index="0"></span>
-                                <span class="dhs2"><img src="../image/img23.png" alt=""></span>
-                                <span class="dhs3"><a href="#">黑陶自然花香蜡烛</a></span>
-                                <span class="dhs4">￥580</span>
-                                <span class="dhs5">
-                                    <a href="javascript:void(0)" class="sub">-</a>
-                                    <input type="text" class="num" value="1">
-                                    <a href="javascript:void(0)" class="add">+</a>
-                                </span>
-                                <span class="dhs6">￥580</span>
-                                <span class="dhs7"><a href="#" class="del">删除</a></span>
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <span><input type="checkbox" class="ch" index="0"></span>
-                                <span class="dhs2"><img src="../image/img23.png" alt=""></span>
-                                <span class="dhs3"><a href="#">黑陶自然花香蜡烛</a></span>
-                                <span class="dhs4">￥580</span>
-                                <span class="dhs5">
-                                    <a href="javascript:void(0)" class="sub">-</a>
-                                    <input type="text" class="num" value="1">
-                                    <a href="javascript:void(0)" class="add">+</a>
-                                </span>
-                                <span class="dhs6">￥580</span>
-                                <span class="dhs7"><a href="#" class="del">删除</a></span>
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <span><input type="checkbox" class="ch" index="0"></span>
-                                <span class="dhs2"><img src="../image/img23.png" alt=""></span>
-                                <span class="dhs3"><a href="#">黑陶自然花香蜡烛</a></span>
-                                <span class="dhs4">￥580</span>
-                                <span class="dhs5">
-                                    <a href="javascript:void(0)" class="sub">-</a>
-                                    <input type="text" class="num" value="1">
-                                    <a href="javascript:void(0)" class="add">+</a>
-                                </span>
-                                <span class="dhs6">￥580</span>
-                                <span class="dhs7"><a href="#" class="del">删除</a></span>
-                            </div>
-                        </li>
-                    </ul>
+                    <ul class="shopList"></ul>
                     <div class="shopAll">
                         <div>
                             <span><input type="checkbox" class="ch"></span>
@@ -411,20 +385,29 @@
                                 <span class="allSum">￥0</span>
                                 <span>已优惠：<span>￥0</span></span>
                             </div>
-                            <a href="">确认结算</a>
+                            <button id="confirm">确认结算</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal">
+        <div class="content">
+            <p>请选择支付方式</p>
+            <div>
+                <input type="radio" name="payType" id="ali">支付宝
+                <input type="radio" name="payType" id="wepay">微信
+            </div>
+            <button id="payConfirm">确定</button>
+            <button id="cancel" class="cancel">取消</button>
+        </div>
+    </div>
     <script src="../js/leibie.js"></script>
     <script src="../js/public.js"></script>
     <script src="../jq1.11.1/jquery.min.js"></script>
+    <script src="../js/jquery.growl.js"></script>
     <script>
-        window.onload = function(){
-            checkToken();
-        }
         var price = null;
         var pcs = 0;
         var sum =0;
@@ -525,7 +508,8 @@
                 if($(this).siblings('span').eq(0).children('.ch').prop('checked')===false){
 
                 }else{
-                    k = Number(this.innerText.replace(/[^0-9]/g,''));
+                    k = Number(this.innerText.replace(/[^0-9\.]/g,''));
+                    console.log(k);
                     allSum += k;
                 }
             });
@@ -593,7 +577,74 @@
             allSum = 0;
             sumAll();
         })
+    </script>
+    <script>
+        function appendList(data){
+            for(var i=0;i<data.length;i++){
+                $(".shopList").append("<li><div><span>" +
+                    "<input type='checkbox' class='ch' index='0'></span>" +
+                    "<span class='dhs2'><img src='../image/img23.png' alt></span>" +
+                    "<span class='dhs3'><a href='#'>"+data[i].goods_name+"</a></span>" +
+                    "<span class='dhs4'>￥"+data[i].goods_price+"</span>" +
+                    "<span class='dhs5'><a href='javascript:void(0)' class='sub'>-</a><input type='text' class='num' value='"+data[i].count+"'>" +
+                    "<a href='javascript:void(0)' class='add'>+</a></span>" +
+                    "<span class='dhs6'>￥"+data[i].count*data[i].goods_price+"</span>" +
+                    "<span class='dhs7'><a href='#' class='del'>删除</a></span></div></li>");
+            }
+        }
+        window.onload = function(){
+            checkToken();
+            $.ajax({
+                url: "/api/shopping/getShoppingCar",
+                type: "POST",
+                data: {
+                    token: sessionStorage.getItem("token")
+                },
+                beforeSend: function(request){
+                    request.setRequestHeader("Authorization",sessionStorage.getItem("token"));
+                },
+                success: function(res){
+                    if(res.resultCode!=200){
+                        $.growl.error({
+                            title: "提示",
+                            message: "获取购物车列表失败!"
+                        })
+                    }else{
+                        appendList(res.data);
+                    }
+                },
+                error: function(e){
 
+                }
+            })
+            $("#confirm").click(function(){
+                document.getElementsByClassName("modal")[0].style.display = 'block';
+            });
+            $('#cancel').click(function(){
+                document.getElementsByClassName("modal")[0].style.display = 'none';
+            })
+            $('#payConfirm').click(function(){
+                var payType = $("input[name='payType']:checked").val()
+                $.ajax({
+                    url: "/api/order/addOrder",
+                    type: "POST",
+                    data: {
+                        token: sessionStorage.getItem("token"),
+                        list: [],
+
+                    },
+                    beforeSend: function(request){
+                        request.setRequestHeader("Authorization",sessionStorage.getItem("token"));
+                    },
+                    success: function(res){
+
+                    },
+                    error: function(e){
+
+                    }
+                })
+            });
+        }
     </script>
 </body>
 </html>

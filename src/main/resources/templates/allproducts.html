@@ -197,13 +197,10 @@
 				}
 			},
 			error: function(e){
-				alert("登录失效，请重新登录！");
-				sessionStorage.removeItem("token");
-				window.location.href="./login";
 			}
 		});
 		$.ajax({
-			url: 'api/goodsType/getTypeList',
+			url: '/common/getTypeList',
 			type: 'post',
 			data: {
 				pageSize: 999,
@@ -225,7 +222,7 @@
 			}
 		});
 		$.ajax({
-			url: 'api/goods/getGoodsList',
+			url: '/common/getGoodsList',
 			type: 'post',
 			data: {
 				pageSize: 12,

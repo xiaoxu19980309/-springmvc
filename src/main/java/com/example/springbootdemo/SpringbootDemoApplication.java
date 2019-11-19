@@ -2,6 +2,7 @@ package com.example.springbootdemo;
 
 import com.example.springbootdemo.pojo.*;
 import com.example.springbootdemo.service.GoodsServices;
+import com.example.springbootdemo.service.OrderServices;
 import com.github.pagehelper.PageHelper;
 import org.apache.commons.io.FileUtils;
 import org.mybatis.spring.annotation.MapperScan;
@@ -34,6 +35,8 @@ public class SpringbootDemoApplication {
 
     @Autowired
     private GoodsServices goodsServices;
+    @Autowired
+    private OrderServices orderServices;
 
     public static void main(String[] args) {
         SpringApplication.run(SpringbootDemoApplication.class, args);
@@ -69,7 +72,11 @@ public class SpringbootDemoApplication {
     public String orderList(){ return "orderList"; }
 
     @RequestMapping(value = "/orderDetail")
-    public String orderDetail(){ return "orderDetail"; }
+    public String orderDetail(Model model,@RequestParam String order_id){
+        List<OrderDetail> orderDetails = orderServices.getOrderDetails(order_id);
+        model.addAttribute("detailList",orderDetails);
+        return "orderDetail";
+    }
 
     @RequestMapping(value = "/changePsw")
     public String changePsw(){ return "changePsw"; }

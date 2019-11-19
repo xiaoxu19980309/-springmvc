@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>订单详情</title>
@@ -246,40 +246,13 @@
                 </div>
                 <div class="dtb">
                     <ul class="shopList">
-                        <li>
+                        <li th:each="detail,iterStat:${detailList}">
                             <div>
                                 <span class="dhs2"><img src="../image/img23.png" alt=""></span>
-                                <span class="dhs3"><a href="#">黑陶自然花香蜡烛</a></span>
-                                <span class="dhs4">￥580</span>
-                                <span class="dhs5">1件</span>
-                                <span class="dhs6">￥580</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <span class="dhs2"><img src="../image/img23.png" alt=""></span>
-                                <span class="dhs3"><a href="#">黑陶自然花香蜡烛</a></span>
-                                <span class="dhs4">￥580</span>
-                                <span class="dhs5">1件</span>
-                                <span class="dhs6">￥580</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <span class="dhs2"><img src="../image/img23.png" alt=""></span>
-                                <span class="dhs3"><a href="#">黑陶自然花香蜡烛</a></span>
-                                <span class="dhs4">￥580</span>
-                                <span class="dhs5">1件</span>
-                                <span class="dhs6">￥580</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <span class="dhs2"><img src="../image/img23.png" alt=""></span>
-                                <span class="dhs3"><a href="#">黑陶自然花香蜡烛</a></span>
-                                <span class="dhs4">￥580</span>
-                                <span class="dhs5">1件</span>
-                                <span class="dhs6">￥580</span>
+                                <span class="dhs3"><a href="#" th:text="${detail.name}"></a></span>
+                                <span class="dhs4">￥<span th:text="${detail.price}"></span></span>
+                                <span class="dhs5"><span th:text="${detail.number}"></span>件</span>
+                                <span class="dhs6">￥<span th:text="${detail.itemcount}"></span></span>
                             </div>
                         </li>
                     </ul>

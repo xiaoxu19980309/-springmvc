@@ -3,6 +3,7 @@ package com.example.springbootdemo.pojo;
 public class OrderDetail {
     private Integer id;
     private String order_id;
+    private Integer good_id;
     private String name;
     private Double price;
     private Integer number;
@@ -25,6 +26,14 @@ public class OrderDetail {
 
     public void setOrder_id(String order_id) {
         this.order_id = order_id;
+    }
+
+    public Integer getGood_id() {
+        return good_id;
+    }
+
+    public void setGood_id(Integer good_id) {
+        this.good_id = good_id;
     }
 
     public String getName() {
@@ -86,11 +95,9 @@ public class OrderDetail {
     public OrderDetail() {
     }
 
-    public OrderDetail(String order_id, String name, Double price, Integer number, Double itemcount) {
+    public OrderDetail(String order_id, Integer good_id, Double itemcount) {
         this.order_id = order_id;
-        this.name = name;
-        this.price = price;
-        this.number = number;
+        this.good_id = good_id;
         this.itemcount = itemcount;
     }
 }

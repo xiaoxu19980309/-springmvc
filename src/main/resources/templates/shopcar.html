@@ -396,8 +396,8 @@
         <div class="content">
             <p>请选择支付方式</p>
             <div>
-                <input type="radio" name="payType" id="ali">支付宝
-                <input type="radio" name="payType" id="wepay">微信
+                <input type="radio" name="payType" id="ali" value="1">支付宝
+                <input type="radio" name="payType" id="wepay" value="2">微信
             </div>
             <button id="payConfirm">确定</button>
             <button id="cancel" class="cancel">取消</button>
@@ -579,6 +579,9 @@
         })
     </script>
     <script>
+        var shoppingCarList = [];
+        var list = [];
+        var modal = document.getElementsByClassName("modal")[0]
         function appendList(data){
             for(var i=0;i<data.length;i++){
                 $(".shopList").append("<li><div><span>" +
@@ -590,10 +593,10 @@
                     "<a href='javascript:void(0)' class='add'>+</a></span>" +
                     "<span class='dhs6'>￥"+data[i].count*data[i].goods_price+"</span>" +
                     "<span class='dhs7'><a href='#' class='del'>删除</a></span></div></li>");
+                shoppingCarList.push({id: data[i].good_id,price: data[i].goods_price,count: data[i].count});
             }
         }
-        window.onload = function(){
-            checkToken();
+        function getCar(){
             $.ajax({
                 url: "/api/shopping/getShoppingCar",
                 type: "POST",
@@ -617,27 +620,66 @@
 
                 }
             })
+        }
+        window.onload = function(){
+            checkToken();
+            getCar();
             $("#confirm").click(function(){
-                document.getElementsByClassName("modal")[0].style.display = 'block';
+                var shopList = document.getElementsByClassName("shopList")[0].getElementsByTagName("li")
+                list = [];
+                for(var i=0;i<shopList.length;i++){
+                    var checked = shopList[i].querySelector(".ch").checked
+                    var number = parseInt(shopList[i].querySelector(".num").value);
+                    shoppingCarList[i].count = number
+                    if(checked){
+                        list.push(shoppingCarList[i])
+                    }
+                }
+                if(list.length==0){
+                    $.growl.error({
+                        title: "提示",
+                        message: "请选择结算商品!"
+                    })
+                    return;
+                }
+                console.log(list);
+                modal.style.display = 'block';
             });
             $('#cancel').click(function(){
-                document.getElementsByClassName("modal")[0].style.display = 'none';
+                modal.style.display = 'none';
             })
             $('#payConfirm').click(function(){
                 var payType = $("input[name='payType']:checked").val()
+                var data = {
+                    token: sessionStorage.getItem("token"),
+                    list: list,
+                }
+                if(payType!=undefined){
+                    data.pay_type = payType
+                }
                 $.ajax({
                     url: "/api/order/addOrder",
                     type: "POST",
-                    data: {
-                        token: sessionStorage.getItem("token"),
-                        list: [],
-
-                    },
+                    data: JSON.stringify(data),
+                    dataType: 'JSON',
+                    contentType: "application/json",
                     beforeSend: function(request){
                         request.setRequestHeader("Authorization",sessionStorage.getItem("token"));
                     },
                     success: function(res){
-
+                        if(res.resultCode!=200){
+                            $.growl.error({
+                                title: "提示",
+                                message: res.resultMsg
+                            })
+                        }else{
+                            $.growl.notice({
+                                title: "提示",
+                                message: res.resultMsg
+                            });
+                            modal.style.display = 'none';
+                            window.location.href='./orderList'
+                        }
                     },
                     error: function(e){
 

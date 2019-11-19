@@ -5,6 +5,7 @@ public class Goods {
     private String goods_name;
     private Double goods_price;
     private Integer goods_num;
+    private Integer has_sold;
     private String main_pic;
     private String sub_pic;
     private String description;
@@ -37,6 +38,14 @@ public class Goods {
 
     public void setGoods_num(Integer goods_num) {
         this.goods_num = goods_num;
+    }
+
+    public Integer getHas_sold() {
+        return has_sold;
+    }
+
+    public void setHas_sold(Integer has_sold) {
+        this.has_sold = has_sold;
     }
 
     public String getMain_pic() {
@@ -119,24 +128,6 @@ public class Goods {
         this.gmt_modified = gmt_modified;
     }
 
-    @Override
-    public String toString() {
-        return "Goods{" +
-                "id=" + id +
-                ", goods_name='" + goods_name + '\'' +
-                ", goods_price=" + goods_price +
-                ", goods_num=" + goods_num +
-                ", main_pic='" + main_pic + '\'' +
-                ", sub_pic='" + sub_pic + '\'' +
-                ", description='" + description + '\'' +
-                ", type_id=" + type_id +
-                ", is_special=" + is_special +
-                ", is_delete=" + is_delete +
-                ", gmt_create='" + gmt_create + '\'' +
-                ", gmt_modified='" + gmt_modified + '\'' +
-                '}';
-    }
-
     public Goods(Integer id, String goods_name, Double goods_price, Integer goods_num, String main_pic, String sub_pic, String description, Integer type_id, Integer is_special, Integer is_delete) {
         this.id = id;
         this.goods_name = goods_name;
@@ -151,5 +142,25 @@ public class Goods {
     }
 
     public Goods() {
+    }
+
+    @Override
+    public String toString() {
+        return "Goods{" +
+                "id=" + id +
+                ", goods_name='" + goods_name + '\'' +
+                ", goods_price=" + goods_price +
+                ", goods_num=" + goods_num +
+                ", has_sold=" + has_sold +
+                ", main_pic='" + main_pic + '\'' +
+                ", sub_pic='" + sub_pic + '\'' +
+                ", description='" + description + '\'' +
+                ", type_id=" + type_id +
+                ", typeName='" + typeName + '\'' +
+                ", is_special=" + is_special +
+                ", is_delete=" + is_delete +
+                ", gmt_create='" + gmt_create + '\'' +
+                ", gmt_modified='" + gmt_modified + '\'' +
+                '}';
     }
 }

@@ -5,6 +5,7 @@ public class ShoppingCar {
     private Integer user_id;
     private Integer good_id;
     private Integer count;
+    private Integer is_delete;
     private String gmt_create;
     private String gmt_modified;
     private String goods_name;
@@ -43,6 +44,14 @@ public class ShoppingCar {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public Integer getIs_delete() {
+        return is_delete;
+    }
+
+    public void setIs_delete(Integer is_delete) {
+        this.is_delete = is_delete;
     }
 
     public String getGmt_create() {

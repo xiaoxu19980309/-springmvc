@@ -13,7 +13,7 @@ public class Order {
     private Integer is_delete;
     private String gmt_create;
     private String gmt_modified;
-    private List<OrderDetail> orderDetailList;
+//    private List<OrderDetail> orderDetailList;
 
     public Integer getId() {
         return id;
@@ -95,13 +95,13 @@ public class Order {
         this.gmt_modified = gmt_modified;
     }
 
-    public List<OrderDetail> getOrderDetailList() {
-        return orderDetailList;
-    }
+//    public List<OrderDetail> getOrderDetailList() {
+//        return orderDetailList;
+//    }
 
-    public void setOrderDetailList(List<OrderDetail> orderDetailList) {
-        this.orderDetailList = orderDetailList;
-    }
+//    public void setOrderDetailList(List<OrderDetail> orderDetailList) {
+//        this.orderDetailList = orderDetailList;
+//    }
 
     public Order() {
 
@@ -113,5 +113,22 @@ public class Order {
         this.order_id = order_id;
         this.user_id = user_id;
         this.pay_type = pay_type;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", total_num=" + total_num +
+                ", total_price=" + total_price +
+                ", order_id='" + order_id + '\'' +
+                ", user_id=" + user_id +
+                ", pay_type=" + pay_type +
+                ", is_pay=" + is_pay +
+                ", is_delete=" + is_delete +
+                ", gmt_create='" + gmt_create + '\'' +
+                ", gmt_modified='" + gmt_modified + '\'' +
+//                ", orderDetailList=" + orderDetailList +
+                '}';
     }
 }

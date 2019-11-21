@@ -29,6 +29,21 @@ public interface OrderDao {
     @Select("select * from orders WHERE order_id = #{order_id}")
     Order selectOrderById(@Param("order_id") String order_id);
 
+    @Results({
+            @Result(column = "id",property = "id")
+    })
+    @Select("<script>select orders.id,total_num,total_price,order_id,user_id,pay_type,is_pay,orders.is_delete,DATE_FORMAT(orders.gmt_create,'%Y-%m-%d %H:%i:%s') gmt_create," +
+            "DATE_FORMAT(orders.gmt_modified,'%Y-%m-%d %H:%i:%s') gmt_modified,username from orders left join user on user.id=orders.user_id WHERE orders.is_delete=0" +
+            "<if test=\"order_id!=null and order_id!=''\">AND order_id like concat('%',#{order_id},'%')</if>" +
+            "<if test=\"startTime!=null and startTime!='' and endTime!=null and endTime!=''\">AND orders.gmt_create between #{startTime}" +
+            "AND #{endTime}</if>" +
+            "<if test=\"is_pay!=null\">" +
+                "<if test=\"is_pay==1\">AND is_pay=#{is_pay}</if>" +
+                "<if test=\"is_pay==0\">AND is_pay is null</if>" +
+            "</if>" +
+            "</script>")
+    List<Order> selectOrderAdmin(@Param("order_id") String order_id,@Param("startTime") String startTime,@Param("endTime") String endTime,@Param("is_pay") Integer is_pay);
+
     @Update("<script>update orders set gmt_modified = now()" +
             "<if test=\"order.pay_type!=null\">,pay_type = #{order.pay_type}</if>" +
             "<if test=\"order.is_pay!=null\">,is_pay = #{order.is_pay}</if>" +

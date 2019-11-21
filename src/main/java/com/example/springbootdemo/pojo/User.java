@@ -16,6 +16,8 @@ public class User {
     private Integer is_delete;
 
     private String phone;
+    private Integer total_num;
+    private Double total_price;
 
     private String gmt_create;
 
@@ -94,6 +96,21 @@ public class User {
         this.gmt_create = gmt_create;
     }
 
+    public Integer getTotal_num() {
+        return total_num;
+    }
+
+    public void setTotal_num(Integer total_num) {
+        this.total_num = total_num;
+    }
+
+    public Double getTotal_price() {
+        return total_price;
+    }
+
+    public void setTotal_price(Double total_price) {
+        this.total_price = total_price;
+    }
 
     @Override
     public String toString() {

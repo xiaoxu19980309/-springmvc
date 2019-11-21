@@ -28,12 +28,6 @@ public interface GoodsTypeDao {
     @Delete("delete from goods_type WHERE id = #{id}")
     int deleteGoodsType(@Param("id") Integer id);
 
-//    @Select("<script>select types.id,types.type_name,types.is_active,types.is_delete,types.note,DATE_FORMAT(types.gmt_create,'%Y-%m-%d %H:%i:%s') gmt_create," +
-//            "DATE_FORMAT(types.gmt_modified,'%Y-%m-%d %H:%i:%s') gmt_modified," +
-//            "goods.goods_name,goods.goods_num,goods.goods_price,goods.has_sold,goods.main_pic,goods.sub_pic,goods.description," +
-//            "goods.type_id,goods.is_special from goods_type types left join goods on types.id=goods.type_id" +
-//            "</script>")
-//    List<GoodsType> selectGoodsByType();
 
     @Results({
             @Result(column = "id",property = "goodsList",one = @One(select = "com.example.springbootdemo.mybatis.GoodsDao.getGoodsByTypeId")),

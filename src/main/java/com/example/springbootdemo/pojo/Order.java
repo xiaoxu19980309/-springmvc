@@ -13,6 +13,8 @@ public class Order {
     private Integer is_delete;
     private String gmt_create;
     private String gmt_modified;
+
+    private String username;
 //    private List<OrderDetail> orderDetailList;
 
     public Integer getId() {
@@ -95,7 +97,15 @@ public class Order {
         this.gmt_modified = gmt_modified;
     }
 
-//    public List<OrderDetail> getOrderDetailList() {
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    //    public List<OrderDetail> getOrderDetailList() {
 //        return orderDetailList;
 //    }
 

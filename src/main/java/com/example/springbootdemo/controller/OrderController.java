@@ -13,6 +13,8 @@ import com.example.springbootdemo.tools.IdGenerator;
 import com.example.springbootdemo.tools.JwtHelper;
 import com.example.springbootdemo.tools.ResponseCode;
 import com.example.springbootdemo.tools.Result;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -116,6 +118,43 @@ public class OrderController {
             return Result.success(null,"支付成功！");
         }else{
             return Result.fail(ResponseCode.ERROR.val(),"支付失败！");
+        }
+    }
+
+    @RequestMapping(value = "/getOrderListAdmin",method = RequestMethod.POST)
+    public Result getOrderListAdmin(@RequestParam(required = false) String order_id,@RequestParam(required = false) String startTime,
+                                    @RequestParam(required = false) String endTime,@RequestParam(required = false) Integer is_pay,
+                                    @RequestParam(defaultValue = "10") Integer pageSize,@RequestParam(defaultValue = "1") Integer pageNum){
+        Order order = new Order();
+        order.setOrder_id(order_id);
+        order.setIs_pay(is_pay);
+        PageInfo<Order> orderPageInfo = null;
+        try{
+            orderPageInfo = PageHelper.startPage(pageNum,pageSize).doSelectPageInfo(()->this.orderServices.getOrderListAdmin(order,startTime,endTime));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if(orderPageInfo!=null){
+            return Result.success(orderPageInfo,"获取订单列表成功！");
+        }else{
+            return Result.fail(ResponseCode.ERROR.val(),"获取订单列表失败！");
+        }
+    }
+
+    @RequestMapping(value = "/getStatics",method = RequestMethod.POST)
+    public Result getStatic(@RequestParam(required = false) String startTime,@RequestParam(required = false) String endTime,
+                            @RequestParam(required = false) String goods_name,@RequestParam(defaultValue = "10") Integer pageSize,
+                            @RequestParam(defaultValue = "1") Integer pageNum){
+        PageInfo<OrderDetail> orderDetailPageInfo = null;
+        try{
+            orderDetailPageInfo = PageHelper.startPage(pageNum,pageSize).doSelectPageInfo(()->this.orderServices.getOrderStatics(startTime, endTime, goods_name));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if(orderDetailPageInfo!=null){
+            return Result.success(orderDetailPageInfo,"获取统计数据成功!");
+        }else{
+            return Result.fail(ResponseCode.ERROR.val(),"获取统计数据失败！");
         }
     }
 }

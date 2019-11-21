@@ -12,6 +12,10 @@ public class OrderDetail {
     private String gmt_create;
     private String gmt_modified;
 
+    private Goods goods;
+    private Integer total_number;
+    private Double total_price;
+
     public Integer getId() {
         return id;
     }
@@ -90,6 +94,30 @@ public class OrderDetail {
 
     public void setGmt_modified(String gmt_modified) {
         this.gmt_modified = gmt_modified;
+    }
+
+    public Goods getGoods() {
+        return goods;
+    }
+
+    public void setGoods(Goods goods) {
+        this.goods = goods;
+    }
+
+    public Integer getTotal_number() {
+        return total_number;
+    }
+
+    public void setTotal_number(Integer total_number) {
+        this.total_number = total_number;
+    }
+
+    public Double getTotal_price() {
+        return total_price;
+    }
+
+    public void setTotal_price(Double total_price) {
+        this.total_price = total_price;
     }
 
     public OrderDetail() {

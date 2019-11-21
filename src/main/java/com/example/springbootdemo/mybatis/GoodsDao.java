@@ -16,8 +16,9 @@ public interface GoodsDao {
             "values(#{goods.goods_name},#{goods.goods_price},#{goods.goods_num},#{goods.main_pic},#{goods.sub_pic},#{goods.description},#{goods.type_id},now(),now())")
     int insertGoods(@Param("goods") Goods goods);
 
-    @Select("select * from goods WHERE id = #{goodId}")
-    Goods selectGoods(@Param("goodId") Integer goodId);
+    @Results({@Result(column = "id",property = "id")})
+    @Select("select * from goods WHERE id = #{good_id} AND is_delete=0")
+    Goods selectGoods(@Param("good_id") Integer good_id);
 
     @Select("<script>select id,goods_name,goods_price,goods_num,has_sold,main_pic,sub_pic,description,type_id,is_special,is_delete," +
             "DATE_FORMAT(gmt_create,'%Y-%m-%d %H:%i:%s') gmt_create,DATE_FORMAT(gmt_modified,'%Y-%m-%d %H:%i:%s') gmt_modified from goods WHERE 1=1" +
@@ -36,9 +37,9 @@ public interface GoodsDao {
             "left join goods_type on goods.type_id=goods_type.id WHERE 1=1" +
             "<if test=\"goods.type_id!=null and goods.type_id!=0\">AND type_id = #{goods.type_id}</if>"+
             "<if test=\"status!=null and status!='0'\">" +
-            "<if test=\"status==1\">AND goods_num>0 AND is_delete=0</if>" +
-            "<if test=\"status==2\">AND goods_num=0 AND is_delete=0</if>" +
-            "<if test=\"status==3\">AND is_delete=1</if>" +
+            "<if test=\"status=='1'\">AND goods_num>0 AND is_delete=0</if>" +
+            "<if test=\"status=='2'\">AND goods_num=0 AND is_delete=0</if>" +
+            "<if test=\"status=='3'\">AND is_delete=1</if>" +
             "</if>"+
             "<if test=\"goods.goods_name!=null and goods.goods_name!=''\">AND goods_name like concat('%',#{goods.goods_name},'%')</if>"+
             " </script>")

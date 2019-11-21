@@ -17,6 +17,9 @@ public interface UserDao{
     @Select("select * from user WHERE username = #{username} AND is_delete!=1")
     User queryUserByUserName(@Param("username") String username);
 
+    @Select("select * from user WHERE id = #{id}")
+    User selectUserById(@Param("id") Integer id);
+
     @Select("select * from user WHERE username = #{username} AND is_admin = 1 AND is_delete!=1")
     User queryUserByUserNameAdmin(@Param("username") String username);
 
@@ -24,9 +27,13 @@ public interface UserDao{
      * 查找所有用户
      * @return
      */
-    @Select("<script>"+"select id,username,is_admin,is_delete,phone,DATE_FORMAT(gmt_create,'%Y-%m-%d %H:%i:%s') gmt_create,DATE_FORMAT(gmt_modified,'%Y-%m-%d %H:%i:%s') gmt_modified from user WHERE 1=1 " +
-            "<if test=\"username !=null and username != ''\"> AND username like concat('%',#{username},'%') </if> "
-            +"<if test=\"phone != null  and phone != ''\"> AND phone like concat('%',#{phone},'%') </if> "+"</script>")
+    @Select("<script>"+"select user.id,username,is_admin,user.is_delete,phone,DATE_FORMAT(user.gmt_create,'%Y-%m-%d %H:%i:%s') gmt_create," +
+            "DATE_FORMAT(user.gmt_modified,'%Y-%m-%d %H:%i:%s') gmt_modified,IFNULL(sum(IFNULL(total_num,0)),0) as total_num" +
+            ",IFNULL(sum(IFNULL(total_price,0)),0) as total_price" +
+            " from user left join orders on user.id=orders.user_id WHERE 1=1 " +
+            "<if test=\"username !=null and username != ''\"> AND username like concat('%',#{username},'%')</if>" +
+            "<if test=\"phone != null  and phone != ''\"> AND phone like concat('%',#{phone},'%') </if>"+
+            "group by id</script>")
     List<User> queryUserAll(@Param("username") String username,@Param("phone") String phone);
 
     /**

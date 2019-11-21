@@ -14,4 +14,6 @@ public interface OrderServices {
     int deleteOrder(String order_id);
     int updateOrder(Order order);
     Order selectOrderById(String order_id);
+    List<Order> getOrderListAdmin(Order order,String startTime,String endTime);
+    List<OrderDetail> getOrderStatics(String startTime,String endTime,String goods_name);
 }

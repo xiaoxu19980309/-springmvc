@@ -100,4 +100,18 @@ public class OrderServiceImpl implements OrderServices {
         order = orderDao.selectOrderById(order_id);
         return order;
     }
+
+    @Override
+    public List<Order> getOrderListAdmin(Order order,String startTime,String endTime) {
+        List<Order> orderList = null;
+        orderList = orderDao.selectOrderAdmin(order.getOrder_id(),startTime,endTime,order.getIs_pay());
+        return orderList;
+    }
+
+    @Override
+    public List<OrderDetail> getOrderStatics(String startTime, String endTime, String goods_name) {
+        List<OrderDetail> orderDetailList = null;
+        orderDetailList=orderDetailDao.selectStaticNumbers(startTime,endTime,goods_name);
+        return orderDetailList;
+    }
 }

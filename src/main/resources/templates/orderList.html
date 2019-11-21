@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>订单列表</title>
     <link rel="stylesheet" href="../css/public.css">
+    <link rel="stylesheet" href="../css/jquery.growl.css">
     <style>
         body{
             background: #f2f2f2
@@ -57,9 +58,6 @@
             display: inline-block;
             padding-top: 2px;
         }
-        .dhs2{
-            width: 65px;
-        }
         .dhs3{
             width: 300px;
         }
@@ -79,7 +77,7 @@
             width: 109px;
         }
         .dhs7{
-            width: 56px;
+            width: 70px;
         }
         .dtb{
           /* width: 100%; */
@@ -111,13 +109,8 @@
         .dtb>ul .ch{
             margin-top:43px
         }
-        .dtb>ul .dhs2{
-            width: 60px;
-            height: 60px;
-            margin: 20px 0 20px 16px;
-            line-height: 99px;
-        }
         .dtb>ul .dhs3{
+            margin-top: 23px;
             width: 250px;
             height: 18px;
             padding: 20px 38px 20px 12px;
@@ -156,16 +149,23 @@
             height: 18px;
             margin-top: 23px;
             padding: 20px 0;
-            margin-left: 7px;
+            margin-left: 10px;
         }
         .dtb>ul .dhs7{
-            width: 60px;
+            width: 75px;
             height: 18px;
             padding: 20px 0;
             margin-top: 23px;
             margin-left: 2px;
         }
         .dtb>ul .dhs7>a{
+            text-decoration: none;
+            color: black;
+            font-size: 12px;
+        }
+        .dtb>ul .dhs7>button{
+            border: none;
+            background-color: white;
             text-decoration: none;
             color: black;
             font-size: 12px;
@@ -191,11 +191,11 @@
             <a href="#" class="logo"><img src="../image/logo.png" alt="" class="logoi"></a>
             <ul class="ul-bar-left">
                 <li><a href="" class="word chakan" id="chak">查看所有类别</a></li>
-                <li><a href="" class="word">首页</a></li>
-                <li><a href="" class="word">所有商品</a></li>
+                <li><a href="./" class="word">首页</a></li>
+                <li><a href="./allproducts" class="word">所有商品</a></li>
             </ul>
             <ul class="ul-bar-right">
-                <li class="word a0">0</li>
+                <li class="word a0"></li>
                 <li class="img2"><img src="../image/0.png" alt=""></li>
                 <li class="isLogin"><a href="./register.html" class="word zhuc">注册</a></li>
                 <li class="isLogin word ash">|</li>
@@ -213,40 +213,10 @@
             </ul>
         </div>
         <div class="wrap2" id="lb">
-            <ul>
-                <li><a href="">不锈钢</a></li>
-                <li><a href="">原料水泥</a></li>
-                <li><a href="">塑料</a></li>
-                <li><a href="">木制</a></li>
-                <li><a href="">陶瓷</a></li>
-            </ul>
-            <div class="wA1">
-                <a href="#" class="w2I">
-                    <img src="../image/img101.png" alt="">
-                </a>
-                <a href="#" class="w2P1">
-                    <p>简约原木餐盘</p>
-                </a>
-                <p class="w2P2">￥300.00</p>
-            </div>
-            <div class="wA2">
-                <a href="#" class="w2I">
-                    <img src="../image/img102.png" alt="">
-                </a>
-                <a href="#" class="w2P1">
-                    <p>不锈钢时尚咖啡水壶</p>
-                </a>
-                <p class="w2P2">￥400.00</p>
-            </div>
-            <div class="wA3">
-                <a href="#" class="w2I">
-                    <img src="../image/img103.png" alt="">
-                </a>
-                <a href="#" class="w2P1">
-                    <p>经典系列红色时钟</p>
-                </a>
-                <p class="w2P2">￥580.00</p>
-            </div>
+            <ul></ul>
+            <div class="wA1"></div>
+            <div class="wA2"></div>
+            <div class="wA3"></div>
         </div>
     </div>
     <div class="sd">
@@ -256,12 +226,11 @@
             </div>
             <div class="dtrolley">
                 <div class="dhead">
-                    <span><input type="checkbox" class="ch"></span>
-                    <span class="dhs2">全选</span>
                     <span class="dhs3">订单编号</span>
                     <span class="dhs8">创建时间</span>
                     <span class="dhs5">商品数量</span>
                     <span class="dhs6">总计</span>
+                    <span class="dhs7">支付状态</span>
                     <span class="dhs7">操作</span>
                     <span class="dhs9">查看详情</span>
                 </div>
@@ -271,25 +240,55 @@
             </div>
         </div>
     </div>
+    <div class="modal">
+        <div class="content">
+            <p>确定删除该订单？</p>
+            <div>
+                <button onclick="deleteConfirm()">确定</button>
+                <button class="cancel" onclick="cancelConfirm()">取消</button>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="../js/leibie.js"></script>
 <script src="../js/public.js"></script>
-<script src="../jq1.11.1/jquery1.11.1.min.js"></script>
+<script src="../jq1.11.1/jquery.min.js"></script>
+<script src="../js/jquery.growl.js"></script>
 <script>
     var token = sessionStorage.getItem("token")
+    var current_orderId = ""
+    var typeList = []
+    var ul = $('.wrap2 ul')
+    var div1 = $('.wrap2 .wA1')
+    var div2 = $('.wrap2 .wA2')
+    var div3 = $('.wrap2 .wA3')
+    $content1 = null
+    $content2 = null
+    $content3 = null
     function addList(list){
         for(var i=0;i<list.length;i++){
-            $(".shopList").append("<li><div><span>" +
-                "<input type='checkbox' class='ch' index='0'></span>" +
-                "<span class='dhs2'></span>" +
-                "<span class='dhs3'><a href='#'>"+list[i].order_id+"</a></span>" +
-                "<span class='dhs8'>"+list[i].gmt_create+"</span>" +
-                // "<span class='dhs4'>￥"+list[i].total_price+"</span>" +
-                "<span class='dhs5'>"+list[i].total_num+"件</span>" +
-                "<span class='dhs6'>￥"+list[i].total_price+"</span>" +
-                "<span class='dhs7'><a href='#' class='del'>删除</a></span>" +
-                "<span class='dhs7'><a href='./orderDetail?order_id="+list[i].order_id+"' class='del'>详情</a></span>" +
-                "</div></li>");
+            if(list[i].is_pay!=null){
+                $(".shopList").append("<li><div>" +
+                    "<span class='dhs3'><a href='#'>"+list[i].order_id+"</a></span>" +
+                    "<span class='dhs8'>"+list[i].gmt_create+"</span>" +
+                    "<span class='dhs5'>"+list[i].total_num+"件</span>" +
+                    "<span class='dhs6'>￥"+list[i].total_price+"</span>" +
+                    "<span class='dhs7'>已支付</span>" +
+                    "<span class='dhs7'><button class='del' onclick='deleteOrder(\""+list[i].order_id+"\")'>删除</button></span>" +
+                    "<span class='dhs7'><a href='./orderDetail?order_id="+list[i].order_id+"' class='del'>详情</a></span>" +
+                    "</div></li>");
+            }else{
+                $(".shopList").append("<li><div>" +
+                    "<span class='dhs3'><a href='#'>"+list[i].order_id+"</a></span>" +
+                    "<span class='dhs8'>"+list[i].gmt_create+"</span>" +
+                    "<span class='dhs5'>"+list[i].total_num+"件</span>" +
+                    "<span class='dhs6'>￥"+list[i].total_price+"</span>" +
+                    "<span class='dhs7'>待支付</span>" +
+                    "<span class='dhs7'><button class='del' onclick='deleteOrder(\""+list[i].order_id+"\")'>删除</button></span>" +
+                    "<span class='dhs7'><a href='./orderDetail?order_id="+list[i].order_id+"' class='del'>详情</a></span>" +
+                    "</div></li>");
+            }
+
         }
     }
     function getOrderList(){
@@ -318,9 +317,133 @@
             }
         })
     }
+    function deleteOrder(order_id){
+        document.getElementsByClassName("modal")[0].style.display = "block";
+        current_orderId = order_id
+    }
+    function deleteConfirm(){
+        $.ajax({
+            url: "/api/order/deleteOrder",
+            type: "POST",
+            data: {
+                order_id: current_orderId,
+            },
+            beforeSend: function(request){
+                request.setRequestHeader("Authorization",token);
+            },
+            success: function(res){
+                if(res.resultCode!=200){
+                    $.growl.error({
+                        title: "提示",
+                        message: res.resultMsg
+                    })
+                }else{
+                    $.growl.notice({
+                        title: "提示",
+                        message: res.resultMsg
+                    })
+                    getOrderList();
+                    document.getElementsByClassName("modal")[0].style.display = "none";
+                }
+            }
+        })
+    }
+    function cancelConfirm(){
+        document.getElementsByClassName("modal")[0].style.display = "none";
+    }
+    function getTypeList(){
+        $.ajax({
+            url: '/common/getTypeAndGoods',
+            type: 'post',
+            data: {
+                pageSize: 10,
+                pageNum: 1
+            },
+            beforeSend: function(request){
+                request.setRequestHeader("Authorization",token);
+            },
+            success: function(res){
+                if(res.resultCode!=200){
+                    $.growl({
+                        title: "提示",
+                        message: res.resultMsg
+                    })
+                }else{
+                    typeList = res.data.list
+                    for(var i=0;i<typeList.length;i++){
+                        ul.append("<li><a href=''>"+typeList[i].type_name+"</a></li>")
+                    }
+                    addMouseOver()
+                }
+            },
+            error: function(e){
+            }
+        });
+    }
+    function addMouseOver(){
+        $('.wrap2 ul li').mouseover(function(e){
+            var i = $(this).index()
+            console.log(i,"index")
+            if(typeList[i].goodsList.length==0){
+                if($content1!=null)
+                    $content1.remove();
+                if($content2!=null)
+                    $content2.remove();
+                if($content3!=null)
+                    $content3.remove();
+            }
+            if(typeList[i].goodsList.length==1){
+                if($content1!=null)
+                    $content1.remove();
+                $content1 = $("<a href=\"#\" class=\"w2I\"><img src='../image/img101.png' alt=''></a>" +
+                    "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[0].goods_name+"</p></a>" +
+                    "<p class='w2P2'>￥"+typeList[i].goodsList[0].goods_price+"</p>")
+                div1.append($content1);
+            }
+            if(typeList[i].goodsList.length==2){
+                if($content1!=null)
+                    $content1.remove();
+                $content1 = $("<a href=\"#\" class=\"w2I\"><img src='../image/img101.png' alt=''></a>" +
+                    "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[0].goods_name+"</p></a>" +
+                    "<p class='w2P2'>￥"+typeList[i].goodsList[0].goods_price+"</p>")
+                div1.append($content1)
+                if($content2!=null)
+                    $content2.remove();
+                $content2=$("<a href=\"#\" class=\"w2I\"><img src='../image/img101.png' alt=''></a>" +
+                    "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[1].goods_name+"</p></a>" +
+                    "<p class='w2P2'>￥"+typeList[i].goodsList[1].goods_price+"</p>")
+                div2.append($content2)
+            }
+            if(typeList[i].goodsList.length==3){
+                if($content1!=null)
+                    $content1.remove();
+                $content1 = $("<a href=\"#\" class=\"w2I\"><img src='../image/img101.png' alt=''></a>" +
+                    "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[0].goods_name+"</p></a>" +
+                    "<p class='w2P2'>￥"+typeList[i].goodsList[0].goods_price+"</p>")
+                div1.append($content1)
+                if($content2!=null)
+                    $content2.remove();
+                $content2=$("<a href=\"#\" class=\"w2I\"><img src='../image/img101.png' alt=''></a>" +
+                    "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[1].goods_name+"</p></a>" +
+                    "<p class='w2P2'>￥"+typeList[i].goodsList[1].goods_price+"</p>")
+                div2.append($content2)
+                if($content3!=null)
+                    $content3.remove()
+                $content3=$("<a href=\"#\" class=\"w2I\"><img src='../image/img101.png' alt=''></a>" +
+                    "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[2].goods_name+"</p></a>" +
+                    "<p class='w2P2'>￥"+typeList[i].goodsList[2].goods_price+"</p>")
+                div3.append($content3)
+            }
+
+        })
+    }
     window.onload = function(){
         checkToken();
-        getOrderList();
+        getTypeList();
+        if(sessionStorage.getItem("token")){
+            getOrderList();
+            getCar();
+        }
     }
 </script>
 </html>

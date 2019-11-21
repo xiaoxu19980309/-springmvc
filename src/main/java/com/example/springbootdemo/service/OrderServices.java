@@ -11,4 +11,7 @@ public interface OrderServices {
     int addOrder(Order order, JSONArray list);
     List<Order> getOrdersList(Integer user_id);
     List<OrderDetail> getOrderDetails(String order_id);
+    int deleteOrder(String order_id);
+    int updateOrder(Order order);
+    Order selectOrderById(String order_id);
 }

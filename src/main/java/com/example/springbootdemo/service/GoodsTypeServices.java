@@ -9,4 +9,5 @@ public interface GoodsTypeServices {
     List<GoodsType> queryType();
     int deleteGoodsType(Integer id);
     int updateGoodsType(GoodsType goodsType);
+    List<GoodsType> selectTypeAndGoods();
 }

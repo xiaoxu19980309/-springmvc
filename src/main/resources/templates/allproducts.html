@@ -19,57 +19,8 @@
 				<dt><a href="#">查看所有类型</a></dt>
 				<dd>
 					<div class = "dd_inn">
-						<ul class = "dd_cont">
-							<li><a href="#">不锈钢</a></li>
-							<li><a href="#">原料水泥</a></li>
-							<li><a href="#">塑料</a></li>
-							<li><a href="#">木质</a></li>
-							<li><a href="#">陶瓷</a></li>
-						</ul>
-						<ul class="pro">
-							<li>
-								<a href="#">
-									<div class="pic">
-										<img src="../image/img25.png" alt="">
-									</div>
-									<div class="content">
-										<h3>简约木质餐盘</h3>
-										<span>￥200</span>
-									</div>
-								</a>
-								<div class="mask">
-									<a href="#" class = "btn">查看详情</a>
-								</div>
-							</li>
-							<li>
-								<a href="#">
-									<div class="pic">
-										<img src="../image/img26.png" alt="">
-									</div>
-									<div class="content">
-										<h3>简约木质餐盘</h3>
-										<span>￥200</span>
-									</div>
-								</a>
-								<div class="mask">
-									<a href="#" class = "btn">查看详情</a>
-								</div>
-							</li>
-							<li>
-								<a href="#">
-									<div class="pic">
-										<img src="../image/img27.png" alt="">
-									</div>
-									<div class="content">
-										<h3>简约木质餐盘</h3>
-										<span>￥200</span>
-									</div>
-								</a>
-								<div class="mask">
-									<a href="#" class = "btn">查看详情</a>
-								</div>
-							</li>
-						</ul>
+						<ul class = "dd_cont"></ul>
+						<ul class="pro"></ul>
 					</div>
 				</dd>
 			</dl>
@@ -84,9 +35,7 @@
 						<p class="con">0件商品 共计：<span>￥0</span></p>
 						<a href="./shopcar" class="btn">结算</a>
 					</div>
-					<span class = "con">
-						0
-					</span>
+					<span class = "con"></span>
 				</div>
 				<div class = "reg_c">
 					<a class="isLogin" href="./login" id="">登陆</a>
@@ -173,6 +122,133 @@
 <script src="../js/public.js"></script>
 <script src="../jq1.11.1/jquery.min.js"></script>
 <script>
+	var typeList = []
+	var ul = $('.dd_cont')
+	var div = $('.pro')
+	$content1 = null
+	$content2 = null
+	$content3 = null
+	function getCarContent(){
+		$.ajax({
+			url: "/api/shopping/getShoppingCar",
+			type: "POST",
+			data: {
+				token: sessionStorage.getItem("token")
+			},
+			beforeSend: function(request){
+				request.setRequestHeader("Authorization",sessionStorage.getItem("token"));
+			},
+			success: function(res){
+				if(res.resultCode!=200){
+					$.growl.error({
+						title: "提示",
+						message: "获取购物车列表失败!"
+					})
+				}else{
+					var p = document.getElementsByClassName("con")[0]
+					var span = document.getElementsByClassName("con")[1]
+					span.innerHTML = "0"
+					p.innerHTML = res.data.length+"件商品 共计：<span>￥0</span>"
+					sessionStorage.setItem("carItem",res.data.length)
+				}
+			},
+			error: function(e){
+
+			}
+		})
+	}
+	function getTypeList(){
+		$.ajax({
+			url: '/common/getTypeAndGoods',
+			type: 'post',
+			data: {
+				pageSize: 10,
+				pageNum: 1
+			},
+			beforeSend: function(request){
+				request.setRequestHeader("Authorization",token);
+			},
+			success: function(res){
+				if(res.resultCode!=200){
+					$.growl({
+						title: "提示",
+						message: res.resultMsg
+					})
+				}else{
+					typeList = res.data.list
+					for(var i=0;i<typeList.length;i++){
+						ul.append("<li><a href=''>"+typeList[i].type_name+"</a></li>")
+					}
+					addMouseOver()
+				}
+			},
+			error: function(e){
+			}
+		});
+	}
+	function addMouseOver(){
+		$('.dd_cont li').mouseover(function(e){
+			var i = $(this).index()
+			console.log(i,"index")
+			if(typeList[i].goodsList.length==0){
+				if($content1!=null)
+					$content1.remove();
+				if($content2!=null)
+					$content2.remove();
+				if($content3!=null)
+					$content3.remove();
+			}
+			if(typeList[i].goodsList.length==1){
+				if($content1!=null)
+					$content1.remove();
+				$content1 = $("<li><a href=\"#\"><div class='pic'><img src='../image/img25.png' alt=''></div>" +
+						"<div class='content'><h3>" + typeList[i].goodsList[0].goods_name + "</h3>" +
+						"<span>￥"+typeList[i].goodsList[0].goods_price + "</span></div></a>" +
+						"<div class='mask'><a href='#' class='btn'>查看详情</a></div>")
+				div.append($content1);
+			}
+			if(typeList[i].goodsList.length==2){
+				if($content1!=null)
+					$content1.remove();
+				$content1 = $("<li><a href=\"#\"><div class='pic'><img src='../image/img25.png' alt=''></div>" +
+						"<div class='content'><h3>" + typeList[i].goodsList[0].goods_name + "</h3>" +
+						"<span>￥"+typeList[i].goodsList[0].goods_price + "</span></div></a>" +
+						"<div class='mask'><a href='#' class='btn'>查看详情</a></div>")
+				div.append($content1)
+				if($content2!=null)
+					$content2.remove();
+				$content2 = $("<li><a href=\"#\"><div class='pic'><img src='../image/img25.png' alt=''></div>" +
+						"<div class='content'><h3>" + typeList[i].goodsList[1].goods_name + "</h3>" +
+						"<span>￥"+typeList[i].goodsList[1].goods_price + "</span></div></a>" +
+						"<div class='mask'><a href='#' class='btn'>查看详情</a></div>")
+				div.append($content2)
+			}
+			if(typeList[i].goodsList.length==3){
+				if($content1!=null)
+					$content1.remove();
+				$content1 = $("<li><a href=\"#\"><div class='pic'><img src='../image/img25.png' alt=''></div>" +
+						"<div class='content'><h3>" + typeList[i].goodsList[0].goods_name + "</h3>" +
+						"<span>￥"+typeList[i].goodsList[0].goods_price + "</span></div></a>" +
+						"<div class='mask'><a href='#' class='btn'>查看详情</a></div>")
+				div.append($content1)
+				if($content2!=null)
+					$content2.remove();
+				$content2 = $("<li><a href=\"#\"><div class='pic'><img src='../image/img25.png' alt=''></div>" +
+						"<div class='content'><h3>" + typeList[i].goodsList[1].goods_name + "</h3>" +
+						"<span>￥"+typeList[i].goodsList[1].goods_price + "</span></div></a>" +
+						"<div class='mask'><a href='#' class='btn'>查看详情</a></div>")
+				div.append($content2)
+				if($content3!=null)
+					$content3.remove()
+				$content3 = $("<li><a href=\"#\"><div class='pic'><img src='../image/img25.png' alt=''></div>" +
+						"<div class='content'><h3>" + typeList[i].goodsList[2].goods_name + "</h3>" +
+						"<span>￥"+typeList[i].goodsList[2].goods_price + "</span></div></a>" +
+						"<div class='mask'><a href='#' class='btn'>查看详情</a></div>")
+				div.append($content3)
+			}
+
+		})
+	}
 	window.onload = function(){
 		$.ajax({
 			url: '/api/user/checkToken',
@@ -192,6 +268,7 @@
 					for(var i=0;i<outbtn.length;i++){
 						outbtn[i].style.display = "inline-block";
 					}
+					getCarContent()
 				}else{
 					sessionStorage.removeItem("token");
 				}
@@ -252,6 +329,7 @@
 			error: function(e){
 			}
 		});
+		getTypeList();
 	}
 </script>
 </html>

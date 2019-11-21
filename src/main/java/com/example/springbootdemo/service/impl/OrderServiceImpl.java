@@ -75,4 +75,29 @@ public class OrderServiceImpl implements OrderServices {
         orderDetails = orderDao.selectOrderDetailList(order_id);
         return orderDetails;
     }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public int deleteOrder(String order_id) {
+        Order order = orderDao.selectOrderById(order_id);
+        int ans = 0;
+        order.setIs_delete(1);
+        ans = orderDao.updateOrder(order);
+        return ans;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public int updateOrder(Order order) {
+        int ans =0;
+        ans = orderDao.updateOrder(order);
+        return ans;
+    }
+
+    @Override
+    public Order selectOrderById(String order_id) {
+        Order order = null;
+        order = orderDao.selectOrderById(order_id);
+        return order;
+    }
 }

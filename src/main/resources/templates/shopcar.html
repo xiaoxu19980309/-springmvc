@@ -253,41 +253,6 @@
             color: white;
             border: none;
         }
-        .modal{
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background: rgba(0,0,0,0.7);
-            width: 100%;
-            height: 100%;
-        }
-        .modal .content{
-            padding: 40px 80px;
-            background-color: white;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-        }
-        .modal .content div{
-            padding: 20px 0;
-            margin-bottom: 10px;
-        }
-        .modal .content button{
-            text-decoration: none;
-            font-size: 17px;
-            padding: 0 40px;
-            border: none;
-            background-color: rgb(255, 68, 68);
-            color: white;
-            line-height: 36px;
-        }
-        .modal .content .cancel{
-            background: #999;
-        }
     </style>
 </head>
 <body>
@@ -300,7 +265,7 @@
                 <li><a href="./allproducts" class="word">所有商品</a></li>
             </ul>
             <ul class="ul-bar-right">
-                <li class="word a0">0</li>
+                <li class="word a0"></li>
                 <li class="img2"><img src="../image/0.png" alt=""></li>
                 <li class="isLogin"><a href="./register.html" class="word zhuc">注册</a></li>
                 <li class="word ash isLogin">|</li>
@@ -318,40 +283,10 @@
             </ul>
         </div>
         <div class="wrap2" id="lb">
-            <ul>
-                <li><a href="">不锈钢</a></li>
-                <li><a href="">原料水泥</a></li>
-                <li><a href="">塑料</a></li>
-                <li><a href="">木制</a></li>
-                <li><a href="">陶瓷</a></li>
-            </ul>
-            <div class="wA1">
-                <a href="#" class="w2I">
-                    <img src="../image/img101.png" alt="">
-                </a>
-                <a href="#" class="w2P1">
-                    <p>简约原木餐盘</p>
-                </a>
-                <p class="w2P2">￥300.00</p>
-            </div>
-            <div class="wA2">
-                <a href="#" class="w2I">
-                    <img src="../image/img102.png" alt="">
-                </a>
-                <a href="#" class="w2P1">
-                    <p>不锈钢时尚咖啡水壶</p>
-                </a>
-                <p class="w2P2">￥400.00</p>
-            </div>
-            <div class="wA3">
-                <a href="#" class="w2I">
-                    <img src="../image/img103.png" alt="">
-                </a>
-                <a href="#" class="w2P1">
-                    <p>经典系列红色时钟</p>
-                </a>
-                <p class="w2P2">￥580.00</p>
-            </div>
+            <ul></ul>
+            <div class="wA1"></div>
+            <div class="wA2"></div>
+            <div class="wA3"></div>
         </div>
     </div>
     <div class="sd">
@@ -582,6 +517,100 @@
         var shoppingCarList = [];
         var list = [];
         var modal = document.getElementsByClassName("modal")[0]
+        var typeList = []
+        var ul = $('.wrap2 ul')
+        var div1 = $('.wrap2 .wA1')
+        var div2 = $('.wrap2 .wA2')
+        var div3 = $('.wrap2 .wA3')
+        $content1 = null
+        $content2 = null
+        $content3 = null
+        function getTypeList(){
+            $.ajax({
+                url: '/common/getTypeAndGoods',
+                type: 'post',
+                data: {
+                    pageSize: 10,
+                    pageNum: 1
+                },
+                beforeSend: function(request){
+                    request.setRequestHeader("Authorization",token);
+                },
+                success: function(res){
+                    if(res.resultCode!=200){
+                        $.growl({
+                            title: "提示",
+                            message: res.resultMsg
+                        })
+                    }else{
+                        typeList = res.data.list
+                        for(var i=0;i<typeList.length;i++){
+                            ul.append("<li><a href=''>"+typeList[i].type_name+"</a></li>")
+                        }
+                        addMouseOver()
+                    }
+                },
+                error: function(e){
+                }
+            });
+        }
+        function addMouseOver(){
+            $('.wrap2 ul li').mouseover(function(e){
+                var i = $(this).index()
+                console.log(i,"index")
+                if(typeList[i].goodsList.length==0){
+                    if($content1!=null)
+                        $content1.remove();
+                    if($content2!=null)
+                        $content2.remove();
+                    if($content3!=null)
+                        $content3.remove();
+                }
+                if(typeList[i].goodsList.length==1){
+                    if($content1!=null)
+                        $content1.remove();
+                    $content1 = $("<a href=\"#\" class=\"w2I\"><img src='../image/img101.png' alt=''></a>" +
+                        "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[0].goods_name+"</p></a>" +
+                        "<p class='w2P2'>￥"+typeList[i].goodsList[0].goods_price+"</p>")
+                    div1.append($content1);
+                }
+                if(typeList[i].goodsList.length==2){
+                    if($content1!=null)
+                        $content1.remove();
+                    $content1 = $("<a href=\"#\" class=\"w2I\"><img src='../image/img101.png' alt=''></a>" +
+                        "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[0].goods_name+"</p></a>" +
+                        "<p class='w2P2'>￥"+typeList[i].goodsList[0].goods_price+"</p>")
+                    div1.append($content1)
+                    if($content2!=null)
+                        $content2.remove();
+                    $content2=$("<a href=\"#\" class=\"w2I\"><img src='../image/img101.png' alt=''></a>" +
+                        "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[1].goods_name+"</p></a>" +
+                        "<p class='w2P2'>￥"+typeList[i].goodsList[1].goods_price+"</p>")
+                    div2.append($content2)
+                }
+                if(typeList[i].goodsList.length==3){
+                    if($content1!=null)
+                        $content1.remove();
+                    $content1 = $("<a href=\"#\" class=\"w2I\"><img src='../image/img101.png' alt=''></a>" +
+                        "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[0].goods_name+"</p></a>" +
+                        "<p class='w2P2'>￥"+typeList[i].goodsList[0].goods_price+"</p>")
+                    div1.append($content1)
+                    if($content2!=null)
+                        $content2.remove();
+                    $content2=$("<a href=\"#\" class=\"w2I\"><img src='../image/img101.png' alt=''></a>" +
+                        "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[1].goods_name+"</p></a>" +
+                        "<p class='w2P2'>￥"+typeList[i].goodsList[1].goods_price+"</p>")
+                    div2.append($content2)
+                    if($content3!=null)
+                        $content3.remove()
+                    $content3=$("<a href=\"#\" class=\"w2I\"><img src='../image/img101.png' alt=''></a>" +
+                        "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[2].goods_name+"</p></a>" +
+                        "<p class='w2P2'>￥"+typeList[i].goodsList[2].goods_price+"</p>")
+                    div3.append($content3)
+                }
+
+            })
+        }
         function appendList(data){
             for(var i=0;i<data.length;i++){
                 $(".shopList").append("<li><div><span>" +
@@ -591,12 +620,12 @@
                     "<span class='dhs4'>￥"+data[i].goods_price+"</span>" +
                     "<span class='dhs5'><a href='javascript:void(0)' class='sub'>-</a><input type='text' class='num' value='"+data[i].count+"'>" +
                     "<a href='javascript:void(0)' class='add'>+</a></span>" +
-                    "<span class='dhs6'>￥"+data[i].count*data[i].goods_price+"</span>" +
+                    "<span class='dhs6'>￥"+(data[i].count*data[i].goods_price).toFixed(2)+"</span>" +
                     "<span class='dhs7'><a href='#' class='del'>删除</a></span></div></li>");
                 shoppingCarList.push({id: data[i].good_id,price: data[i].goods_price,count: data[i].count});
             }
         }
-        function getCar(){
+        function getCarList(){
             $.ajax({
                 url: "/api/shopping/getShoppingCar",
                 type: "POST",
@@ -614,6 +643,7 @@
                         })
                     }else{
                         appendList(res.data);
+                        document.getElementsByClassName("ul-bar-right")[0].getElementsByClassName("a0")[0].innerHTML = res.data.length
                     }
                 },
                 error: function(e){
@@ -621,71 +651,72 @@
                 }
             })
         }
+        $("#confirm").click(function(){
+            var shopList = document.getElementsByClassName("shopList")[0].getElementsByTagName("li")
+            list = [];
+            for(var i=0;i<shopList.length;i++){
+                var checked = shopList[i].querySelector(".ch").checked
+                var number = parseInt(shopList[i].querySelector(".num").value);
+                shoppingCarList[i].count = number
+                if(checked){
+                    list.push(shoppingCarList[i])
+                }
+            }
+            if(list.length==0){
+                $.growl.error({
+                    title: "提示",
+                    message: "请选择结算商品!"
+                })
+                return;
+            }
+            console.log(list);
+            modal.style.display = 'block';
+        });
+        $('#cancel').click(function(){
+            modal.style.display = 'none';
+        })
+        $('#payConfirm').click(function(){
+            var payType = $("input[name='payType']:checked").val()
+            var data = {
+                token: sessionStorage.getItem("token"),
+                list: list,
+            }
+            if(payType!=undefined){
+                data.pay_type = payType
+            }
+            $.ajax({
+                url: "/api/order/addOrder",
+                type: "POST",
+                data: JSON.stringify(data),
+                dataType: 'JSON',
+                contentType: "application/json",
+                beforeSend: function(request){
+                    request.setRequestHeader("Authorization",sessionStorage.getItem("token"));
+                },
+                success: function(res){
+                    if(res.resultCode!=200){
+                        $.growl.error({
+                            title: "提示",
+                            message: res.resultMsg
+                        })
+                    }else{
+                        $.growl.notice({
+                            title: "提示",
+                            message: res.resultMsg
+                        });
+                        modal.style.display = 'none';
+                        window.location.href='./orderList'
+                    }
+                },
+                error: function(e){
+
+                }
+            })
+        });
         window.onload = function(){
             checkToken();
-            getCar();
-            $("#confirm").click(function(){
-                var shopList = document.getElementsByClassName("shopList")[0].getElementsByTagName("li")
-                list = [];
-                for(var i=0;i<shopList.length;i++){
-                    var checked = shopList[i].querySelector(".ch").checked
-                    var number = parseInt(shopList[i].querySelector(".num").value);
-                    shoppingCarList[i].count = number
-                    if(checked){
-                        list.push(shoppingCarList[i])
-                    }
-                }
-                if(list.length==0){
-                    $.growl.error({
-                        title: "提示",
-                        message: "请选择结算商品!"
-                    })
-                    return;
-                }
-                console.log(list);
-                modal.style.display = 'block';
-            });
-            $('#cancel').click(function(){
-                modal.style.display = 'none';
-            })
-            $('#payConfirm').click(function(){
-                var payType = $("input[name='payType']:checked").val()
-                var data = {
-                    token: sessionStorage.getItem("token"),
-                    list: list,
-                }
-                if(payType!=undefined){
-                    data.pay_type = payType
-                }
-                $.ajax({
-                    url: "/api/order/addOrder",
-                    type: "POST",
-                    data: JSON.stringify(data),
-                    dataType: 'JSON',
-                    contentType: "application/json",
-                    beforeSend: function(request){
-                        request.setRequestHeader("Authorization",sessionStorage.getItem("token"));
-                    },
-                    success: function(res){
-                        if(res.resultCode!=200){
-                            $.growl.error({
-                                title: "提示",
-                                message: res.resultMsg
-                            })
-                        }else{
-                            $.growl.notice({
-                                title: "提示",
-                                message: res.resultMsg
-                            });
-                            modal.style.display = 'none';
-                            window.location.href='./orderList'
-                        }
-                    },
-                    error: function(e){
-
-                    }
-                })
-            });
+            getCarList();
+            getTypeList();
         }
     </script>
 </body>

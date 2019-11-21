@@ -7,6 +7,7 @@ import com.example.springbootdemo.service.GoodsTypeServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -57,5 +58,12 @@ public class GoodsTypeServiceImpl implements GoodsTypeServices {
             e.printStackTrace();
         }
         return ans;
+    }
+
+    @Override
+    public List<GoodsType> selectTypeAndGoods() {
+        List<GoodsType> goodsTypeList = new ArrayList<>();
+        goodsTypeList = goodsTypeDao.selectGoodsByType();
+        return goodsTypeList;
     }
 }

@@ -3,6 +3,12 @@ var toShopCar = document.getElementsByClassName("img2")[0]
 var blocks = document.getElementsByClassName("isLogin")
 var outbtn = document.getElementsByClassName("login-out")
 
+var carItem
+var header_right = document.getElementsByClassName("ul-bar-right")[0]
+if(header_right){
+    carItem = header_right.getElementsByClassName("a0")[0]
+}
+
 function checkToken(){
     $.ajax({
         url: '/api/user/checkToken',
@@ -69,5 +75,31 @@ function loginOut(){
 if(toShopCar!=null){
     toShopCar.addEventListener("click",function(){
         window.location.href='./shopcar'
+    })
+}
+
+function getCar(){
+    $.ajax({
+        url: "/api/shopping/getShoppingCar",
+        type: "POST",
+        data: {
+            token: sessionStorage.getItem("token")
+        },
+        beforeSend: function(request){
+            request.setRequestHeader("Authorization",token);
+        },
+        success: function(res){
+            if(res.resultCode!=200){
+                $.growl.error({
+                    title: "提示",
+                    message: "获取购物车列表失败!"
+                })
+            }else{
+                carItem.innerHTML = res.data.length
+            }
+        },
+        error: function(e){
+
+        }
     })
 }

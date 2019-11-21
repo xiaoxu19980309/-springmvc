@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -114,6 +116,21 @@ public class CommonController {
             return Result.success(goodsPageInfo,"获取商品列表成功！");
         }else{
             return Result.fail(ResponseCode.ERROR.val(),"获取商品列表失败");
+        }
+    }
+
+    @RequestMapping(value = "getTypeAndGoods",method = RequestMethod.POST)
+    public Result getTypeAndGoods(@RequestParam(defaultValue = "10") Integer pageSize,@RequestParam(defaultValue = "1") Integer pageNum){
+        PageInfo<GoodsType> goodsTypePageInfo = null;
+        try{
+            goodsTypePageInfo = PageHelper.startPage(pageNum,pageSize).setOrderBy("id asc").doSelectPageInfo(()->this.goodsTypeServices.selectTypeAndGoods());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if(goodsTypePageInfo!=null){
+            return Result.success(goodsTypePageInfo,"获取商品类别和内容成功！");
+        }else{
+            return Result.fail(ResponseCode.ERROR.val(),"失败");
         }
     }
 }

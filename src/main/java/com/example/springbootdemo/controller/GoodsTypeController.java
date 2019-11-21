@@ -88,4 +88,5 @@ public class GoodsTypeController {
             return Result.fail(ResponseCode.ERROR.val(),"失败！");
         }
     }
+
 }

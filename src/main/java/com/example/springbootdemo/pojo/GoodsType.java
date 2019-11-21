@@ -1,11 +1,14 @@
 package com.example.springbootdemo.pojo;
 
+import java.util.List;
+
 public class GoodsType {
     private Integer id;
     private String type_name;
     private String note;
     private Integer is_active;
     private Integer is_delete;
+    private List<Goods> goodsList;
     private String gmt_create;
     private String gmt_modified;
 
@@ -61,6 +64,14 @@ public class GoodsType {
 
     public void setIs_delete(Integer is_delete) {
         this.is_delete = is_delete;
+    }
+
+    public List<Goods> getGoodsList() {
+        return goodsList;
+    }
+
+    public void setGoodsList(List<Goods> goodsList) {
+        this.goodsList = goodsList;
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.springbootdemo.pojo.Goods;
 import org.apache.ibatis.annotations.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper
@@ -71,4 +72,8 @@ public interface GoodsDao {
             "WHERE id = #{goods.id}"+
             "</foreach></script>")
     int updateGoodsList(@Param("goodsList") List<JSONObject> goodsList);
+
+    @Results(@Result(property = "id",column = "id"))
+    @Select("select * from goods where type_id =#{type_id} AND is_delete=0")
+    List<Goods> getGoodsByTypeId(@Param("type_id") Integer type_id);
 }

@@ -88,4 +88,34 @@ public class OrderController {
             return Result.fail(ResponseCode.ERROR.val(),"下单失败!");
         }
     }
+
+    @RequestMapping(value = "/deleteOrder",method = RequestMethod.POST)
+    public Result deleteOrder(@RequestParam String order_id){
+        int ans = 0;
+        ans = orderServices.deleteOrder(order_id);
+        if(ans!=0){
+            return Result.success(null,"删除订单成功！");
+        }else{
+            return Result.fail(ResponseCode.ERROR.val(),"删除订单失败！");
+        }
+    }
+
+    @RequestMapping(value = "/payOrder",method = RequestMethod.POST)
+    public Result payOrder(@RequestParam String order_id,@RequestParam Integer pay_type){
+        int ans = 0;
+        Order order = null;
+        try{
+            order = orderServices.selectOrderById(order_id);
+            order.setIs_pay(1);
+            order.setPay_type(pay_type);
+            ans = orderServices.updateOrder(order);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if(ans!=0){
+            return Result.success(null,"支付成功！");
+        }else{
+            return Result.fail(ResponseCode.ERROR.val(),"支付失败！");
+        }
+    }
 }

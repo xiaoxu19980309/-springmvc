@@ -74,6 +74,9 @@ public class SpringbootDemoApplication {
     @RequestMapping(value = "/orderDetail")
     public String orderDetail(Model model,@RequestParam String order_id){
         List<OrderDetail> orderDetails = orderServices.getOrderDetails(order_id);
+        Order order = orderServices.selectOrderById(order_id);
+        Integer is_pay = order.getIs_pay();
+        model.addAttribute("is_pay",is_pay);
         model.addAttribute("detailList",orderDetails);
         return "orderDetail";
     }

@@ -15,7 +15,7 @@ public class GoodsServiceImpl implements GoodsServices {
     private GoodsDao goodsDao;
 
     @Override
-    public List<Goods> getGoodsList(Goods goods,String status) {
+    public List<Goods> getGoodsList(Goods goods,Integer status) {
         List<Goods> goodsList = null;
         try{
             goodsList = goodsDao.selectGoodsListAll(goods,status);

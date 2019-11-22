@@ -20,30 +20,19 @@ public interface GoodsDao {
     @Select("select * from goods WHERE id = #{good_id} AND is_delete=0")
     Goods selectGoods(@Param("good_id") Integer good_id);
 
-    @Select("<script>select id,goods_name,goods_price,goods_num,has_sold,main_pic,sub_pic,description,type_id,is_special,is_delete," +
-            "DATE_FORMAT(gmt_create,'%Y-%m-%d %H:%i:%s') gmt_create,DATE_FORMAT(gmt_modified,'%Y-%m-%d %H:%i:%s') gmt_modified from goods WHERE 1=1" +
-            "<if test=\"goods.type_id!=null and goods.type_id!=0\">AND type_id = #{goods.type_id}</if>"+
-            "<if test=\"status!=null and status!='0'\">" +
-                "<if test=\"status==1\">AND goods_num>0 AND is_delete=0</if>" +
-                "<if test=\"status==2\">AND goods_num=0 AND is_delete=0</if>" +
-                "<if test=\"status==3\">AND is_delete=1</if>" +
-            "</if>"+
-            "<if test=\"goods.goods_name!=null and goods.goods_name!=''\">AND goods_name like concat('%',#{goods.goods_name},'%')</if>"+
-            " </script>")
-    List<Goods> selectGoodsList(@Param("goods") Goods goods,@Param("status") String status);
-
     @Select("<script>select goods.id,goods_name,goods_price,goods_num,has_sold,main_pic,sub_pic,description,goods.type_id,goods.is_special,goods.is_delete,goods_type.type_name as typeName," +
             "DATE_FORMAT(goods.gmt_create,'%Y-%m-%d %H:%i:%s') gmt_create,DATE_FORMAT(goods.gmt_modified,'%Y-%m-%d %H:%i:%s') gmt_modified from goods " +
             "left join goods_type on goods.type_id=goods_type.id WHERE 1=1" +
             "<if test=\"goods.type_id!=null and goods.type_id!=0\">AND type_id = #{goods.type_id}</if>"+
             "<if test=\"status!=null and status!='0'\">" +
-            "<if test=\"status=='1'\">AND goods_num>0 AND is_delete=0</if>" +
-            "<if test=\"status=='2'\">AND goods_num=0 AND is_delete=0</if>" +
-            "<if test=\"status=='3'\">AND is_delete=1</if>" +
-            "</if>"+
+            "<if test=\"status==1\">AND goods_num>0 AND goods.is_delete=0</if>" +
+            "<if test=\"status==2\">AND goods_num=0 AND goods.is_delete=0</if>" +
+            "<if test=\"status==3\">AND goods.is_delete=1</if>" +
+            "</if>" +
+            "<if test=\"goods.hasnum!=null and goods.hasnum==1\">AND goods_num>0 </if>"+
             "<if test=\"goods.goods_name!=null and goods.goods_name!=''\">AND goods_name like concat('%',#{goods.goods_name},'%')</if>"+
             " </script>")
-    List<Goods> selectGoodsListAll(@Param("goods") Goods goods,@Param("status") String status);
+    List<Goods> selectGoodsListAll(@Param("goods") Goods goods,@Param("status") Integer status);
 
     @Update("<script>update goods set gmt_modified = now()" +
             "<if test=\"goods.goods_name!=null and goods.goods_name!=''\">,goods_name = #{goods.goods_name}</if>" +

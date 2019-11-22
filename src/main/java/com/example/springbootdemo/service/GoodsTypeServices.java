@@ -10,4 +10,5 @@ public interface GoodsTypeServices {
     int deleteGoodsType(Integer id);
     int updateGoodsType(GoodsType goodsType);
     List<GoodsType> selectTypeAndGoods();
+    List<GoodsType> selectTypeActive();
 }

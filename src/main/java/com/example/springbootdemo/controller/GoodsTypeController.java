@@ -1,5 +1,6 @@
 package com.example.springbootdemo.controller;
 
+import com.example.springbootdemo.pojo.Goods;
 import com.example.springbootdemo.pojo.GoodsType;
 import com.example.springbootdemo.service.GoodsTypeServices;
 import com.example.springbootdemo.tools.ResponseCode;
@@ -30,6 +31,21 @@ public class GoodsTypeController {
             return Result.success(pageInfo,"获取商品类别列表成功！");
         }else{
             return Result.fail(ResponseCode.ERROR.val(),"失败");
+        }
+    }
+
+    @RequestMapping(value = "/getTypeActiveList",method = RequestMethod.POST)
+    public Result getTypeActiveList(@RequestParam(defaultValue = "1") Integer pageNum,@RequestParam(defaultValue = "10") Integer pageSize){
+        PageInfo<GoodsType> goodsTypePageInfo = null;
+        try{
+            goodsTypePageInfo = PageHelper.startPage(pageNum,pageSize).doSelectPageInfo(()->this.goodsTypeServices.selectTypeActive());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if(goodsTypePageInfo!=null){
+            return Result.success(goodsTypePageInfo,"获取启用的商品类别成功！");
+        }else{
+            return Result.fail(ResponseCode.ERROR.val(),"获取启用的商品类别失败！");
         }
     }
 

@@ -5,7 +5,7 @@ import com.example.springbootdemo.pojo.Goods;
 import java.util.List;
 
 public interface GoodsServices {
-    List<Goods> getGoodsList(Goods goods,String status);
+    List<Goods> getGoodsList(Goods goods,Integer status);
     Goods getGoods(Integer goodId);
     int addGoods(Goods goods);
     int updateGoods(Goods goods);

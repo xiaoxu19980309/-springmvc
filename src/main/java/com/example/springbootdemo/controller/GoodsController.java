@@ -22,7 +22,7 @@ public class GoodsController {
     @RequestMapping(value = "/getGoodsList",method = RequestMethod.POST)
     public Result getGoodsList(@RequestParam(required = false) Integer type_id,@RequestParam(required = false) String goods_name,
                                 @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10")int pageSize,
-                                @RequestParam(required = false) String status){
+                                @RequestParam(required = false) Integer status){
         PageInfo<Goods> goodsPageInfo = null;
         Goods goods = new Goods();
         goods.setType_id(type_id);

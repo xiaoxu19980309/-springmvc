@@ -67,18 +67,10 @@
 				</div>
 				<div class="screen">
 					<table>
-						<tr class = "t1">
-							<th>品牌</th>
-							<td>
-								<a href="#">无印</a>
-								<a href="#">博朗</a>
-								<a href="#">花印</a>
-							</td>
-						</tr>
 						<tr class = "t2">
 							<th>类别</th>
 							<td>
-								<a href="#">全部</a>
+								<a href="./allproducts">全部</a>
 							</td>
 						</tr>
 					</table>
@@ -86,34 +78,31 @@
 				<div class="fun">
 					<div class="sort">
 						<span>排序：</span>
-						<a href="#" class="s1">
+						<a class="s1">
 							<i></i>销量
 						</a>
-						<a href="#" class="s2">
+						<a class="s2">
 							<i></i>价格
 						</a>
-						<a href="#" class="s3">
+						<a class="s3">
 							<i></i>上架时间
 						</a>
 					</div>
 					<div class="swi">
 						<span>仅显示有货：</span>
-						<a href="#">
+						<a>
 							<i></i>
 						</a>
 					</div>
 					<div class="total">
-						共<span>20</span>个商品
+						共<span>0</span>个商品
 					</div>
 				</div>
 				<div class="s_prod">
 					<ul class = "pub_pro"></ul>
 				</div>
 				<div class="pages">
-					<a href="#">&lt;</a>
-					<a href="#" class = "tol cur">1</a>
-					<a href="#" class = "tol ">2</a>
-					<a href="#">&gt;</a>
+					<span></span>
 				</div>
 			</div>
 		</div>
@@ -128,6 +117,22 @@
 	$content1 = null
 	$content2 = null
 	$content3 = null
+	var obj = {}
+	function geturlKey(){
+		var url = window.location.href.split("?")[1]
+		obj.pageNum = 1;
+		obj.typeId = 0;
+		if(url==null){
+			return;
+		}
+		var keys = url.split("&")
+		for(var i=0;i<keys.length;i++){
+			var key = keys[i].split("=")[0]
+			var val = keys[i].split("=")[1]
+			obj[key] = val;
+		}
+	}
+	geturlKey();
 	function getCarContent(){
 		$.ajax({
 			url: "/api/shopping/getShoppingCar",
@@ -223,7 +228,7 @@
 						"<div class='mask'><a href='#' class='btn'>查看详情</a></div>")
 				div.append($content2)
 			}
-			if(typeList[i].goodsList.length==3){
+			if(typeList[i].goodsList.length>=3){
 				if($content1!=null)
 					$content1.remove();
 				$content1 = $("<li><a href=\"#\"><div class='pic'><img src='../image/img25.png' alt=''></div>" +
@@ -246,9 +251,96 @@
 						"<div class='mask'><a href='#' class='btn'>查看详情</a></div>")
 				div.append($content3)
 			}
-
 		})
 	}
+	function getGoodsList(type){
+		var data = {
+			pageSize: 8,
+			pageNum: obj.pageNum,
+			type_id: obj.typeId!=0?parseInt(obj.typeId):null,
+		}
+		if(type!=null){
+			data.orderByType = type
+			$(".pub_pro li").remove();
+			$(".pages  a").remove();
+		}
+		if(sessionStorage.getItem("hasnum")=='true'){
+			data.hasnum = 1;
+		}
+		$.ajax({
+			url: '/common/getGoodsList',
+			type: 'post',
+			data: data,
+			beforeSend: function(request){
+				request.setRequestHeader("Authorization",sessionStorage.getItem("token"));
+			},
+			success: function(res){
+				if(res.resultCode!=200){
+					alert(res.resultMsg)
+				}else{
+					var goodsList = $(".pub_pro")
+					$(".total span")[0].innerHTML = res.data.total;
+					for(var i=0;i<res.data.list.length;i++){
+						goodsList.append("<li>"
+								+"<img src=\"../image/img47.png\" alt=\"\">"
+								+"<div class=\"cont\">"
+								+"<h3>"+res.data.list[i].goods_name+"</h3>"
+								+"<span>"+res.data.list[i].goods_price+"</span></div>"
+								+"<div class=\"mask\">"
+								+"<a class=\"btn\" href='proDetail?goodId="+res.data.list[i].id+"'>查看详情</a>"
+								+"</div>"
+								+"</li>")
+					}
+					var pages = res.data.lastPage
+					for(var i=0;i<pages;i++){
+						var index = parseInt(i+1)
+						if(obj.pageNum==index)
+							$(".pages span").append("<a href='./allproducts?typeId="+obj.typeId+"&pageNum="+index+"' class='tol cur'>"+index+"</a>")
+						else
+							$(".pages span").append("<a href='./allproducts?typeId="+obj.typeId+"&pageNum="+index+"' class='tol'>"+index+"</a>")
+					}
+				}
+			},
+			error: function(e){
+			}
+		});
+	}
+	$(".s1").click(function(){
+		$(".s1")[0].style.color = "rgb(255,68,68)"
+		$(".s2")[0].style.color = "inherit";
+		$(".s3")[0].style.color = "inherit";
+		getGoodsList(1);
+	})
+	$(".s2").click(function(){
+		$(".s2")[0].style.color = "rgb(255,68,68)"
+		$(".s1")[0].style.color = "inherit";
+		$(".s3")[0].style.color = "inherit";
+		getGoodsList(2);
+	})
+	$(".s3").click(function(){
+		$(".s3")[0].style.color = "rgb(255,68,68)"
+		$(".s2")[0].style.color = "inherit";
+		$(".s1")[0].style.color = "inherit";
+		getGoodsList(3);
+	})
+	$(".swi a").click(function(){
+		if(sessionStorage.getItem("hasnum")){
+			if(sessionStorage.getItem("hasnum")=='false'){
+				sessionStorage.setItem("hasnum",true);
+				$(".swi a")[0].style.backgroundColor = "rgb(255,68,68)"
+				$(".swi a i")[0].style.float = "right";
+			}else{
+				$(".swi a")[0].style.backgroundColor = "#909090"
+				$(".swi a i")[0].style.float = "left";
+				sessionStorage.setItem("hasnum",false)
+			}
+		}else{
+			sessionStorage.setItem("hasnum",true)
+			$(".swi a")[0].style.backgroundColor = "rgb(255,68,68)"
+			$(".swi a i")[0].style.float = "right";
+		}
+
+	})
 	window.onload = function(){
 		$.ajax({
 			url: '/api/user/checkToken',
@@ -277,7 +369,7 @@
 			}
 		});
 		$.ajax({
-			url: '/common/getTypeList',
+			url: '/common/getTypeActiveList',
 			type: 'post',
 			data: {
 				pageSize: 999,
@@ -291,44 +383,19 @@
 				}else{
 					var typelist = $(".t2>td")
 					for(var i=0;i<res.data.list.length;i++){
-						typelist.append("<a href='"+res.data.list[i].id+"'>"+res.data.list[i].type_name+"</a>")
+						typelist.append("<a href='./allproducts?typeId="+res.data.list[i].id+"'>"+res.data.list[i].type_name+"</a>")
 					}
 				}
 			},
 			error: function(e){
 			}
 		});
-		$.ajax({
-			url: '/common/getGoodsList',
-			type: 'post',
-			data: {
-				pageSize: 12,
-				pageNum: 1,
-			},
-			beforeSend: function(request){
-				request.setRequestHeader("Authorization",sessionStorage.getItem("token"));
-			},
-			success: function(res){
-				if(res.resultCode!=200){
-					alert(res.resultMsg)
-				}else{
-					var goodsList = $(".pub_pro")
-					for(var i=0;i<res.data.list.length;i++){
-						goodsList.append("<li>"
-										+"<img src=\"../image/img47.png\" alt=\"\">"
-										+"<div class=\"cont\">"
-										+"<h3>"+res.data.list[i].goods_name+"</h3>"
-										+"<span>"+res.data.list[i].goods_price+"</span></div>"
-										+"<div class=\"mask\">"
-										+"<a class=\"btn\" href='proDetail?goodId="+res.data.list[i].id+"'>查看详情</a>"
-										+"</div>"
-										+"</li>")
-					}
-				}
-			},
-			error: function(e){
-			}
-		});
+		var hasnum = sessionStorage.getItem("hasnum")
+		if(hasnum=='true'){
+			$(".swi a")[0].style.backgroundColor = "rgb(255,68,68)"
+			$(".swi a i")[0].style.float = "right";
+		}
+		getGoodsList();
 		getTypeList();
 	}
 </script>

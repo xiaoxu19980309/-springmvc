@@ -66,4 +66,11 @@ public class GoodsTypeServiceImpl implements GoodsTypeServices {
         goodsTypeList = goodsTypeDao.selectGoodsByType();
         return goodsTypeList;
     }
+
+    @Override
+    public List<GoodsType> selectTypeActive() {
+        List<GoodsType> goodsTypes = null;
+        goodsTypes = goodsTypeDao.queryGoodsTypeActive();
+        return goodsTypes;
+    }
 }

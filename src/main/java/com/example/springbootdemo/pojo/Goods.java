@@ -15,6 +15,7 @@ public class Goods {
     private Integer is_delete;
     private String gmt_create;
     private String gmt_modified;
+    private Integer hasnum;
 
     public String getGoods_name() {
         return goods_name;
@@ -46,6 +47,14 @@ public class Goods {
 
     public void setHas_sold(Integer has_sold) {
         this.has_sold = has_sold;
+    }
+
+    public Integer getHasnum() {
+        return hasnum;
+    }
+
+    public void setHasnum(Integer hasnum) {
+        this.hasnum = hasnum;
     }
 
     public String getMain_pic() {

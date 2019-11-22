@@ -75,6 +75,7 @@
 }
 .s_content .s_content_c .s_info .fun .sort a:hover{
 	text-decoration: underline;
+	cursor: pointer;
 }
 .s_content .s_content_c .s_info .fun .sort a i{
 	display: inline-block;

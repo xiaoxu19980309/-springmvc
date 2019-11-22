@@ -11,8 +11,13 @@ public interface GoodsTypeDao {
     /**
      * Xudeng
      */
-    @Select("select id,type_name,is_active,is_delete,note,DATE_FORMAT(gmt_create,'%Y-%m-%d %H:%i:%s') gmt_create,DATE_FORMAT(gmt_modified,'%Y-%m-%d %H:%i:%s') gmt_modified from goods_type WHERE is_delete!=1")
+    @Select("select id,type_name,is_active,is_delete,note,DATE_FORMAT(gmt_create,'%Y-%m-%d %H:%i:%s') gmt_create,DATE_FORMAT(gmt_modified,'%Y-%m-%d %H:%i:%s') gmt_modified " +
+            "from goods_type WHERE is_delete!=1")
     List<GoodsType> queryGoodsType();
+
+    @Select("select id,type_name,is_active,is_delete,note,DATE_FORMAT(gmt_create,'%Y-%m-%d %H:%i:%s') gmt_create,DATE_FORMAT(gmt_modified,'%Y-%m-%d %H:%i:%s') gmt_modified " +
+            "from goods_type WHERE is_delete!=1 AND is_active=1")
+    List<GoodsType> queryGoodsTypeActive();
 
     @Insert("insert into goods_type(type_name,note,gmt_create,gmt_modified) values(#{goodsType.type_name},#{goodsType.note},now(),now())")
     int insertGoodsType(@Param("goodsType") GoodsType goodsType);
@@ -34,6 +39,6 @@ public interface GoodsTypeDao {
             @Result(column = "id",property = "id")
     })
     @Select("select types.id,types.type_name,types.is_active,types.is_delete,types.note,DATE_FORMAT(types.gmt_create,'%Y-%m-%d %H:%i:%s') gmt_create," +
-            "DATE_FORMAT(types.gmt_modified,'%Y-%m-%d %H:%i:%s') gmt_modified from goods_type types")
+            "DATE_FORMAT(types.gmt_modified,'%Y-%m-%d %H:%i:%s') gmt_modified from goods_type types WHERE types.is_delete=0 AND types.is_active=1")
     List<GoodsType> selectGoodsByType();
 }

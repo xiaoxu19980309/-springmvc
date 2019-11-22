@@ -84,6 +84,12 @@ public class CommonController {
         }
     }
 
+    /**
+     * Xudeng
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     @RequestMapping(value = "/getTypeList",method = RequestMethod.POST)
     public Result getTypeList(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10")int pageSize){
         PageInfo<GoodsType> pageInfo=null;
@@ -99,16 +105,41 @@ public class CommonController {
         }
     }
 
+    @RequestMapping(value = "/getTypeActiveList",method = RequestMethod.POST)
+    public Result getTypeActiveList(@RequestParam(defaultValue = "1") int pageNum,@RequestParam(defaultValue = "10") int pageSize){
+        PageInfo<GoodsType> goodsTypePageInfo = null;
+        try{
+            goodsTypePageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(()->this.goodsTypeServices.selectTypeActive());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if(goodsTypePageInfo!=null){
+            return Result.success(goodsTypePageInfo,"获取商品类别成功！");
+        }else{
+            return Result.fail(ResponseCode.ERROR.val(),"获取商品类别失败！");
+        }
+    }
+
     @RequestMapping(value = "/getGoodsList",method = RequestMethod.POST)
     public Result getGoodsList(@RequestParam(required = false) Integer type_id,@RequestParam(required = false) String goods_name,
                                @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10")int pageSize,
-                               @RequestParam(required = false) String status){
+                               @RequestParam(required = false) Integer status,@RequestParam(required = false) Integer orderByType,
+                               @RequestParam(required = false) Integer hasnum){
         PageInfo<Goods> goodsPageInfo = null;
         Goods goods = new Goods();
         goods.setType_id(type_id);
+        goods.setHasnum(hasnum);
         goods.setGoods_name(goods_name);
         try{
-            goodsPageInfo = PageHelper.startPage(pageNum,pageSize).setOrderBy("id asc").doSelectPageInfo(()->this.goodsServices.getGoodsList(goods,status));
+            if(orderByType==null){
+                goodsPageInfo = PageHelper.startPage(pageNum,pageSize).setOrderBy("id asc").doSelectPageInfo(()->this.goodsServices.getGoodsList(goods,status));
+            }else if(orderByType==1){
+                goodsPageInfo = PageHelper.startPage(pageNum,pageSize).setOrderBy("has_sold desc").doSelectPageInfo(()->this.goodsServices.getGoodsList(goods,status));
+            }else if(orderByType==2){
+                goodsPageInfo = PageHelper.startPage(pageNum,pageSize).setOrderBy("goods_price desc").doSelectPageInfo(()->this.goodsServices.getGoodsList(goods,status));
+            }else if(orderByType==3){
+                goodsPageInfo = PageHelper.startPage(pageNum,pageSize).setOrderBy("gmt_modified desc").doSelectPageInfo(()->this.goodsServices.getGoodsList(goods,status));
+            }
         }catch (Exception e){
             e.printStackTrace();
         }

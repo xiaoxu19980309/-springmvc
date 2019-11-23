@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +38,7 @@ public class CommonController {
 
     @Autowired
     private JwtHelper jwtHelper;
+
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public Result login(HttpServletRequest request, HttpServletResponse response){
         User ans = new User();

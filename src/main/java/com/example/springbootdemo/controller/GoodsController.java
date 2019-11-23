@@ -2,15 +2,19 @@ package com.example.springbootdemo.controller;
 
 import com.example.springbootdemo.pojo.Goods;
 import com.example.springbootdemo.service.GoodsServices;
+import com.example.springbootdemo.tools.IdGenerator;
 import com.example.springbootdemo.tools.ResponseCode;
 import com.example.springbootdemo.tools.Result;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -18,6 +22,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class GoodsController {
     @Autowired
     private GoodsServices goodsServices;
+
+    public static File getImgDirFile(){
+        String filePath = new String("src/main/resources/static/image");
+        File fileDir = new File(filePath);
+        if(!fileDir.exists()){
+            fileDir.mkdirs();
+        }
+        return fileDir;
+    }
 
     @RequestMapping(value = "/getGoodsList",method = RequestMethod.POST)
     public Result getGoodsList(@RequestParam(required = false) Integer type_id,@RequestParam(required = false) String goods_name,
@@ -61,6 +74,27 @@ public class GoodsController {
             return Result.success(null,"添加商品成功！");
         }else{
             return Result.fail(ResponseCode.ERROR.val(),"添加商品失败！");
+        }
+    }
+
+
+    @RequestMapping(value = "/uploadFile",method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Result uploadFile(HttpServletRequest request, @RequestParam("file")MultipartFile file){
+        String fileName = file.getOriginalFilename();
+        String prefix = fileName.substring(fileName.lastIndexOf("."));
+
+        String s = IdGenerator.get();
+        String fileNames = s+prefix;
+        File fileDir = getImgDirFile();
+        String absolutePath = fileDir.getAbsolutePath();
+        File dest = new File(absolutePath+File.separator+fileNames);
+        try{
+            file.transferTo(dest);
+            String url = absolutePath+File.separator+fileNames;
+            return Result.success(url,"上传成功！");
+        }catch (Exception e){
+            return Result.fail(ResponseCode.ERROR.val(),"上传失败！");
         }
     }
 

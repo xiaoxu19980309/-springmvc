@@ -38,9 +38,9 @@ public interface GoodsDao {
             "<if test=\"goods.goods_name!=null and goods.goods_name!=''\">,goods_name = #{goods.goods_name}</if>" +
             "<if test=\"goods.goods_price!=null\">,goods_price = #{goods.goods_price}</if>" +
             "<if test=\"goods.goods_num!=null\">,goods_num = #{goods.goods_num}</if>" +
-            "<if test=\"goods.main_pic!=null and goods.main_pic!=''\">,main_pic = #{goods.main_pic}</if>" +
-            "<if test=\"goods.sub_pic!=null and goods.sub_pic!=''\">,sub_pic = #{goods.sub_pic}</if>" +
-            "<if test=\"goods.description!=null and goods.description!=''\">,description = #{goods.description}</if>" +
+            "<if test=\"goods.main_pic!=null\">,main_pic = #{goods.main_pic}</if>" +
+            "<if test=\"goods.sub_pic!=null\">,sub_pic = #{goods.sub_pic}</if>" +
+            "<if test=\"goods.description!=null\">,description = #{goods.description}</if>" +
             "<if test=\"goods.type_id!=null\">,type_id = #{goods.type_id}</if>" +
             "<if test=\"goods.is_special!=null\">,is_special = #{goods.is_special}</if>" +
             "<if test=\"goods.is_delete!=null\">,is_delete = #{goods.is_delete}</if>" +

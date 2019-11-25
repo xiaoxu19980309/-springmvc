@@ -1,5 +1,6 @@
 package com.example.springbootdemo;
 
+import com.alibaba.fastjson.JSON;
 import com.example.springbootdemo.pojo.*;
 import com.example.springbootdemo.service.GoodsServices;
 import com.example.springbootdemo.service.OrderServices;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +90,21 @@ public class SpringbootDemoApplication {
     @RequestMapping(value = "/proDetail")
     public String proDetail(Model model,@RequestParam String goodId){
         Goods goods = goodsServices.getGoods(Integer.valueOf(goodId));
+        if(goods.getMain_pic()!=null){
+            String firstpic = goods.getMain_pic();
+            model.addAttribute("first_pic",firstpic.substring(firstpic.lastIndexOf("\\")+1));
+        }
+        if(goods.getSub_pic()!=null){
+            List<String> picArr = new ArrayList<>();
+            String strs = goods.getSub_pic().substring(1,goods.getSub_pic().length()-1);
+            String[] list = strs.split(",");
+            for(int i=0;i<list.length;i++){
+                String str = list[i].substring(list[i].lastIndexOf("\\")+1);
+                str = str.substring(0,str.length()-1);
+                picArr.add(str);
+            }
+            model.addAttribute("picArr",picArr);
+        }
         model.addAttribute("goods",goods);
         return "proDetail";
     }

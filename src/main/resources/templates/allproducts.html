@@ -195,57 +195,85 @@
 		$('.dd_cont li').mouseover(function(e){
 			var i = $(this).index()
 			console.log(i,"index")
+			var str1,str2,str3;
 			if(typeList[i].goodsList.length==0){
-				if($content1!=null)
-					$content1.remove();
-				if($content2!=null)
-					$content2.remove();
-				if($content3!=null)
-					$content3.remove();
+				if($content1!=null) $content1.remove();
+				if($content2!=null) $content2.remove();
+				if($content3!=null) $content3.remove();
 			}
 			if(typeList[i].goodsList.length==1){
-				if($content1!=null)
-					$content1.remove();
-				$content1 = $("<li><a href=\"#\"><div class='pic'><img src='../image/img25.png' alt=''></div>" +
-						"<div class='content'><h3>" + typeList[i].goodsList[0].goods_name + "</h3>" +
+				var img1;
+				str1 = "<img src='../image/img25.png' alt=''>";
+				if(!!typeList[i].goodsList[0].main_pic){
+					img1 = typeList[i].goodsList[0].main_pic.substr(typeList[i].goodsList[0].main_pic.lastIndexOf("\\")+1);
+					str1 = "<img src='../file/"+img1+"' alt=''>"
+				}
+				if($content1!=null) $content1.remove();
+				if($content2!=null) $content2.remove();
+				if($content3!=null) $content3.remove();
+				$content1 = $("<li><a href=\"#\"><div class='pic'>" + str1 +
+						"</div><div class='content'><h3>" + typeList[i].goodsList[0].goods_name + "</h3>" +
 						"<span>￥"+typeList[i].goodsList[0].goods_price + "</span></div></a>" +
 						"<div class='mask'><a href='#' class='btn'>查看详情</a></div>")
 				div.append($content1);
 			}
 			if(typeList[i].goodsList.length==2){
-				if($content1!=null)
-					$content1.remove();
-				$content1 = $("<li><a href=\"#\"><div class='pic'><img src='../image/img25.png' alt=''></div>" +
+				var img1,img2;
+				str1 = "<img src='../image/img25.png' alt=''>";
+				str2 = "<img src='../image/img25.png' alt=''>";
+				if(!!typeList[i].goodsList[0].main_pic){
+					img1 = typeList[i].goodsList[0].main_pic.substr(typeList[i].goodsList[0].main_pic.lastIndexOf("\\")+1);
+					str1 = "<img src='../file/"+img1+"' alt=''>"
+				}
+				if(!!typeList[i].goodsList[1].main_pic){
+					img2 = typeList[i].goodsList[1].main_pic.substr(typeList[i].goodsList[1].main_pic.lastIndexOf("\\")+1);
+					str2 = "<img src='../file/"+img2+"' alt=''>"
+				}
+				if($content1!=null) $content1.remove();
+				$content1 = $("<li><a href=\"#\"><div class='pic'>"+str1+"</div>" +
 						"<div class='content'><h3>" + typeList[i].goodsList[0].goods_name + "</h3>" +
 						"<span>￥"+typeList[i].goodsList[0].goods_price + "</span></div></a>" +
 						"<div class='mask'><a href='#' class='btn'>查看详情</a></div>")
 				div.append($content1)
-				if($content2!=null)
-					$content2.remove();
-				$content2 = $("<li><a href=\"#\"><div class='pic'><img src='../image/img25.png' alt=''></div>" +
+				if($content2!=null) $content2.remove();
+				$content2 = $("<li><a href=\"#\"><div class='pic'>"+str2+"</div>" +
 						"<div class='content'><h3>" + typeList[i].goodsList[1].goods_name + "</h3>" +
 						"<span>￥"+typeList[i].goodsList[1].goods_price + "</span></div></a>" +
 						"<div class='mask'><a href='#' class='btn'>查看详情</a></div>")
 				div.append($content2)
+				if($content3!=null)	$content3.remove();
 			}
 			if(typeList[i].goodsList.length>=3){
-				if($content1!=null)
-					$content1.remove();
-				$content1 = $("<li><a href=\"#\"><div class='pic'><img src='../image/img25.png' alt=''></div>" +
+				var img1,img2,img3;
+				str1 = "<img src='../image/img25.png' alt=''>";
+				str2 = "<img src='../image/img25.png' alt=''>";
+				str3 = "<img src='../image/img25.png' alt=''>";
+				if(!!typeList[i].goodsList[0].main_pic){
+					img1 = typeList[i].goodsList[0].main_pic.substr(typeList[i].goodsList[0].main_pic.lastIndexOf("\\")+1);
+					str1 = "<img src='../file/"+img1+"' alt=''>"
+				}
+				if(!!typeList[i].goodsList[1].main_pic){
+					img2 = typeList[i].goodsList[1].main_pic.substr(typeList[i].goodsList[1].main_pic.lastIndexOf("\\")+1);
+					str2 = "<img src='../file/"+img2+"' alt=''>"
+				}
+				if(!!typeList[i].goodsList[2].main_pic){
+					img3 = typeList[i].goodsList[2].main_pic.substr(typeList[i].goodsList[2].main_pic.lastIndexOf("\\")+1);
+					str3 = "<img src='../file/"+img3+"' alt=''>"
+				}
+				if($content1!=null) $content1.remove();
+				$content1 = $("<li><a href=\"#\"><div class='pic'>"+str1+"</div>" +
 						"<div class='content'><h3>" + typeList[i].goodsList[0].goods_name + "</h3>" +
 						"<span>￥"+typeList[i].goodsList[0].goods_price + "</span></div></a>" +
 						"<div class='mask'><a href='#' class='btn'>查看详情</a></div>")
 				div.append($content1)
-				if($content2!=null)
-					$content2.remove();
-				$content2 = $("<li><a href=\"#\"><div class='pic'><img src='../image/img25.png' alt=''></div>" +
+				if($content2!=null) $content2.remove();
+				$content2 = $("<li><a href=\"#\"><div class='pic'>"+str2+"</div>" +
 						"<div class='content'><h3>" + typeList[i].goodsList[1].goods_name + "</h3>" +
 						"<span>￥"+typeList[i].goodsList[1].goods_price + "</span></div></a>" +
 						"<div class='mask'><a href='#' class='btn'>查看详情</a></div>")
 				div.append($content2)
-				if($content3!=null)
-					$content3.remove()
-				$content3 = $("<li><a href=\"#\"><div class='pic'><img src='../image/img25.png' alt=''></div>" +
+				if($content3!=null) $content3.remove()
+				$content3 = $("<li><a href=\"#\"><div class='pic'>"+str3+"</div>" +
 						"<div class='content'><h3>" + typeList[i].goodsList[2].goods_name + "</h3>" +
 						"<span>￥"+typeList[i].goodsList[2].goods_price + "</span></div></a>" +
 						"<div class='mask'><a href='#' class='btn'>查看详情</a></div>")
@@ -281,15 +309,29 @@
 					var goodsList = $(".pub_pro")
 					$(".total span")[0].innerHTML = res.data.total;
 					for(var i=0;i<res.data.list.length;i++){
-						goodsList.append("<li>"
-								+"<img src=\"../image/img47.png\" alt=\"\">"
-								+"<div class=\"cont\">"
-								+"<h3>"+res.data.list[i].goods_name+"</h3>"
-								+"<span>"+res.data.list[i].goods_price+"</span></div>"
-								+"<div class=\"mask\">"
-								+"<a class=\"btn\" href='proDetail?goodId="+res.data.list[i].id+"'>查看详情</a>"
-								+"</div>"
-								+"</li>")
+						if(!!res.data.list[i].main_pic){
+							var pic = res.data.list[i].main_pic.substr(res.data.list[i].main_pic.lastIndexOf("\\")+1)
+							goodsList.append("<li>"
+									+"<img src='../file/"+pic+"' alt=\"\">"
+									+"<div class=\"cont\">"
+									+"<h3>"+res.data.list[i].goods_name+"</h3>"
+									+"<span>"+res.data.list[i].goods_price+"</span></div>"
+									+"<div class=\"mask\">"
+									+"<a class=\"btn\" href='proDetail?goodId="+res.data.list[i].id+"'>查看详情</a>"
+									+"</div>"
+									+"</li>")
+						}else{
+							goodsList.append("<li>"
+									+"<img src=\"../image/img47.png\" alt=\"\">"
+									+"<div class=\"cont\">"
+									+"<h3>"+res.data.list[i].goods_name+"</h3>"
+									+"<span>"+res.data.list[i].goods_price+"</span></div>"
+									+"<div class=\"mask\">"
+									+"<a class=\"btn\" href='proDetail?goodId="+res.data.list[i].id+"'>查看详情</a>"
+									+"</div>"
+									+"</li>")
+						}
+
 					}
 					var pages = res.data.lastPage
 					for(var i=0;i<pages;i++){

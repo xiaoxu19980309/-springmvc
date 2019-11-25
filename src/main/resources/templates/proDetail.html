@@ -262,26 +262,28 @@
                         <div class="magnifier-assembly">
                             <div class="magnifier-line">
                                 <ul class="clearfix animation03">
-                                    <li>
+                                    <li th:if="${goods.main_pic!=null}">
                                         <div class="small-img">
-                                            <img src="../image/img46.png" />
+                                            <img th:src="@{/file/{url}(url=${first_pic})}" />
+                                            <span th:text="${first_pic}"></span>
+                                            <span th:text="${picArr}"></span>
                                         </div>
                                     </li>
-                                    <li>
+                                    <li th:each="item,iterStat:${picArr}">
                                         <div class="small-img">
-                                            <img src="../image/img47.png" />
+                                            <img th:src="@{/file/{url}(url=${item})}" />
                                         </div>
                                     </li>
-                                    <li>
-                                        <div class="small-img">
-                                            <img src="../image/img43.png" />
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="small-img">
-                                            <img src="../image/img42.png" />
-                                        </div>
-                                    </li>
+<!--                                    <li>-->
+<!--                                        <div class="small-img">-->
+<!--                                            <img src="../image/img43.png" />-->
+<!--                                        </div>-->
+<!--                                    </li>-->
+<!--                                    <li>-->
+<!--                                        <div class="small-img">-->
+<!--                                            <img src="../image/img42.png" />-->
+<!--                                        </div>-->
+<!--                                    </li>-->
                                 </ul>
                             </div>
                             <!--缩略图-->
@@ -437,6 +439,13 @@
             }
             var goodId = [[${goods.id}]]
             $('.p6 button').click(function(){
+                if($('#s32').val()>[[${goods.goods_num}]]){
+                    $.growl.error({
+                        title: "提示",
+                        message: "库存不足!"
+                    });
+                    return;
+                }
                 $.ajax({
                     url: "/api/shopping/addToCar",
                     type: 'post',

@@ -21,10 +21,20 @@ public interface ShoppingCarDao {
             " from shoppingcar left join goods on goods.id=shoppingcar.good_id WHERE shoppingcar.user_id = #{userId} AND shoppingcar.is_delete != 1")
     List<ShoppingCar> selectShoppingCar(@Param("userId") Integer userId);
 
-    @Update("<script><foreach collection='goodsList' item='item' index='key' separator=','>" +
+    @Update("<script><foreach collection='goodsList' item='item' index='key' separator=';'>" +
             "update shoppingcar set gmt_modified = now(),is_delete = 1 " +
             "WHERE user_id = #{user_id} AND good_id = #{item.id}" +
             "</foreach>" +
             "</script>")
     void updateShoppingCarList(@Param("goodsList")List<JSONObject> goodsList,@Param("user_id") Integer user_id);
+
+    @Delete("delete from shoppingcar WHERE id = #{id}")
+    int deleteShoppingCar(@Param("good_id") Integer id);
+
+    @Delete("<script>delete from shoppingcar WHERE id IN (" +
+            "<foreach collection='idList' item='item' index='key' separator=','>" +
+            " #{item}" +
+            "</foreach>)" +
+            "</script>")
+    int deleteShoppingCarList(@Param("idList") List<Integer> idList);
 }

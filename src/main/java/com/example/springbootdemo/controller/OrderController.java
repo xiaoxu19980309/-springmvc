@@ -82,6 +82,9 @@ public class OrderController {
             e.printStackTrace();
         }
         if(ans!=0){
+            if(ans==2){
+                return Result.fail(ResponseCode.ERROR.val(),"库存不足！");
+            }
             if(pay_type!=null)
                 return Result.success(1,"下单成功！");
             else

@@ -25,6 +25,20 @@ public class ShoppingCarServiceImpl implements ShoppingCarServices {
     }
 
     @Override
+    public int deleteShoppingCar(Integer id) {
+        int ans = 0;
+        ans = shoppingCarDao.deleteShoppingCar(id);
+        return ans;
+    }
+
+    @Override
+    public int deleteShoppingCarList(List<Integer> idList) {
+        int ans = 0;
+        ans = shoppingCarDao.deleteShoppingCarList(idList);
+        return ans;
+    }
+
+    @Override
     public List<ShoppingCar> getShoppingCar(Integer UserId) {
         List<ShoppingCar> list = null;
         try{

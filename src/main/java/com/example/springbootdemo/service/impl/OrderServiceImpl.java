@@ -40,9 +40,6 @@ public class OrderServiceImpl implements OrderServices {
     @Transactional(propagation = Propagation.REQUIRED)
     public int addOrder(Order order, JSONArray list) {
         int ans = 0;
-        System.out.println(order.getTotal_num());
-        orderDao.insertOrder(order);
-        String order_id = order.getOrder_id();
         List<JSONObject> goodsList = new ArrayList<>();
         for(int i=0;i<list.size();i++){
             Integer id = JSONObject.parseObject(JSONObject.toJSONString(list.get(i))).getInteger("id");
@@ -51,10 +48,18 @@ public class OrderServiceImpl implements OrderServices {
             JSONObject goods = (JSONObject) JSONObject.toJSON(goodsDao.selectGoods(id));
             goods.put("count",count);
             goods.put("goods_num",Integer.parseInt(goods.get("goods_num").toString())-count);
+            if(goods.getInteger("goods_num")<0){
+                ans = 2;
+            }
             goods.put("has_sold",Integer.parseInt(goods.get("has_sold").toString())+count);
             goods.put("itemcount",price*count);
             goodsList.add(goods);
         }
+        if(ans==2){
+            return ans;
+        }
+        orderDao.insertOrder(order);
+        String order_id = order.getOrder_id();
         orderDetailDao.insertOrderDetail(goodsList,order_id);
         ans = goodsDao.updateGoodsList(goodsList);
         shoppingCarDao.updateShoppingCarList(goodsList,order.getUser_id());

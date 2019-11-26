@@ -400,8 +400,8 @@
                     img1 = typeList[i].goodsList[0].main_pic.substr(typeList[i].goodsList[0].main_pic.lastIndexOf("\\")+1);
                     str1 = "<img src='../file/"+img1+"' alt=''>"
                 }
-                $content1 = $("<a href=\"#\" class=\"w2I\">"+str1+"</a>" +
-                    "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[0].goods_name+"</p></a>" +
+                $content1 = $("<a href='./proDetail?goodId="+typeList[i].goodsList[0].id+"' class=\"w2I\">"+str1+"</a>" +
+                    "<a href='./proDetail?goodId="+typeList[i].goodsList[0].id+"' class=\"w2P1\"><p>"+typeList[i].goodsList[0].goods_name+"</p></a>" +
                     "<p class='w2P2'>￥"+typeList[i].goodsList[0].goods_price+"</p>")
                 div1.append($content1);
             }
@@ -418,13 +418,13 @@
                     str2 = "<img src='../file/"+img2+"' alt=''>"
                 }
                 if($content1!=null) $content1.remove();
-                $content1 = $("<a href=\"#\" class=\"w2I\">"+str1+"</a>" +
-                    "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[0].goods_name+"</p></a>" +
+                $content1 = $("<a href='./proDetail?goodId="+typeList[i].goodsList[0].id+"' class=\"w2I\">"+str1+"</a>" +
+                    "<a href='./proDetail?goodId="+typeList[i].goodsList[0].id+"' class=\"w2P1\"><p>"+typeList[i].goodsList[0].goods_name+"</p></a>" +
                     "<p class='w2P2'>￥"+typeList[i].goodsList[0].goods_price+"</p>")
                 div1.append($content1)
                 if($content2!=null) $content2.remove();
-                $content2=$("<a href=\"#\" class=\"w2I\">"+str2+"</a>" +
-                    "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[1].goods_name+"</p></a>" +
+                $content2=$("<a href='./proDetail?goodId="+typeList[i].goodsList[1].id+"' class=\"w2I\">"+str2+"</a>" +
+                    "<a href='./proDetail?goodId="+typeList[i].goodsList[1].id+"' class=\"w2P1\"><p>"+typeList[i].goodsList[1].goods_name+"</p></a>" +
                     "<p class='w2P2'>￥"+typeList[i].goodsList[1].goods_price+"</p>")
                 div2.append($content2)
                 if($content3!=null) $content3.remove();
@@ -446,18 +446,18 @@
                     str3 = "<img src='../file/"+img3+"' alt=''>"
                 }
                 if($content1!=null) $content1.remove();
-                $content1 = $("<a href=\"#\" class=\"w2I\">"+str1+"</a>" +
-                    "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[0].goods_name+"</p></a>" +
+                $content1 = $("<a href='./proDetail?goodId="+typeList[i].goodsList[0].id+"' class=\"w2I\">"+str1+"</a>" +
+                    "<a href='./proDetail?goodId="+typeList[i].goodsList[0].id+"' class=\"w2P1\"><p>"+typeList[i].goodsList[0].goods_name+"</p></a>" +
                     "<p class='w2P2'>￥"+typeList[i].goodsList[0].goods_price+"</p>")
                 div1.append($content1)
                 if($content2!=null) $content2.remove();
-                $content2=$("<a href=\"#\" class=\"w2I\">"+str2+"</a>" +
-                    "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[1].goods_name+"</p></a>" +
+                $content2=$("<a href='./proDetail?goodId="+typeList[i].goodsList[1].id+"' class=\"w2I\">"+str2+"</a>" +
+                    "<a href='./proDetail?goodId="+typeList[i].goodsList[1].id+"' class=\"w2P1\"><p>"+typeList[i].goodsList[1].goods_name+"</p></a>" +
                     "<p class='w2P2'>￥"+typeList[i].goodsList[1].goods_price+"</p>")
                 div2.append($content2)
                 if($content3!=null) $content3.remove()
-                $content3=$("<a href=\"#\" class=\"w2I\">"+str3+"</a>" +
-                    "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[2].goods_name+"</p></a>" +
+                $content3=$("<a href='./proDetail?goodId="+typeList[i].goodsList[2].id+"' class=\"w2I\">"+str3+"</a>" +
+                    "<a href='./proDetail?goodId="+typeList[i].goodsList[2].id+"' class=\"w2P1\"><p>"+typeList[i].goodsList[2].goods_name+"</p></a>" +
                     "<p class='w2P2'>￥"+typeList[i].goodsList[2].goods_price+"</p>")
                 div3.append($content3)
             }

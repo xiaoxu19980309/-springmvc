@@ -134,6 +134,7 @@
 	position: relative;
 }
 .s_content .s_content_c .s_info .s_prod ul li img{
+	height: 246px;
 	width: 100%;
 }
 .s_content .s_content_c .s_info .s_prod ul li:hover .mask{

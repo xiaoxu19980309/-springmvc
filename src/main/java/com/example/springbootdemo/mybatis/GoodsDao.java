@@ -48,7 +48,8 @@ public interface GoodsDao {
             "</script>")
     int updateGoods(@Param("goods") Goods goods);
 
-    @Update("<script><foreach collection='goodsList' item='goods' index='key' separator=','>update goods set gmt_modified = now() " +
+    @Update("<script>" +
+            "<foreach collection='goodsList' item='goods' index='key' separator=';'>update goods set gmt_modified = now()" +
 //            "<if test=\"goods.goods_name!=null and goods.goods_name!=''\">,goods_name = #{goods.goods_name}</if>" +
 //            "<if test=\"goods.goods_price!=null\">,goods_price = #{goods.goods_price}</if>" +
             "<if test=\"goods.goods_num!=null and goods.goods_num>=0\">,goods_num = #{goods.goods_num}</if>" +
@@ -59,7 +60,7 @@ public interface GoodsDao {
 //            "<if test=\"goods.type_id!=null\">,type_id = #{goods.type_id}</if>" +
 //            "<if test=\"goods.is_special!=null\">,is_special = #{goods.is_special}</if>" +
 //            "<if test=\"goods.is_delete!=null\">,is_delete = #{goods.is_delete}</if>" +
-            "WHERE id = #{goods.id}"+
+            "WHERE id = #{goods.id}" +
             "</foreach></script>")
     int updateGoodsList(@Param("goodsList") List<JSONObject> goodsList);
 

@@ -1,5 +1,7 @@
 package com.example.springbootdemo.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.springbootdemo.pojo.ShoppingCar;
 import com.example.springbootdemo.pojo.User;
@@ -9,10 +11,7 @@ import com.example.springbootdemo.tools.JwtHelper;
 import com.example.springbootdemo.tools.ResponseCode;
 import com.example.springbootdemo.tools.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -64,6 +63,43 @@ public class ShoppingCarController {
             return Result.success(list,"获取购物车列表成功！");
         }else{
             return Result.fail(ResponseCode.ERROR.val(),"获取购物车列表失败!");
+        }
+    }
+
+    @RequestMapping(value = "/deleteShoppingCar",method = RequestMethod.POST)
+    public Result deleteShoppingCar(@RequestParam Integer carId){
+        int ans = 0;
+        try{
+            ans = shoppingCarServices.deleteShoppingCar(carId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if(ans!=0){
+            return Result.success(null,"删除成功！");
+        }else{
+            return Result.fail(ResponseCode.ERROR.val(),"删除失败！");
+        }
+    }
+
+    @RequestMapping(value = "/deleteShoppingCarList",method = RequestMethod.POST)
+    @ResponseBody
+    public Result deleteShoppingCarList(@RequestBody JSONObject data){
+        JSONObject json = JSON.parseObject(data.toJSONString());
+        String idList = json.getString("idList");
+        List<Integer> list = null;
+        if(!idList.isEmpty()){
+            list = JSONObject.parseArray(idList,Integer.class);
+        }
+        int ans = 0;
+        try{
+            ans = shoppingCarServices.deleteShoppingCarList(list);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if(ans!=0){
+            return Result.success(null,"删除成功！");
+        }else{
+            return Result.fail(ResponseCode.ERROR.val(),"删除失败！");
         }
     }
 }

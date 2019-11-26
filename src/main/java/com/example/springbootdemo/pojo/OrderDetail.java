@@ -128,4 +128,23 @@ public class OrderDetail {
         this.good_id = good_id;
         this.itemcount = itemcount;
     }
+
+    @Override
+    public String toString() {
+        return "OrderDetail{" +
+                "id=" + id +
+                ", order_id='" + order_id + '\'' +
+                ", good_id=" + good_id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", number=" + number +
+                ", itemcount=" + itemcount +
+                ", is_delete=" + is_delete +
+                ", gmt_create='" + gmt_create + '\'' +
+                ", gmt_modified='" + gmt_modified + '\'' +
+                ", goods=" + goods +
+                ", total_number=" + total_number +
+                ", total_price=" + total_price +
+                '}';
+    }
 }

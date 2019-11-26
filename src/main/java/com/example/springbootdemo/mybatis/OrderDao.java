@@ -22,8 +22,14 @@ public interface OrderDao {
             "DATE_FORMAT(gmt_modified,'%Y-%m-%d %H:%i:%s') gmt_modified from orders WHERE user_id = #{user_id} AND is_delete=0")
     List<Order> selectOrderList(@Param("user_id") Integer user_id);
 
-    @Select("select id,order_id,good_id,name,price,number,itemcount,is_delete,DATE_FORMAT(gmt_create,'%Y-%m-%d %H:%i:%s') gmt_create," +
-            "DATE_FORMAT(gmt_modified,'%Y-%m-%d %H:%i:%s') gmt_modified from orderdetail WHERE order_id = #{order_id} AND is_delete=0")
+    @Results({
+            @Result(column = "id",property = "id"),
+            @Result(column = "good_id",property = "good_id"),
+            @Result(column = "good_id",property = "goods",one = @One(select = "com.example.springbootdemo.mybatis.GoodsDao.selectGoods")),
+    })
+    @Select("select orderdetail.id,orderdetail.order_id,orderdetail.good_id,orderdetail.name,orderdetail.price,orderdetail.number,itemcount,orderdetail.is_delete," +
+            "DATE_FORMAT(orderdetail.gmt_create,'%Y-%m-%d %H:%i:%s') gmt_create," +
+            "DATE_FORMAT(orderdetail.gmt_modified,'%Y-%m-%d %H:%i:%s') gmt_modified from orderdetail WHERE order_id = #{order_id} AND orderdetail.is_delete=0")
     List<OrderDetail> selectOrderDetailList(@Param("order_id") String order_id);
 
     @Select("select * from orders WHERE order_id = #{order_id}")

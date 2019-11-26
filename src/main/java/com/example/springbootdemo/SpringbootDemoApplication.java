@@ -76,6 +76,13 @@ public class SpringbootDemoApplication {
     @RequestMapping(value = "/orderDetail")
     public String orderDetail(Model model,@RequestParam String order_id){
         List<OrderDetail> orderDetails = orderServices.getOrderDetails(order_id);
+        for(int i=0;i<orderDetails.size();i++){
+            if(orderDetails.get(i).getGoods().getMain_pic()!=null||orderDetails.get(i).getGoods().getMain_pic().length()!=0){
+                String url = orderDetails.get(i).getGoods().getMain_pic().substring(orderDetails.get(i).getGoods().getMain_pic().lastIndexOf("\\")+1);
+                orderDetails.get(i).getGoods().setMain_pic(url);
+                System.out.println(url);
+            }
+        }
         Order order = orderServices.selectOrderById(order_id);
         Integer is_pay = order.getIs_pay();
         model.addAttribute("is_pay",is_pay);

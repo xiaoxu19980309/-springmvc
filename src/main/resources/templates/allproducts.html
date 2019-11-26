@@ -58,7 +58,7 @@
 		<div class="s_content_c inner_c">
 			<div class="s_info">
 				<div class="s_title">
-					<a href="#">
+					<a href="./">
 						首页
 					</a>
 					<span>
@@ -211,10 +211,10 @@
 				if($content1!=null) $content1.remove();
 				if($content2!=null) $content2.remove();
 				if($content3!=null) $content3.remove();
-				$content1 = $("<li><a href=\"#\"><div class='pic'>" + str1 +
+				$content1 = $("<li><a href='./proDetail?goodId="+typeList[i].goodsList[0].id+"'><div class='pic'>" + str1 +
 						"</div><div class='content'><h3>" + typeList[i].goodsList[0].goods_name + "</h3>" +
 						"<span>￥"+typeList[i].goodsList[0].goods_price + "</span></div></a>" +
-						"<div class='mask'><a href='#' class='btn'>查看详情</a></div>")
+						"<div class='mask'><a href='./proDetail?goodId="+typeList[i].goodsList[0].id+"' class='btn'>查看详情</a></div>")
 				div.append($content1);
 			}
 			if(typeList[i].goodsList.length==2){
@@ -230,16 +230,16 @@
 					str2 = "<img src='../file/"+img2+"' alt=''>"
 				}
 				if($content1!=null) $content1.remove();
-				$content1 = $("<li><a href=\"#\"><div class='pic'>"+str1+"</div>" +
+				$content1 = $("<li><a href='./proDetail?goodId="+typeList[i].goodsList[0].id+"'><div class='pic'>"+str1+"</div>" +
 						"<div class='content'><h3>" + typeList[i].goodsList[0].goods_name + "</h3>" +
 						"<span>￥"+typeList[i].goodsList[0].goods_price + "</span></div></a>" +
-						"<div class='mask'><a href='#' class='btn'>查看详情</a></div>")
+						"<div class='mask'><a href='./proDetail?goodId="+typeList[i].goodsList[0].id+"' class='btn'>查看详情</a></div>")
 				div.append($content1)
 				if($content2!=null) $content2.remove();
-				$content2 = $("<li><a href=\"#\"><div class='pic'>"+str2+"</div>" +
+				$content2 = $("<li><a href='./proDetail?goodId="+typeList[i].goodsList[1].id+"'><div class='pic'>"+str2+"</div>" +
 						"<div class='content'><h3>" + typeList[i].goodsList[1].goods_name + "</h3>" +
 						"<span>￥"+typeList[i].goodsList[1].goods_price + "</span></div></a>" +
-						"<div class='mask'><a href='#' class='btn'>查看详情</a></div>")
+						"<div class='mask'><a href='./proDetail?goodId="+typeList[i].goodsList[1].id+"' class='btn'>查看详情</a></div>")
 				div.append($content2)
 				if($content3!=null)	$content3.remove();
 			}
@@ -261,22 +261,22 @@
 					str3 = "<img src='../file/"+img3+"' alt=''>"
 				}
 				if($content1!=null) $content1.remove();
-				$content1 = $("<li><a href=\"#\"><div class='pic'>"+str1+"</div>" +
+				$content1 = $("<li><a href='./proDetail?goodId="+typeList[i].goodsList[0].id+"'><div class='pic'>"+str1+"</div>" +
 						"<div class='content'><h3>" + typeList[i].goodsList[0].goods_name + "</h3>" +
 						"<span>￥"+typeList[i].goodsList[0].goods_price + "</span></div></a>" +
-						"<div class='mask'><a href='#' class='btn'>查看详情</a></div>")
+						"<div class='mask'><a href='./proDetail?goodId="+typeList[i].goodsList[0].id+"' class='btn'>查看详情</a></div>")
 				div.append($content1)
 				if($content2!=null) $content2.remove();
-				$content2 = $("<li><a href=\"#\"><div class='pic'>"+str2+"</div>" +
+				$content2 = $("<li><a href='./proDetail?goodId="+typeList[i].goodsList[1].id+"'><div class='pic'>"+str2+"</div>" +
 						"<div class='content'><h3>" + typeList[i].goodsList[1].goods_name + "</h3>" +
 						"<span>￥"+typeList[i].goodsList[1].goods_price + "</span></div></a>" +
-						"<div class='mask'><a href='#' class='btn'>查看详情</a></div>")
+						"<div class='mask'><a href='./proDetail?goodId="+typeList[i].goodsList[1].id+"' class='btn'>查看详情</a></div>")
 				div.append($content2)
 				if($content3!=null) $content3.remove()
-				$content3 = $("<li><a href=\"#\"><div class='pic'>"+str3+"</div>" +
+				$content3 = $("<li><a href='./proDetail?goodId="+typeList[i].goodsList[2].id+"'><div class='pic'>"+str3+"</div>" +
 						"<div class='content'><h3>" + typeList[i].goodsList[2].goods_name + "</h3>" +
 						"<span>￥"+typeList[i].goodsList[2].goods_price + "</span></div></a>" +
-						"<div class='mask'><a href='#' class='btn'>查看详情</a></div>")
+						"<div class='mask'><a href='./proDetail?goodId="+typeList[i].goodsList[2].id+"' class='btn'>查看详情</a></div>")
 				div.append($content3)
 			}
 		})

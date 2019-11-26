@@ -161,6 +161,7 @@
         }
         .dtb>ul .dhs7>a{
             text-decoration: none;
+            cursor: pointer;
             color: #666;
             font-size: 12px;
         }
@@ -253,6 +254,9 @@
             color: white;
             border: none;
         }
+        .shopAll .delebtn{
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -310,8 +314,8 @@
                         <div>
                             <span><input type="checkbox" class="ch"></span>
                             <span>全选</span>
-                            <span>删除</span>
-                            <span>清除下架商品</span>
+                            <span class="delebtn">删除</span>
+<!--                            <span>清除下架商品</span>-->
                             <div>
                                 已选商品
                                 <span class="allNum">0</span>
@@ -346,6 +350,9 @@
         var price = null;
         var pcs = 0;
         var sum =0;
+        var allNum = 0;
+        var j = 0;
+        var checkedGood = []
 
         function get_val(a) {
             price = a.parent().siblings('.dhs4')[0].innerText;
@@ -361,68 +368,136 @@
         function get_sum(a) {
             a.parent().siblings('.dhs6')[0].innerText = '￥'+(price*pcs);
         }
+        function addMouseClick(){
+            $('.shopList .num').blur(function () {
+                get_val($(this));
+                get_sum($(this));
+                this.value = pcs;
+                allNum = 0;
+                numAll();
+                allSum = 0;
+                sumAll()
+            });
 
-        $('.shopList .num').blur(function () {
-            get_val($(this));
-            get_sum($(this));
-            this.value = pcs;
-            allNum = 0;
-            numAll();
-            allSum = 0;
-            sumAll()
-        });
+            $('.shopList .add').click(function () {
+                get_val($(this).siblings('.num'));
+                pcs++;
+                $(this).siblings('.num')[0].value = pcs;
+                get_sum($(this).siblings('.num'));
+                allNum = 0;
+                numAll();
+                allSum = 0;
+                sumAll()
+            });
 
-        $('.shopList .add').click(function () {
-            get_val($(this).siblings('.num'));
-            pcs++;
-            $(this).siblings('.num')[0].value = pcs;
-            get_sum($(this).siblings('.num'));
-            allNum = 0;
-            numAll();
-            allSum = 0;
-            sumAll()
-        });
+            $('.shopList .sub').click(function () {
+                get_val($(this).siblings('.num'));
+                pcs--;
+                if(pcs<1){
+                    pcs = 1;
+                }
+                $(this).siblings('.num')[0].value = pcs;
+                get_sum($(this).siblings('.num'));
+                allNum = 0;
+                numAll();
+                allSum = 0;
+                sumAll()
+            });
 
-        $('.shopList .sub').click(function () {
-            get_val($(this).siblings('.num'));
-            pcs--;
-            if(pcs<1){
-                pcs = 1;
-            }
-            $(this).siblings('.num')[0].value = pcs;
-            get_sum($(this).siblings('.num'));
-            allNum = 0;
-            numAll();
-            allSum = 0;
-            sumAll()
-        });
-
-        var i = 0;
-        document.onscroll = function () {
-            i = $('.shopList').children().last().offset().top-$(document).scrollTop();
-            let widths = document.getElementsByClassName('shopList')[0].getElementsByTagName('li')[0].offsetWidth
-            widths -= 60;
-            if(i>300){
-                $('.shopAll').css({
-                    position:'fixed',
-                    width: widths,
-                    bottom:0,
-                    borderLeft:'1px solid rgb(221,221,221)',
-                    borderRight:'1px solid rgb(221,221,221)'
+            var i = 0;
+            document.onscroll = function () {
+                i = $('.shopList').children().last().offset().top-$(document).scrollTop();
+                let widths = document.getElementsByClassName('shopList')[0].getElementsByTagName('li')[0].offsetWidth
+                widths -= 60;
+                if(i>300){
+                    $('.shopAll').css({
+                        position:'fixed',
+                        width: widths,
+                        bottom:0,
+                        borderLeft:'1px solid rgb(221,221,221)',
+                        borderRight:'1px solid rgb(221,221,221)'
+                    });
+                }else{
+                    $('.shopAll').css({
+                        position:'',
+                        width: 'auto',
+                        bottom:'',
+                        borderLeft:'',
+                        borderRight:''
+                    });
+                }
+            };
+            $('.shopList .ch').change(function () {
+                allNum = 0;
+                numAll();
+                allSum = 0;
+                sumAll();
+                if($(this).prop('checked')===true){
+                    $(this).attr('index',1)
+                    checkedGood.push($(this).val())
+                }else{
+                    $(this).attr('index',0)
+                    var index;
+                    for(var i=0;i<checkedGood.length;i++) {
+                        if(checkedGood[i]==$(this).val()) {
+                            index = i;
+                        }
+                    }
+                    checkedGood.splice(index,1)
+                }
+                var index = 0;
+                $('.shopList .ch').each(function () {
+                    index += Number($(this).attr('index'));
                 });
-            }else{
-                $('.shopAll').css({
-                    position:'',
-                    width: 'auto',
-                    bottom:'',
-                    borderLeft:'',
-                    borderRight:''
-                });
-            }
-        };
+                if(index === $('.shopList').children().length){
+                    $('.shopAll .ch').prop('checked','checked');
+                    $('.dhead .ch').prop('checked','checked');
+                }else{
+                    $('.shopAll .ch').prop('checked','');
+                    $('.dhead .ch').prop('checked','');
+                }
+            });
 
-        var allNum = 0;
-        var j = 0;
+            $('.dhead .ch').change(function () {
+                if($(this).prop('checked')===true){
+                    $('.shopList .ch').each(function () {
+                        $(this).prop('checked','checked');
+                    });
+                    $('.shopAll .ch').prop('checked','checked');
+
+                }else{
+                    $('.shopList .ch').each(function () {
+                        $(this).prop('checked','');
+                    });
+                    $('.shopAll .ch').prop('checked','');
+                }
+                allNum = 0;
+                numAll();
+                allSum = 0;
+                sumAll();
+            });
+
+            $('.shopAll .ch').change(function () {
+                if($(this).prop('checked')===true){
+                    $('.shopList .ch').each(function () {
+                        $(this).prop('checked','checked');
+                    });
+                    $('.dhead .ch').prop('checked','checked');
+
+                }else{
+                    $('.shopList .ch').each(function () {
+                        $(this).prop('checked','');
+                    });
+                    $('.dhead .ch').prop('checked','');
+                }
+                allNum = 0;
+                numAll();
+                allSum = 0;
+                sumAll();
+            })
+        }
+
+
         function numAll(a) {
             $('.shopList .num').each(function (index) {
                 if($(this).parent().siblings('span').eq(0).children('.ch').prop('checked')===false){
@@ -448,70 +523,9 @@
                     allSum += k;
                 }
             });
-            $('.shopAll .allSum')[0].innerText = '￥'+allSum;
+            $('.shopAll .allSum')[0].innerText = '￥'+allSum.toFixed(2);
         }
         sumAll();
-
-        $('.shopList .ch').change(function () {
-            allNum = 0;
-            numAll();
-            allSum = 0;
-            sumAll();
-            if($(this).prop('checked')===true){
-                $(this).attr('index',1)
-            }else{
-                $(this).attr('index',0)
-            }
-            var index = 0;
-            $('.shopList .ch').each(function () {
-                index += Number($(this).attr('index'));
-            });
-            if(index === $('.shopList').children().length){
-                $('.shopAll .ch').prop('checked','checked');
-                $('.dhead .ch').prop('checked','checked');
-            }else{
-                $('.shopAll .ch').prop('checked','');
-                $('.dhead .ch').prop('checked','');
-            }
-        });
-
-        $('.dhead .ch').change(function () {
-            if($(this).prop('checked')===true){
-                $('.shopList .ch').each(function () {
-                    $(this).prop('checked','checked');
-                });
-                $('.shopAll .ch').prop('checked','checked');
-
-            }else{
-                $('.shopList .ch').each(function () {
-                    $(this).prop('checked','');
-                });
-                $('.shopAll .ch').prop('checked','');
-            }
-            allNum = 0;
-            numAll();
-            allSum = 0;
-            sumAll();
-        });
-
-        $('.shopAll .ch').change(function () {
-            if($(this).prop('checked')===true){
-                $('.shopList .ch').each(function () {
-                    $(this).prop('checked','checked');
-                });
-                $('.dhead .ch').prop('checked','checked');
-
-            }else{
-                $('.shopList .ch').each(function () {
-                    $(this).prop('checked','');
-                });
-                $('.dhead .ch').prop('checked','');
-            }
-            allNum = 0;
-            numAll();
-            allSum = 0;
-            sumAll();
-        })
     </script>
     <script>
         var shoppingCarList = [];
@@ -557,7 +571,6 @@
         function addMouseOver(){
             $('.wrap2 ul li').mouseover(function(e){
                 var i = $(this).index()
-                console.log(i,"index")
                 var str1,str2,str3;
                 if(typeList[i].goodsList.length==0){
                     if($content1!=null) $content1.remove();
@@ -574,8 +587,8 @@
                         img1 = typeList[i].goodsList[0].main_pic.substr(typeList[i].goodsList[0].main_pic.lastIndexOf("\\")+1);
                         str1 = "<img src='../file/"+img1+"' alt=''>"
                     }
-                    $content1 = $("<a href=\"#\" class=\"w2I\">"+str1+"</a>" +
-                        "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[0].goods_name+"</p></a>" +
+                    $content1 = $("<a href='./proDetail?goodId="+typeList[i].goodsList[0].id+"' class=\"w2I\">"+str1+"</a>" +
+                        "<a href='./proDetail?goodId="+typeList[i].goodsList[0].id+"' class=\"w2P1\"><p>"+typeList[i].goodsList[0].goods_name+"</p></a>" +
                         "<p class='w2P2'>￥"+typeList[i].goodsList[0].goods_price+"</p>")
                     div1.append($content1);
                 }
@@ -592,13 +605,13 @@
                         str2 = "<img src='../file/"+img2+"' alt=''>"
                     }
                     if($content1!=null) $content1.remove();
-                    $content1 = $("<a href=\"#\" class=\"w2I\">"+str1+"</a>" +
-                        "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[0].goods_name+"</p></a>" +
+                    $content1 = $("<a href='./proDetail?goodId="+typeList[i].goodsList[0].id+"' class=\"w2I\">"+str1+"</a>" +
+                        "<a href='./proDetail?goodId="+typeList[i].goodsList[0].id+"' class=\"w2P1\"><p>"+typeList[i].goodsList[0].goods_name+"</p></a>" +
                         "<p class='w2P2'>￥"+typeList[i].goodsList[0].goods_price+"</p>")
                     div1.append($content1)
                     if($content2!=null) $content2.remove();
-                    $content2=$("<a href=\"#\" class=\"w2I\">"+str2+"</a>" +
-                        "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[1].goods_name+"</p></a>" +
+                    $content2=$("<a href='./proDetail?goodId="+typeList[i].goodsList[1].id+"' class=\"w2I\">"+str2+"</a>" +
+                        "<a href='./proDetail?goodId="+typeList[i].goodsList[1].id+"' class=\"w2P1\"><p>"+typeList[i].goodsList[1].goods_name+"</p></a>" +
                         "<p class='w2P2'>￥"+typeList[i].goodsList[1].goods_price+"</p>")
                     div2.append($content2)
                     if($content3!=null) $content3.remove();
@@ -620,36 +633,70 @@
                         str3 = "<img src='../file/"+img3+"' alt=''>"
                     }
                     if($content1!=null) $content1.remove();
-                    $content1 = $("<a href=\"#\" class=\"w2I\">"+str1+"</a>" +
-                        "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[0].goods_name+"</p></a>" +
+                    $content1 = $("<a href='./proDetail?goodId="+typeList[i].goodsList[0].id+"' class=\"w2I\">"+str1+"</a>" +
+                        "<a href='./proDetail?goodId="+typeList[i].goodsList[0].id+"' class=\"w2P1\"><p>"+typeList[i].goodsList[0].goods_name+"</p></a>" +
                         "<p class='w2P2'>￥"+typeList[i].goodsList[0].goods_price+"</p>")
                     div1.append($content1)
                     if($content2!=null) $content2.remove();
-                    $content2=$("<a href=\"#\" class=\"w2I\">"+str2+"</a>" +
-                        "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[1].goods_name+"</p></a>" +
+                    $content2=$("<a href='./proDetail?goodId="+typeList[i].goodsList[1].id+"' class=\"w2I\">"+str2+"</a>" +
+                        "<a href='./proDetail?goodId="+typeList[i].goodsList[1].id+"' class=\"w2P1\"><p>"+typeList[i].goodsList[1].goods_name+"</p></a>" +
                         "<p class='w2P2'>￥"+typeList[i].goodsList[1].goods_price+"</p>")
                     div2.append($content2)
                     if($content3!=null) $content3.remove()
-                    $content3=$("<a href=\"#\" class=\"w2I\">"+str3+"</a>" +
-                        "<a href=\"#\" class=\"w2P1\"><p>"+typeList[i].goodsList[2].goods_name+"</p></a>" +
+                    $content3=$("<a href='./proDetail?goodId="+typeList[i].goodsList[2].id+"' class=\"w2I\">"+str3+"</a>" +
+                        "<a href='./proDetail?goodId="+typeList[i].goodsList[2].id+"' class=\"w2P1\"><p>"+typeList[i].goodsList[2].goods_name+"</p></a>" +
                         "<p class='w2P2'>￥"+typeList[i].goodsList[2].goods_price+"</p>")
                     div3.append($content3)
                 }
             })
         }
+        function deleteItem(i){
+            $.ajax({
+                url: "/api/shopping/deleteShoppingCar",
+                type: "POST",
+                beforeSend: function(request){
+                    request.setRequestHeader("Authorization",sessionStorage.getItem("token"));
+                },
+                data: {
+                    carId: shoppingCarList[i].carId
+                },
+                success: function(res){
+                    if(res.resultCode!=200){
+                        $.growl.error({
+                            title: "提示",
+                            message: res.resultMsg
+                        })
+                    }else{
+                        $(".shopList li").eq(i).remove();
+                        $.growl.notice({
+                            title: "提示",
+                            message: res.resultMsg
+                        })
+                        shoppingCarList.splice(i,1);
+                    }
+                }
+            })
+        }
         function appendList(data){
             for(var i=0;i<data.length;i++){
+                var url = data[i].main_pic
+                var imgStr = ""
+                if(!!url){
+                    url = url.substr(url.lastIndexOf("\\")+1);
+                    imgStr = "<img src='../file/"+url+"' alt=''>"
+                }
                 $(".shopList").append("<li><div><span>" +
-                    "<input type='checkbox' class='ch' index='0'></span>" +
-                    "<span class='dhs2'><img src='../image/img23.png' alt></span>" +
+                    "<input type='checkbox' class='ch' index='0' value='"+data[i].id+"'></span>" +
+                    "<span class='dhs2'>"+imgStr+"</span>" +
                     "<span class='dhs3'><a href='#'>"+data[i].goods_name+"</a></span>" +
                     "<span class='dhs4'>￥"+data[i].goods_price+"</span>" +
                     "<span class='dhs5'><a href='javascript:void(0)' class='sub'>-</a><input type='text' class='num' value='"+data[i].count+"'>" +
                     "<a href='javascript:void(0)' class='add'>+</a></span>" +
                     "<span class='dhs6'>￥"+(data[i].count*data[i].goods_price).toFixed(2)+"</span>" +
-                    "<span class='dhs7'><a href='#' class='del'>删除</a></span></div></li>");
-                shoppingCarList.push({id: data[i].good_id,price: data[i].goods_price,count: data[i].count});
+                    "<span class='dhs7'><a class='del' onclick='deleteItem("+i+")'>删除</a></span></div></li>");
+                shoppingCarList.push({id: data[i].good_id,carId: data[i].id,price: data[i].goods_price,count: data[i].count});
             }
+            addMouseClick();
         }
         function getCarList(){
             $.ajax({
@@ -677,6 +724,50 @@
                 }
             })
         }
+        $(".shopAll .delebtn").click(function(){
+            console.log(checkedGood)
+            var data = {
+                idList: checkedGood,
+            }
+            $.ajax({
+                url: "/api/shopping/deleteShoppingCarList",
+                type: "POST",
+                dataType: 'JSON',
+                contentType: "application/json",
+                beforeSend: function(request){
+                    request.setRequestHeader("Authorization",sessionStorage.getItem("token"));
+                },
+                data: JSON.stringify(data),
+                success: function(res){
+                    if(res.resultCode!=200){
+                        $.growl.error({
+                            title: "提示",
+                            message: res.resultMsg
+                        })
+                    }else{
+                        $.growl.notice({
+                            title: "提示",
+                            message: res.resultMsg
+                        })
+                        for(var i=0;i<checkedGood.length;i++){
+                            var index;
+                            for(var j=0;j<shoppingCarList.length;j++){
+                                if(checkedGood[i]==shoppingCarList[j].carId){
+                                    index = j;
+                                    break;
+                                }
+                            }
+                            shoppingCarList.splice(index,1)
+                            $(".shopList li").eq(index).remove();
+                        }
+                        checkedGood = []
+                    }
+                },
+                error: function(e){
+
+                }
+            })
+        })
         $("#confirm").click(function(){
             var shopList = document.getElementsByClassName("shopList")[0].getElementsByTagName("li")
             list = [];
